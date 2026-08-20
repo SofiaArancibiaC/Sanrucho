@@ -1,0 +1,142 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Debug Eureka",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/eureka",
+      "mainClass": "cl.sanrucho.eureka.TiendaEurekaApplication",
+      "projectName": "cl-sanrucho-eureka",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-usuarios",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-usuarios",
+      "mainClass": "cl.sanrucho.usuarios.TiendaUsuariosApplication",
+      "projectName": "cl-sanrucho-usuarios",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-catalogo",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-catalogo",
+      "mainClass": "cl.sanrucho.catalogo.TiendaCatalogoApplication",
+      "projectName": "cl-sanrucho-catalogo",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-inventario",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-inventario",
+      "mainClass": "cl.sanrucho.inventario.TiendaInventarioApplication",
+      "projectName": "cl-sanrucho-inventario",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-carrito",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-carrito",
+      "mainClass": "cl.sanrucho.carrito.TiendaCarritoApplication",
+      "projectName": "cl-sanrucho-carrito",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-pedidos",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-pedidos",
+      "mainClass": "cl.sanrucho.pedidos.TiendaPedidosApplication",
+      "projectName": "cl-sanrucho-pedidos",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-pagos",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-pagos",
+      "mainClass": "cl.sanrucho.pagos.TiendaPagosApplication",
+      "projectName": "cl-sanrucho-pagos",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-despacho",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-despacho",
+      "mainClass": "cl.sanrucho.despacho.TiendaDespachoApplication",
+      "projectName": "cl-sanrucho-despacho",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-notificaciones",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-notificaciones",
+      "mainClass": "cl.sanrucho.notificaciones.TiendaNotificacionesApplication",
+      "projectName": "cl-sanrucho-notificaciones",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-reportes",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-reportes",
+      "mainClass": "cl.sanrucho.reportes.TiendaReportesApplication",
+      "projectName": "cl-sanrucho-reportes",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-reviews",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-reviews",
+      "mainClass": "cl.sanrucho.reviews.TiendaReviewsApplication",
+      "projectName": "cl-sanrucho-reviews",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-common",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-common",
+      "mainClass": "cl.sanrucho.common.TiendaCommonApplication",
+      "projectName": "cl-sanrucho-common",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Debug ms-api-gateway",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/ms-api-gateway",
+      "mainClass": "cl.sanrucho.api-gateway.TiendaApi-gatewayApplication",
+      "projectName": "cl-sanrucho-api-gateway",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug All Services",
+      "configurations": [
+        "Debug Eureka",
+        "Debug ms-usuarios",
+        "Debug ms-catalogo",
+        "Debug ms-inventario",
+        "Debug ms-carrito",
+        "Debug ms-pedidos",
+        "Debug ms-pagos",
+        "Debug ms-despacho",
+        "Debug ms-notificaciones",
+        "Debug ms-reportes",
+        "Debug ms-reviews",
+        "Debug ms-common",
+        "Debug ms-api-gateway"
+      ]
+    }
+  ]
+}
