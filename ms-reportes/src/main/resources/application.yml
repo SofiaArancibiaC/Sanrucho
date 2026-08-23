@@ -1,8 +1,5 @@
 server:
-  port: 9009
-  error:
-    include-stacktrace: never
-
+  port: 0
 spring:
   application:
     name: ms-reportes

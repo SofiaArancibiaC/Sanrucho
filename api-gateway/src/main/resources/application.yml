@@ -1,0 +1,88 @@
+server:
+  port: 9012
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        #1 - ms-carrito
+        - id: ms-carrito
+          uri: lb://ms-carrito
+          predicates:
+            - Path=/api/v1/carritos/**
+        #2 - ms-catalogo
+        - id: ms-catalogo
+          uri: lb://ms-catalogo
+          predicates:
+            - Path=/api/v1/catalogo/**
+        #3 - ms-despacho
+        - id: ms-despacho
+          uri: lb://ms-despacho
+          predicates:
+            - Path=/api/v1/despacho/**
+        #4 - ms-inventario
+        - id: ms-inventario
+          uri: lb://ms-inventario
+          predicates:
+            - Path=/api/v1/inventario/**
+        #5 - ms-notificaciones
+        - id: ms-notificaciones
+          uri: lb://ms-notificaciones
+          predicates:
+            - Path=/api/v1/notificaciones/**
+        #6 - ms-pagos
+        - id: ms-pagos
+          uri: lb://ms-pagos
+          predicates:
+            - Path=/api/v1/pagos/**
+        #7 - ms-pedidos
+        - id: ms-pedidos
+          uri: lb://ms-pedidos
+          predicates:
+            - Path=/api/v1/pedidos/**
+        #8 - ms-reportes
+        - id: ms-reportes
+          uri: lb://ms-reportes
+          predicates:
+            - Path=/api/v1/reportes/**
+        #9 - ms-reviews
+        - id: ms-reviews
+          uri: lb://ms-reviews
+          predicates:
+            - Path=/api/v1/reviews/**
+        #10 - ms-usuarios
+        - id: ms-usuarios
+          uri: lb://ms-usuarios
+          predicates:
+            - Path=/api/v1/usuarios/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+#springdoc:
+#  swagger-ui:
+#    path: /swagger-ui.html
+#    urls:
+#      - name: ms-catalogo
+#        url: /ms-catalogo/v3/api-docs
+#      - name: ms-carrito
+#        url: /ms-carrito/v3/api-docs
+#      - name: ms-reportes
+#        url: /ms-reportes/v3/api-docs
+#      - name: ms-proveedores
+#        url: /ms-proveedores/v3/api-docs

@@ -1,0 +1,455 @@
+# ============================================================
+# Docker Compose - Sistema Biblioteca Triskeledu (completo)
+# ============================================================
+# Levanta toda la infraestructura + microservicios Java.
+#
+# Orden de arranque garantizado por healthchecks:
+#   1. postgres, kafka           -> arrancan en paralelo
+#   2. eureka-server             -> arranca en paralelo con infra
+#   3. api-gateway               -> espera a eureka (healthy)
+#   4. ms-usuarios, ms-catalogo, -> esperan a eureka + postgres
+#      ms-recursos                  + kafka + api-gateway
+# ============================================================
+
+services:
+
+  # -- Infraestructura: Base de Datos --------------------------
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-rdbms
+    command: postgres -c fsync=off -c synchronous_commit=off -c full_page_writes=off -c checkpoint_timeout=30min -c max_wal_size=2GB
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "123"
+      POSTGRES_DB: main_postgres_db
+    volumes:
+      - ./init-multi-db:/docker-entrypoint-initdb.d
+    networks:
+      - sanrucho-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 600s
+
+
+  # -- Infraestructura: Mensajeria -----------------------------
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka-broker
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-broker:9093
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:29092,EXTERNAL://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker:29092,EXTERNAL://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
+    networks:
+      - sanrucho-network
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-broker-api-versions --bootstrap-server localhost:9092 > /dev/null 2>&1"]
+      interval: 10s
+      timeout: 10s
+      retries: 15
+      start_period: 30s
+
+  # -- Infraestructura: Kafka UI -------------------------------
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    depends_on:
+      kafka:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-broker:29092
+    networks:
+      - sanrucho-network
+
+  # -- Descubrimiento: Eureka Server ---------------------------
+  eureka-server:
+    build: ./eureka
+    image: sanrucho-eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    networks:
+      - sanrucho-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8761/actuator/health | grep -q '\"status\":\"UP\"' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 40s
+
+  # -- Enrutamiento: API Gateway -------------------------------
+  api-gateway:
+    build: ./api-gateway
+    image: sanrucho-api-gateway
+    container_name: api-gateway
+    ports:
+      - "9012:9012"
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 9000 || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 30
+      start_period: 90s
+
+  # -- Microservicio: carrito -----------------
+  ms-carrito:
+    build: ./ms-carrito
+    image: sanrucho-ms-carrito
+    container_name: ms-carrito
+    ports:
+      - "9001:9001"
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9001
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/carrito
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+  # -- Microservicio: Catalogo -----------------------
+  ms-catalogo:
+    build: ./ms-catalogo
+    image: sanrucho-ms-catalogo
+    container_name: ms-catalogo
+    ports:
+      - "9002:9002"
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9002
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/catalogo
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+  # -- Microservicio: despacho -------------------------
+  ms-categorias:
+    build: ./ms-despacho
+    image: sanrucho-ms-despacho
+    container_name: ms-despacho
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9003
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/despacho
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+  # -- Microservicio: clientes -------------------------
+  ms-clientes:
+    build: ./ms-clientes
+    image: sanrucho-ms-clientes
+    container_name: ms-clientes
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9004
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/cliente
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+  # -- Microservicio: despacho -------------------------
+  ms-despacho:
+    build: ./ms-despacho
+    image: sanrucho-ms-despacho
+    container_name: ms-despacho
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9005
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/despacho
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+  # -- Microservicio: inventario -------------------------
+  ms-inventario:
+    build: ./ms-inventario
+    image: sanrucho-ms-inventario
+    container_name: ms-inventario
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9006
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/inventario
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+  # -- Microservicio: notificaciones -------------------------
+  ms-notificaciones:
+    build: ./ms-notificaciones
+    image: sanrucho-ms-notificaciones
+    container_name: ms-notificaciones
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9007
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/notificacion
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+  # -- Microservicio: pagos -------------------------
+  ms-pagos:
+    build: ./ms-pagos
+    image: sanrucho-ms-pagos
+    container_name: ms-pagos
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9008
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/pago
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+  # -- Microservicio: pedidos -------------------------
+  ms-pedidos:
+    build: ./ms-pedidos
+    image: sanrucho-ms-pedidos
+    container_name: ms-pedidos
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9009
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/pedido
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+  # -- Microservicio: proveedores -------------------------
+  ms-proveedores:
+    build: ./ms-proveedores
+    image: sanrucho-ms-proveedores
+    container_name: ms-proveedores
+    ports:
+      - "9010:9010"
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9010
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/proveedor
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+  # -- Microservicio: reportes -------------------------
+  ms-reportes:
+    build: ./ms-reportes
+    image: sanrucho-ms-reportes
+    container_name: ms-reportes
+    ports:
+      - "9011:9011"
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9011
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/reporte
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+  # -- Microservicio: usuarios -------------------------
+  ms-usuarios:
+    build: ./ms-usuarios
+    image: sanrucho-ms-usuarios
+    container_name: ms-usuarios
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 9012
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-rdbms:5432/usuario
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "123"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - sanrucho-network
+
+# ============================================================
+# Red compartida con nombre fijo (independiente del nombre
+# de la carpeta del proyecto)
+# ============================================================
+networks:
+  sanrucho-network:
+    name: sanrucho-network
+
+# ============================================================
+# Volumen nombrado para Postgres: usa el almacenamiento
+# interno de Docker en vez del overlay del contenedor, que en
+# Docker Desktop (Windows/WSL2/Hyper-V) es muchísimo más lento
+# para fsync y provocaba que el healthcheck marcara "unhealthy"
+# ============================================================

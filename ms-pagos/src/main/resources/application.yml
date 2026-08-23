@@ -1,8 +1,5 @@
 server:
-  port: 9006
-  error:
-    include-stacktrace: never
-
+  port: 0
 spring:
   application:
     name: ms-pagos
