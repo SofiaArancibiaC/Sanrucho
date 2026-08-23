@@ -31,7 +31,7 @@ CREATE TABLE productos_mas_vendidos (
     personaje VARCHAR(50) NOT NULL,
     categoria VARCHAR(100) NOT NULL,
     cantidad_vendida INTEGER NOT NULL,
-    ingresos_totales DECIMAL(12, 2) NOT NULL,
+    ingresos_totales INTEGER NOT NULL,
     periodo_inicio DATE NOT NULL,
     periodo_fin DATE NOT NULL,
     fecha_calculo TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -27,9 +27,9 @@ CREATE TABLE items_carrito (
     sku VARCHAR(50) NOT NULL,
     nombre_producto VARCHAR(200) NOT NULL,  -- Snapshot
     personaje VARCHAR(50),  -- Snapshot para filtros
-    precio_unitario DECIMAL(10, 2) NOT NULL,  -- Snapshot del precio al momento de agregar
+    precio_unitario INTEGER NOT NULL,  -- Snapshot del precio al momento de agregar
     cantidad INTEGER NOT NULL DEFAULT 1 CHECK (cantidad > 0),
-    subtotal DECIMAL(10, 2) NOT NULL,
+    subtotal INTEGER NOT NULL,
     fecha_agregado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     version INTEGER DEFAULT 1

@@ -14,7 +14,7 @@ CREATE TABLE productos (
     sku VARCHAR(50) UNIQUE NOT NULL,
     nombre VARCHAR(200) NOT NULL,
     descripcion TEXT,
-    precio DECIMAL(10, 2) NOT NULL,
+    precio INTEGER NOT NULL,
     personaje VARCHAR(50) NOT NULL,
     categoria VARCHAR(100) NOT NULL,
     imagen_url VARCHAR(500),
