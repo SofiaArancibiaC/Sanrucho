@@ -119,6 +119,50 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- [SWAGGER-INI] -->
+        <!-- Springdoc OpenAPI: generacion automatica de documentacion Swagger UI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+        <!-- [SWAGGER-FIN] -->
+
+        <!--  [HATEOAS-INI]  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+        <!--  [HATEOAS-FIN]  -->
+
+        <!-- Spring Kafka -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cl.sanrucho</groupId>
+            <artifactId>cl-sanrucho-common</artifactId>
+        </dependency>
+
+        <!-- [TEST-INI] -->
+        <!-- Dependencias de testing con JUnit, MockMvc, etc. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Generador de datos aleatorios para pruebas unitarias -->
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>2.2.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- [TEST-FIN] -->
+
+
     </dependencies>
 
     <!-- Empaquetado ejecutable con Spring Boot -->

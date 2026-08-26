@@ -1,15 +1,13 @@
 package cl.sanrucho.carrito.dto;
 
 import java.time.LocalDateTime;
+import org.springframework.hateoas.RepresentationModel;
 
 import cl.sanrucho.carrito.model.entity.Carrito.EstadoCarrito;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import lombok.Data;
 
-public class CarritoResponse {
+@Data
+public class CarritoResponse extends RepresentationModel<CarritoResponse>{
 
     private Integer id;
     private Integer usuarioId;

@@ -1,1 +1,1 @@
-mvn -f ms-api-gateway spring-boot:run
+mvn -f api-gateway spring-boot:run
