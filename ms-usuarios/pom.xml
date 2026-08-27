@@ -119,6 +119,12 @@
             <optional>true</optional>
         </dependency>
 
+        <!--Libreria Common-->
+        <dependency>
+            <groupId>cl.sanrucho</groupId>
+            <artifactId>cl-sanrucho-common</artifactId>
+        </dependency>
+
     </dependencies>
 
     <!-- Empaquetado ejecutable con Spring Boot -->
