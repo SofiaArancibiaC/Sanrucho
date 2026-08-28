@@ -17,13 +17,13 @@ CREATE TABLE usuarios (
     telefono VARCHAR(20),
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     estado VARCHAR(20) DEFAULT 'activo' CHECK (estado IN ('activo', 'inactivo', 'suspendido')),
-    personaje_favorito VARCHAR(50),
     notificaciones_email BOOLEAN DEFAULT TRUE,
     notificaciones_push BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(100),
     updated_by VARCHAR(100),
-    version INTEGER DEFAULT 1
+    version INTEGER DEFAULT 1,
+    rol VARCHAR(100) CHECK (rol IN ('ADMIN', 'CLIENTE', 'DUEÑO'))
 );
 
 CREATE TABLE direcciones (
@@ -59,15 +59,15 @@ CREATE INDEX idx_eventos_usuario_event_id ON eventos_usuario(event_id);
 CREATE INDEX idx_eventos_usuario_publicado ON eventos_usuario(publicado);
 
 -- Datos de prueba
-INSERT INTO usuarios (id, email, nombre, apellido, telefono, estado, personaje_favorito, created_by, version) VALUES
-(1, 'maria.gonzalez@email.com', 'María', 'González', '+56912345678', 'activo', 'Hello Kitty', 'sistema', 1),
-(2, 'carlos.silva@email.com', 'Carlos', 'Silva', '+56987654321', 'activo', 'Kuromi', 'sistema', 1),
-(3, 'ana.rodriguez@email.com', 'Ana', 'Rodríguez', '+56923456789', 'activo', 'My Melody', 'sistema', 1),
-(4, 'pedro.martinez@email.com', 'Pedro', 'Martínez', '+56934567890', 'activo', 'Cinnamoroll', 'sistema', 1),
-(5, 'lucia.fernandez@email.com', 'Lucía', 'Fernández', '+56945678901', 'activo', 'Pompompurin', 'sistema', 1),
-(6, 'diego.torres@email.com', 'Diego', 'Torres', '+56956789012', 'inactivo', 'Keroppi', 'sistema', 1),
-(7, 'sofia.morales@email.com', 'Sofía', 'Morales', '+56967890123', 'activo', 'Little Twin Stars', 'sistema', 1),
-(8, 'jorge.ramirez@email.com', 'Jorge', 'Ramírez', '+56978901234', 'activo', 'Badtz-Maru', 'sistema', 1);
+INSERT INTO usuarios (id, email, nombre, apellido, telefono, estado, created_by, version, rol) VALUES
+(1, 'maria.gonzalez@email.com', 'María', 'González', '+56912345678', 'activo', 'sistema', 1, 'CLIENTE'),
+(2, 'carlos.silva@email.com', 'Carlos', 'Silva', '+56987654321', 'activo', 'sistema', 1, 'CLIENTE'),
+(3, 'ana.rodriguez@email.com', 'Ana', 'Rodríguez', '+56923456789', 'activo', 'sistema', 1, 'CLIENTE'),
+(4, 'pedro.martinez@email.com', 'Pedro', 'Martínez', '+56934567890', 'activo', 'sistema', 1, 'CLIENTE'),
+(5, 'lucia.fernandez@email.com', 'Lucía', 'Fernández', '+56945678901', 'activo', 'sistema', 1, 'ADMIN'),
+(6, 'diego.torres@email.com', 'Diego', 'Torres', '+56956789012', 'inactivo', 'sistema', 1, 'ADMIN'),
+(7, 'sofia.morales@email.com', 'Sofía', 'Morales', '+56967890123', 'activo', 'sistema', 1, 'DUEÑO'),
+(8, 'jorge.ramirez@email.com', 'Jorge', 'Ramírez', '+56978901234', 'activo', 'sistema', 1, 'DUEÑO');
 
 INSERT INTO direcciones (id, usuario_id, tipo, direccion, ciudad, region, codigo_postal, es_principal, version) VALUES
 (1, 1, 'envio', 'Av. Providencia 1234, Depto 501', 'Santiago', 'Región Metropolitana', '7500000', TRUE, 1),
