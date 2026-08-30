@@ -1,2 +1,12 @@
+body {
+    background-color: rgb(67, 148, 121);
+    color: rgb(253, 221, 182);
+
+    .caacupe-one-regular {
+    font-family: "Caacupe One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    }
+}
 
 
