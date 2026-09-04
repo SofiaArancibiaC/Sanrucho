@@ -1,0 +1,28 @@
+body {
+    background-image: url('/static/img/Fondo-Sanrucho.png');
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% auto;   /* ancho completo, alto proporcional */
+    background-color: #ffffff;    /* continúa en blanco después de la imagen */
+    background-attachment: scroll; 
+    min-height: 100vh;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+}
+
+.logo {
+  height: 100px;       /* controla el tamaño según la altura, no el ancho */
+  width: auto;         /* mantiene la proporción */
+  object-fit: contain;
+  align-self: center;
+}
+
+.site-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
