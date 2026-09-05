@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Carrito - Sanrucho{% endblock %}
+
+{% block meta_desc %}Tu carrito de compras en Sanrucho: revisa los productos elegidos, ajusta cantidades y confirma tu pedido.{% endblock %}
+
+{% block extra_css %}
+<!--debo cambiar esta linea cuando hagamos el CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carrito.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <!-- Cabecera de la página -->
+        <div class="header">
+            <div>
+                <h1>Carrito de compras</h1>
+                <div class="subtitle">Revisa los productos elegidos y confirma tu pedido</div>
+            </div>
+            <span class="badge" id="resumen-articulos">0 artículos</span>
+        </div>
+
+        <div class="carrito-layout">
+            <!-- Listado de artículos -->
+            <section class="carrito-articulos">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="carrito-body">
+                            <tr class="loading-row"><td colspan="5">Cargando carrito...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mensaje cuando el carrito está vacío -->
+                <div class="sin-resultados" id="carrito-vacio" style="display: none;">
+                    <p>Tu carrito está vacío.</p>
+                    <a class="btn btn-accent" href="{{ url_for('index') }}">Ir a la tienda</a>
+                </div>
+            </section>
+
+            <!-- Resumen del pedido -->
+            <aside class="resumen">
+                <h2>Resumen del pedido</h2>
+                <div class="resumen-fila">
+                    <span>Subtotal</span>
+                    <span id="resumen-subtotal">$0,00</span>
+                </div>
+                <div class="resumen-fila">
+                    <span>Envío</span>
+                    <span id="resumen-envio">Gratis</span>
+                </div>
+                <hr>
+                <div class="resumen-fila resumen-total">
+                    <span>Total</span>
+                    <span id="resumen-total">$0,00</span>
+                </div>
+                <button class="btn btn-accent btn-block" id="btn-finalizar" onclick="finalizarCompra()">
+                    Finalizar compra
+                </button>
+                <a class="seguir-comprando" href="{{ url_for('index') }}">&larr; Seguir comprando</a>
+            </aside>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{{ url_for('static', filename='js/carrito.js') }}"></script>
+{% endblock %}

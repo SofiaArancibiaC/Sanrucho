@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Cómo crear tu cuenta y hacer tu primer pedido en Sanrucho - Blog{% endblock %}
+
+{% block meta_desc %}Guía rápida de Sanrucho: crea tu cuenta, navega el catálogo, arma tu carrito y completa tu primer pedido.{% endblock %}
+
+{% block extra_css %}
+<!--debo cambiar esta linea cuando hagamos el CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-detalle-2.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <article class="container blog-post py-5" style="max-width: 800px;">
+        <!--ver que imagen vamos a poner -->
+        <img src="{{ url_for('static', filename='img/blog/primer-pedido.svg') }}" class="img-fluid rounded mb-4" alt="Cómo crear tu cuenta y hacer tu primer pedido en Nexo Gaming">
+        <p class="text-muted small mb-1">04 de Septiembre, 2026</p>
+        <h1 class="mb-4">Cómo crear tu cuenta y hacer tu primer pedido en Sanrucho</h1>
+        <p>
+            Ya abrimos las puertas y queremos que tu primera experiencia sea excelente. En esta guía te
+            contamos paso a paso cómo crear tu cuenta, recorrer el catálogo y completar tu primer pedido
+            sin complicaciones.
+        </p>
+        <p>
+            Lo primero es <strong>crear tu cuenta</strong>: solo necesitas un email, un nombre de usuario
+            y una contraseña. En menos de un minuto ya formas parte de Sanrucho. Tu perfil guardará
+            tus datos de envío, tu historial de pedidos y tus favoritos, para que todo esté a un clic.
+        </p>
+        <p>
+            Después, recorre el <strong>catálogo</strong>: estará organizado por categorías — accesorios,
+            figuras, maquillaje, ropa y más — y cada producto tendrá una ficha completa con descripción
+            y precio. Usa el buscador o los filtros para llegar directo a lo que buscas.
+        </p>
+        <p>
+            Cuando encuentres un producto, <strong>añádelo al carrito</strong>. Lo mejor de todo: tu carrito
+            se guarda automáticamente aunque cierres el navegador, así puedes armar tu compra con calma y
+            volver cuando quieras.
+        </p>
+        <p>
+            El último paso es el <strong>checkout</strong>: confirma tus datos y el método de pago, y listo.
+            Recibirás la confirmación de tu pedido al instante y podrás seguir su estado desde tu perfil.
+            Si tienes dudas, nuestro equipo de soporte está a un mensaje de distancia.
+        </p>
+        <a href="#" id="volver-blog" class="btn btn-accent mt-3">&larr; Volver al Blog</a>
+    </article>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{{ url_for('static', filename='js/blog-detalle-2.js') }}"></script>
+{% endblock %}

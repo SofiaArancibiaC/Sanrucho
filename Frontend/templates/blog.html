@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - Sanrucho{% endblock %}
+
+{% block meta_desc %}Novedades, anuncios y guías de Sanrucho, la tienda online creada por y para la comunidad gamer.{% endblock %}
+
+{% block extra_css %}
+<!--debo cambiar esta linea cuando hagamos el CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <!-- Cabecera de la página -->
+        <div class="header">
+            <div>
+                <h1>Blog</h1>
+                <div class="subtitle">Novedades, anuncios y guías de Sanrucho</div>
+            </div>
+        </div>
+
+        <!-- Barra de herramientas -->
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" id="busqueda" placeholder="Buscar artículos..." oninput="filtrarArticulos()">
+            </div>
+            <span class="text-muted" id="contador">2 artículos</span>
+        </div>
+
+        <!-- Listado de artículos -->
+        <div class="cards-grid" id="lista-articulos">
+            <article class="post-card">
+                <img class="post-thumb" src="{{ url_for('static', filename='img/blog/apertura.svg') }}" alt="Sanrucho les da la bienvenida">
+                <div class="post-card-body">
+                    <span class="text-muted small">01 de Septiembre, 2026</span>
+                    <h2 class="post-card-title">Sanrucho les da la bienvenida</h2>
+                    <p class="post-card-excerpt">Después de meses de trabajo, hoy nace Sanrucho, una nueva tienda online pensada para la comodidad de nuestros clientes.</p>
+                    <a class="btn btn-accent btn-sm" href="{{ url_for('blog_detalle_1') }}">Leer más &rarr;</a>
+                </div>
+            </article>
+
+            <article class="post-card">
+                <img class="post-thumb" src="{{ url_for('static', filename='img/blog/primer-pedido.svg') }}" alt="Cómo crear tu cuenta y hacer tu primer pedido en Sanrucho">
+                <div class="post-card-body">
+                    <span class="text-muted small">04 de Septiembre, 2026</span>
+                    <h2 class="post-card-title">Cómo crear tu cuenta y hacer tu primer pedido en Sanrucho</h2>
+                    <p class="post-card-excerpt">Una guía paso a paso para crear tu cuenta, recorrer el catálogo y completar tu primer pedido sin complicaciones.</p>
+                    <a class="btn btn-accent btn-sm" href="{{ url_for('blog_detalle_2') }}">Leer más &rarr;</a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Mensaje cuando el buscador no encuentra nada -->
+        <div class="sin-resultados" id="sin-resultados" style="display: none;">
+            No se encontraron artículos para tu búsqueda.
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{{ url_for('static', filename='js/blog.js') }}"></script>
+{% endblock %}
