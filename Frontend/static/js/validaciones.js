@@ -1,5 +1,5 @@
 //----------------------Validación para inicio de sesión en index--------------------------//
-(function () {
+(function inicioSesion() {
         'use strict'
         // Obtener todos los formularios a los que queremos aplicar estilos de validación
         var forms = document.querySelectorAll('.needs-validation')

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
 </head>
 <body class="body-login">
+
     <div class="login-container">
         <a href="{{ url_for('inicio') }}">← Volver</a>
         <h2>Iniciar Sesión</h2>
@@ -18,10 +19,13 @@
 
             <label for="password">Contraseña</label>
             <input type="password" id="password" name="password" required placeholder="********">
+            <div class="invalid-feedback">Por favor, ingresa tu contraseña.</div>
 
             <button type="submit">Entrar</button>
         </form>
     </div>
+
+    
     <script src="/static/js/validaciones.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

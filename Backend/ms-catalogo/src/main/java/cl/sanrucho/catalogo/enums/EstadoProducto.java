@@ -1,5 +1,5 @@
-package cl.sanrucho.catalogo.enums;
+//package cl.sanrucho.catalogo.enums;
 
-public class Estado {
+//public class Estado {
 
-}
+//}

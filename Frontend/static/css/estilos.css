@@ -61,8 +61,8 @@ body {
 }
 
 .bienvenidos img{
-  max-width: 50%;
-  max-height: 50%;
+  max-width: 30%;
+  max-height: 30%;
   object-fit: contain;
 }
 
@@ -132,7 +132,7 @@ body {
   position: relative;
   text-align: center;
   margin-top: 20px;
-  color: rgb(63, 127, 245);
+  color: #eb4138;
   font-weight: bold;
   display: inline-block;
 }
@@ -145,14 +145,30 @@ body {
   color: white; 
 }
 /*---------------------------------------------------------------------------------------------- */
+.sesion{
+  align-items: center;
+  background-color: white;
+  border: 2px solid pink;
+  border-radius: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
 .container img{
   max-width: 200px;
 }
 
+.crear-cuenta{
+  text-align: center;
+  font-size: 25px;
+}
+
 .shadow-effect {
   border: none;
+  margin-top: 10px;
   color: white;
-  padding: 14px 28px;
+  padding: 10px 20px;
   cursor: pointer;
   border-radius: 15px;
   background-color: #eb4138; /* Color base del botón */
@@ -167,11 +183,9 @@ body {
 
 .shadow-effect h1 {
   font-weight: bolder;
+  font-size: 25px;
 }
 
-.crear-cuenta{
-  text-align: center;
-}
 
 /*-------------------------------------------------LOGIN-----------------------------------------------*/
 
