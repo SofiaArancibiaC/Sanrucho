@@ -70,3 +70,11 @@ body {
 .btn-1:focus-visible {
     outline-offset: 1px;
 }
+
+.cherry-bomb-one-regular {
+  font-family: "Cherry Bomb One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+}
+
