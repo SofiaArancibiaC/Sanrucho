@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_desc %}Panel de administración de Sanrucho{% endblock %}">
+    <title>{% block title %}Panel de Administración{% endblock %}</title>
+
+    <!-- Estilos base: compartidos por todas las páginas -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+
+    <!-- Bloque para que cada página agregue sus propios estilos -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- Barra superior compartida -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <a href="{{ url_for('inicio') }}">{% block brand %}Tienda Sanrucho{% endblock %}</a>
+        </div>
+        <nav class="topbar-nav">
+            {% block nav %}
+            <a href="{{ url_for('inicio') }}">Inicio</a>
+            {% endblock %}
+        </nav>
+        <div class="topbar-user">
+            {% block user_info %}Administrador{% endblock %}
+        </div>
+    </header>
+
+    <!-- Contenido principal de cada página -->
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Pie de página compartido -->
+    <footer class="footer">
+        <span>{% block footer_text %}Panel de administración · Tienda{% endblock %}</span>
+    </footer>
+
+    <!-- Modales: cada vista agrega aquí los suyos -->
+    {% block modals %}{% endblock %}
+
+    <!-- Toast de notificaciones (usado por mostrarToast() en base.js) -->
+    <div class="toast" id="toast"></div>
+
+    <!-- JS base: utilidades compartidas (mostrarToast, escaparHTML, fetchJSON...) -->
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+
+    <!-- Bloque para que cada página agregue su propio JS -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

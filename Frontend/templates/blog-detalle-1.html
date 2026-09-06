@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Sanrucho les da la bienvenida  - Blog{% endblock %}
+
+{% block meta_desc %}Sanrucho : conoce la nueva tienda online creada  para la comodidad de todos.{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <article class="container blog-post py-5" style="max-width: 800px;">
+        <img src="{{ url_for('static', filename='img/logo-sanrucho.png') }}" class="img-fluid rounded mb-4" alt="logo sanrucho">
+        <p class="text-muted small mb-1">05 de Septiembre, 2026</p>
+        <h1 class="mb-4">Bienvenidos a Sanrucho </h1>
+        <p>
+            Despues de meses de trabajo, hoy nace <strong>Sanrucho</strong>, una nueva tienda online
+            pensada por y para la comodidad de nuestros clientes. Nuestro objetivo es simple: ofrecer un catalogo
+            variado de figuras , productos , maquillaje , accesorios , con una experiencia de compra rapida, clara y facil.
+        </p>
+        <p>
+            Desde el primer momento contaras con un catalogo organizado por categorias, fichas de producto
+            con toda la informacion que necesitas, y un carrito de compras que recuerda tus productos
+            aunque cierres el navegador.
+        </p>
+        <p>
+            Este es solo el comienzo. En las proximas semanas seguiremos sumando promociones
+            y sorpresas que les encantara. Gracias por ser parte de este lanzamiento.
+        </p>
+        <a href="#" id="volver-blog" class="btn btn-accent mt-3">&larr; Volver al Blog</a>
+    </article>
+{% endblock %}
+

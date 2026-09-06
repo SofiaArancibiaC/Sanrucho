@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de Administración - Sanrucho{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <!-- Cabecera de la página -->
+        <div class="header">
+            <div>
+                <h1>Panel  Administrativo</h1>
+            </div>
+            <button class="btn btn-success" onclick="abrirModalNuevo()">+ Nuevo registro</button>
+        </div>
+
+        <!-- Indicadores -->
+        <div class="cards-grid">
+            <div class="card usuarios">
+                <div class="card-title">Usuarios</div>
+                <div class="card-value" data-card="usuarios">-</div>
+                <div class="card-desc">localhost:8082</div>
+            </div>
+            <div class="card productos">
+                <div class="card-title">Productos</div>
+                <div class="card-value" data-card="productos">-</div>
+                <div class="card-desc">localhost:8081</div>
+            </div>
+            <div class="card pedidos">
+                <div class="card-title">Pedidos</div>
+                <div class="card-value" data-card="pedidos">-</div>
+                <div class="card-desc">localhost:8083</div>
+            </div>
+            <div class="card catalogo">
+                <div class="card-title">Catálogo</div>
+                <div class="card-value" data-card="catalogo">-</div>
+                <div class="card-desc">localhost:8084</div>
+            </div>
+        </div>
+
+        <!-- Barra de herramientas -->
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" id="busqueda" placeholder="Buscar...">
+            </div>
+            <span class="text-muted">Sección: <strong id="seccion-actual">usuarios</strong></span>
+            <select id="selector-seccion" onchange="cambiarSeccion(this.value)">
+                <option value="usuarios">Usuarios</option>
+                <option value="productos">Productos</option>
+                <option value="pedidos">Pedidos</option>
+                <option value="catalogo">Catálogo</option>
+            </select>
+            <button class="btn btn-primary" onclick="cargarDatos()">&#8635; Recargar</button>
+        </div>
+
+        <!-- Tabla -->
+        <div class="table-wrapper">
+            <table>
+                <thead id="tabla-head"></thead>
+                <tbody id="tabla-body">
+                    <tr class="loading-row">
+                        <td colspan="6">Cargando datos...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modals %}
+    <!-- Modal Crear / Editar -->
+    <div class="modal-backdrop" id="modal-registro">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-titulo">Nuevo registro</h2>
+                <button class="modal-close" onclick="cerrarModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="campo-principal">Valor</label>
+                    <input type="text" id="campo-principal" placeholder="Escribe un valor...">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="guardarRegistro()">Guardar</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
