@@ -100,37 +100,48 @@
     </div>
   </div>
 
-  <div class="container my-5">
-  <!-- row activa el diseño horizontal -->
+<div class="container my-5">
     <div class="row align-items-center text-center">
-      <!-- Imagen izquierda (3 columnas) -->
+      <!-- Imagen izquierda (Gudetama) -->
       <div class="col-md-3 mb-3 mb-md-0">
         <img src="/static/img/index/gudetama1.png" alt="Izquierda" class="img-fluid rounded">
       </div>
 
-    <!-- Columna central: Botón y enlace vertical (6 columnas) -->
-    <div class="col-md-6 mb-3 mb-md-0 sesion">
-      <div class="mb-3">
-        <a href="{{ url_for('login') }}" class="btn shadow-effect">
-          <span class="h3 m-0 d-block">Inicia Sesión para comprar</span>
-        </a>
+      <!-- Columna central con id="bannerSesion" -->
+      <div class="col-md-6 mb-3 mb-md-0 sesion" id="bannerSesion">
+        
+        <!-- Contenido cuando NO ha iniciado sesión -->
+        <div id="bannerInvitado">
+          <div class="mb-3">
+            <a href="{{ url_for('login') }}" class="btn shadow-effect">
+              <span class="h3 m-0 d-block">Inicia Sesión para comprar</span>
+            </a>
+          </div>
+          <p class="crear-cuenta m-0">
+            <a href="{{ url_for('registro') }}" class="text-decoration-none">O crea una cuenta</a>
+          </p>
+        </div>
+
+        <!-- Contenido cuando SÍ ha iniciado sesión (inicialmente oculto) -->
+        <div id="bannerLogueado" style="display: none;">
+          <h2 class="mb-3">¡Qué bueno verte de nuevo, <span id="bannerNombreUsuario" class="fw-bold"></span>! ✨</h2>
+          <a href="/productos" class="btn btn-primary shadow-effect">
+            <span class="h4 m-0 d-block">Explorar Catálogo</span>
+          </a>
+        </div>
+
       </div>
-      
-      <p class="crear-cuenta m-0">
-        <a href="{{ url_for('registro') }}" class="text-decoration-none">O crea una cuenta</a>
-      </p>
-    </div>
 
-    <!-- Imagen derecha (3 columnas) -->
-    <div class="col-md-3">
-      <img src="/static/img/index/keroppi1.png" alt="Derecha" class="img-fluid rounded">
+      <!-- Imagen derecha (Keroppi) -->
+      <div class="col-md-3">
+        <img src="/static/img/index/keroppi1.png" alt="Derecha" class="img-fluid rounded">
+      </div>
     </div>
-
   </div>
-</div>
  
 
-  <script src="/static/js/validaciones.js"></script>
+  <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/validaciones.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

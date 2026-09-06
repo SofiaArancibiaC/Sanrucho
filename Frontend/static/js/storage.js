@@ -251,9 +251,38 @@ function formatearPrecio(valor) {
     return "$" + Number(valor).toLocaleString("es-CL");
 }
 
+function actualizarBannerIndex() {
+    const sesion = obtenerSesion();
+    const bannerInvitado = document.getElementById("bannerInvitado");
+    const bannerLogueado = document.getElementById("bannerLogueado");
+    const bannerNombreUsuario = document.getElementById("bannerNombreUsuario");
+
+    if (!bannerInvitado) return; // Si no estamos en el index, no hace nada
+
+    if (sesion) {
+        // Si hay sesión iniciada: ocultar botón de login y mostrar saludo
+        bannerInvitado.style.display = "none";
+        if (bannerLogueado) bannerLogueado.style.display = "block";
+        if (bannerNombreUsuario) bannerNombreUsuario.textContent = sesion.nombre;
+    } else {
+        // Si es invitado: mostrar botón de login
+        bannerInvitado.style.display = "block";
+        if (bannerLogueado) bannerLogueado.style.display = "none";
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     inicializarDatos();
     actualizarNavbar();
+    actualizarBadgeCarrito();
+    marcarEnlaceActivo();
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    inicializarDatos();
+    actualizarNavbar();
+    actualizarBannerIndex(); // <-- Agregar aquí
     actualizarBadgeCarrito();
     marcarEnlaceActivo();
 });

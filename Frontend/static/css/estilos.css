@@ -2,17 +2,13 @@ body {
     background-image: url('/static/img/Fondo-Sanrucho.png');
     background-repeat: no-repeat;
     background-position: top center;
-    background-size: 100% auto;   /* ancho completo, alto proporcional */
-    /*background-color: #fffdf5;     continúa en blanco después de la imagen */
+    background-size: 100% auto;   
     background-attachment: fixed; 
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 /*-----------------------------------------------------CONTACTO------------------------------------------------------------------------*/
 
-/* ==========================================================
-   ESTILOS GENERALES Y TIPOGRAFÍA
-   ========================================================== */
 body.contacto-body {
   font-family: 'Quicksand', sans-serif;
   background-color: #fff8fa;
@@ -22,9 +18,6 @@ body.contacto-body {
   overflow-x: hidden;
 }
 
-/* ==========================================================
-   SECCIÓN HERO / BANNER DE CONTACTO
-   ========================================================== */
 .hero-contacto {
   background: linear-gradient(180deg, #ffffff 0%, #fff0f5 100%);
   padding: 50px 0 45px;
@@ -37,7 +30,6 @@ body.contacto-body {
   z-index: 2;
 }
 
-/* Insignia superior tipo pastilla */
 .badge-sugerencia {
   display: inline-flex;
   align-items: center;
@@ -53,7 +45,6 @@ body.contacto-body {
   box-shadow: 0 4px 10px rgba(255, 101, 132, 0.1);
 }
 
-/* Título y descripción */
 .titulo-contacto {
   font-weight: 700;
   color: #3b82f6;
@@ -77,7 +68,6 @@ body.contacto-body {
   }
 }
 
-/* Contenedor e imagen */
 .mascota-wrapper {
   display: inline-block;
   padding: 15px;
@@ -144,7 +134,7 @@ body.contacto-body {
   margin-bottom: 6px;
 }
 
-/* Inputs y Textarea */
+/* Inputs */
 .form-control-custom {
   background-color: #fffbfc;
   border: 2px solid #ffd8e2;
@@ -166,7 +156,7 @@ body.contacto-body {
   color: #b5bdc9;
 }
 
-/* Botón de Enviar */
+/* Botón */
 .btn-enviar {
   background-color: #ff6584;
   color: #ffffff;
@@ -190,7 +180,7 @@ body.contacto-body {
   transform: translateY(0);
 }
 
-/*Validacion*/
+/*Validación*/
 .was-validated .form-control-custom:invalid {
   border-color: #ff476d;
   background-color: #fff5f7;
@@ -305,10 +295,10 @@ body.contacto-body {
 /*---------------------------------------------------------------------------------------------- */
 .sesion {
   background-color: #ffffff;
-  border: 1px solid #f8d7da; /* Rosa suave y sutil */
+  border: 1px solid #f8d7da; 
   border-radius: 24px;
-  padding: 40px 24px; /* Da respiro al contenido */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Sombra difusa moderna */
+  padding: 40px 24px; 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -321,7 +311,7 @@ body.contacto-body {
   background-color: #e63946;
   color: #ffffff !important;
   padding: 14px 28px;
-  border-radius: 50px; /* Bordes redondeados modernos tipo pill */
+  border-radius: 50px; 
   font-weight: 600;
   font-size: 1.1rem;
   letter-spacing: 0.3px;
@@ -332,7 +322,7 @@ body.contacto-body {
 
 .shadow-effect:hover {
   background-color: #d62828;
-  transform: translateY(-2px); /* Pequeña elevación */
+  transform: translateY(-2px); 
   box-shadow: 0 8px 22px rgba(230, 57, 70, 0.4);
 }
 
@@ -357,7 +347,7 @@ body.contacto-body {
   text-decoration: underline;
 }
 
-/* Ajuste e integración de las imágenes laterales */
+
 .col-md-3 img {
   max-width: 170px;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.06));
@@ -370,13 +360,6 @@ body.contacto-body {
 /*-------------------------------------------------LOGIN-----------------------------------------------*/
 
 .body-login {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-image: url('/static/img/Fondo-Sanrucho.png');
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: 100% auto;   /* ancho completo, alto proporcional */
-    background-color: #fffdf5;    /* continúa en blanco después de la imagen */
-    background-attachment: scroll;
     display: flex; 
     justify-content: center; 
     align-items: center; 
@@ -430,16 +413,16 @@ button:hover {
 
 .boton-volver {
     display: inline-block;
-    text-decoration: none; /* Le quita la línea subrayada al texto */
-    color: #007bff;        /* Color azul igual al de tu botón */
+    text-decoration: none; 
+    color: #007bff;        
     font-size: 14px;
     font-weight: bold;
-    margin-bottom: 15px;   /* Separa la flecha del título H2 */
-    transition: color 0.2s ease; /* Hace que el cambio de color sea suave */
+    margin-bottom: 15px;   
+    transition: color 0.2s ease; 
 }
 
 .boton-volver:hover {
-    color: #0056b3;        /* Se pone un azul más oscuro al pasar el mouse */
+    color: #0056b3;        
 }
 
 .body-login a {
@@ -449,11 +432,9 @@ button:hover {
 
 /*---------------------------------------------REGISTRO-------------------------------------------- */
 
-
-/* Ajustes específicos para el registro */
 .registro-container {
-    max-width: 420px; /* Un poco más ancho para albergar los nuevos campos */
-    margin: 40px 15px; /* Margen para pantallas pequeñas si el contenido supera 100vh */
+    max-width: 420px; 
+    margin: 40px 15px; 
 }
 
 .login-footer {
@@ -478,8 +459,7 @@ button:hover {
 .container img{
   max-width: 200px;
 }
-
-/* Tarjeta o panel lateral de filtros */
+/*----panel de filtros------ */
 .filter-card {
     background-color: #ffffff;
     border: 3px solid #ffccd9;
@@ -495,7 +475,7 @@ button:hover {
     margin-bottom: 15px;
 }
 
-/* Card individual del producto */
+/* ------ Card del producto -------*/
 .product-card {
     background-color: #ffffff;
     border: 2px solid #ffd8e2;
@@ -514,7 +494,7 @@ button:hover {
     box-shadow: 0 12px 25px rgba(255, 101, 132, 0.22) !important;
 }
 
-/* Contenedor de la imagen del producto */
+/* ------------Contenedor de la imagen---------- */
 .card-img-wrapper {
     height: 190px;
     background: linear-gradient(180deg, #ffffff 0%, #fff8fa 100%);
@@ -538,7 +518,7 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Información del producto (título, precio, categoría) */
+/* ------------------Información del producto------------ */
 .product-card .card-title {
     font-size: 1.1rem;
     font-weight: 700;
@@ -566,20 +546,20 @@ button:hover {
     width: fit-content;
 }
 
-/* Botón de acción dentro de la card (Añadir / Ver detalle) */
+/* Botón de acción dentro de la card  */
 .product-card .btn-product {
     background-color: #ff6584;
     color: #ffffff;
     font-weight: 600;
-    font-size: 0.85rem;           /* Texto un poco más fino y pequeño */
+    font-size: 0.85rem;           
     border: none;
     border-radius: 50px;
-    padding: 6px 16px;            /* Espaciado interno más balanceado */
+    padding: 6px 16px;            
     text-align: center;
     text-decoration: none;
-    display: inline-block;        /* Ya no ocupa el 100% del ancho */
-    width: auto;                  /* Se ajusta al tamaño de su texto */
-    align-self: center;           /* Se centra dentro del flexbox de la card */
+    display: inline-block;        
+    width: auto;                  
+    align-self: center;           
     margin-top: auto;
     box-shadow: 0 3px 8px rgba(255, 101, 132, 0.25);
     transition: all 0.25s ease;
@@ -590,4 +570,87 @@ button:hover {
     color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(255, 101, 132, 0.4);
+}
+
+/* -----------------------------------DETALLE PRODUCTO----------------------------------------------- */
+
+.product-detail-card {
+    background-color: #ffffff;
+    border: 3px solid #ffccd9;
+    border-radius: 24px;
+    box-shadow: 0 8px 30px rgba(255, 158, 187, 0.18);
+    overflow: hidden;
+    padding: 30px;
+}
+
+.detail-img-wrapper {
+    background: linear-gradient(180deg, #ffffff 0%, #fff8fa 100%);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 380px;
+    border: 1px solid #ffe3eb;
+}
+
+.detail-img-wrapper img {
+    max-height: 320px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.08));
+    transition: transform 0.3s ease;
+}
+
+.detail-img-wrapper img:hover {
+    transform: scale(1.03);
+}
+
+.detail-title {
+    color: #4f5366;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.detail-price {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #3b82f6;
+}
+
+.detail-desc {
+    color: #6c757d;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.input-qty {
+    max-width: 80px;
+    text-align: center;
+    border: 2px solid #ffd8e2;
+    font-weight: bold;
+    border-radius: 12px;
+}
+
+.input-qty:focus {
+    border-color: #ff6584;
+    box-shadow: 0 0 0 0.25rem rgba(255, 101, 132, 0.25);
+}
+
+.btn-add-cart {
+    background-color: #ff6584;
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 24px;
+    box-shadow: 0 4px 12px rgba(255, 101, 132, 0.3);
+    transition: all 0.25s ease;
+}
+
+.btn-add-cart:hover {
+    background-color: #f4476c;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 101, 132, 0.45);
 }

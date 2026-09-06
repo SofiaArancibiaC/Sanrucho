@@ -51,19 +51,32 @@ document.addEventListener("DOMContentLoaded", function () {
                     ${bajoStock ? '<span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">Últimas unidades</span>' : ''}
                     ${agotado ? '<span class="badge bg-danger position-absolute top-0 start-0 m-2">Agotado</span>' : ''}
                     
-                    <div class="card-img-wrapper bg-light text-center p-3">
-                        <img src="${prod.imagen}" class="card-img-top product-img" alt="${prod.nombre}" onerror="this.src='https://placehold.co/300x200?text=Sin+Imagen'">
-                    </div>
+                    <!-- Imagen con enlace al detalle -->
+                    <a href="/producto-detalle?codigo=${prod.codigo}" class="text-decoration-none">
+                        <div class="card-img-wrapper bg-light text-center p-3">
+                            <img src="${prod.imagen}" class="card-img-top product-img" alt="${prod.nombre}" onerror="this.src='https://placehold.co/300x200?text=Sin+Imagen'">
+                        </div>
+                    </a>
 
                     <div class="card-body d-flex flex-column">
-                        <span class="text-muted small text-uppercase fw-semibold">${obtenerNombreCategoria(prod.categoriaId)}</span>
-                        <h6 class="card-title fw-bold mt-1 mb-2 text-truncate" title="${prod.nombre}">${prod.nombre}</h6>
+                        <span class="card-category">${obtenerNombreCategoria(prod.categoriaId)}</span>
+                        
+                        <!-- Título con enlace al detalle -->
+                        <a href="/producto-detalle?codigo=${prod.codigo}" class="text-decoration-none text-reset">
+                            <h6 class="card-title fw-bold mt-1 mb-2 text-truncate" title="${prod.nombre}">${prod.nombre}</h6>
+                        </a>
+                        
                         <p class="card-text text-muted small flex-grow-1">${prod.descripcion}</p>
                         
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <span class="fs-5 fw-bold text-dark">${formatearPrecio(prod.precio)}</span>
+                        <div class="card-price mb-2">${formatearPrecio(prod.precio)}</div>
+
+                        <!-- Botones de acción: Ver detalle y Agregar -->
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="/producto-detalle?codigo=${prod.codigo}" class="btn btn-outline-secondary btn-sm rounded-pill flex-grow-1">
+                                Ver detalle
+                            </a>
                             <button 
-                                class="btn btn-sm btn-primary px-3 btn-agregar" 
+                                class="btn btn-sm btn-product px-3 btn-agregar" 
                                 data-codigo="${prod.codigo}" 
                                 ${agotado ? 'disabled' : ''}>
                                 ${agotado ? 'Sin stock' : 'Agregar'}
@@ -156,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
     btnLimpiar.addEventListener("click", function () {
         buscarInput.value = "";
         filtroCat.value = "0";
-        filtroPrecio.value = "50000";
+        filtroPrecio.value = "100000";
         aplicarFiltros();
     });
 });
