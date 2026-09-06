@@ -3,8 +3,7 @@
 {% block title %}Administración de Usuarios{% endblock %}
 
 {% block extra_css %}
-<!--esta linea la debo modificar despues ya que solo tendremos 1 CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin-usuarios.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -108,7 +107,7 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script src="{{ url_for('static', filename='js/admin-usuarios.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
 {% endblock %}
 
 

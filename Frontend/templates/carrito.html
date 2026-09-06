@@ -5,8 +5,7 @@
 {% block meta_desc %}Tu carrito de compras en Sanrucho: revisa los productos elegidos, ajusta cantidades y confirma tu pedido.{% endblock %}
 
 {% block extra_css %}
-<!--debo cambiar esta linea cuando hagamos el CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/carrito.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -73,5 +72,6 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script src="{{ url_for('static', filename='js/productos.js') }}"></script>
     <script src="{{ url_for('static', filename='js/carrito.js') }}"></script>
 {% endblock %}

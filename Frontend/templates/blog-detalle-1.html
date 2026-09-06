@@ -2,18 +2,17 @@
 
 {% block title %}Sanrucho les da la bienvenida  - Blog{% endblock %}
 
-{% block meta_desc %}Sanrucho les da la bienvenida: conoce la nueva tienda online creada  para la comodidad de todos.{% endblock %}
+{% block meta_desc %}Sanrucho : conoce la nueva tienda online creada  para la comodidad de todos.{% endblock %}
 
 {% block extra_css %}
-<!--debo cambiar esta linea cuando hagamos el CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-detalle-1.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
 {% endblock %}
 
 {% block content %}
     <div class="reading-progress" id="reading-progress"></div>
 
     <article class="container blog-post py-5" style="max-width: 800px;">
-        <img src="{{ url_for('static', filename='img/blog/apertura.svg') }}" class="img-fluid rounded mb-4" alt="Sanrucho les da la bienvenida">
+        <img src="{{ url_for('static', filename='img/logo-sanrucho.png') }}" class="img-fluid rounded mb-4" alt="logo sanrucho">
         <p class="text-muted small mb-1">05 de Septiembre, 2026</p>
         <h1 class="mb-4">Bienvenidos a Sanrucho </h1>
         <p>
@@ -34,6 +33,3 @@
     </article>
 {% endblock %}
 
-{% block extra_js %}
-    <script src="{{ url_for('static', filename='js/blog-detalle-1.js') }}"></script>
-{% endblock %}
