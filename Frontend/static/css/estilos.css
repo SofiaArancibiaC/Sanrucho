@@ -447,6 +447,32 @@ button:hover {
   margin-bottom: 10px;
 }
 
+/*---------------------------------------------REGISTRO-------------------------------------------- */
+
+
+/* Ajustes específicos para el registro */
+.registro-container {
+    max-width: 420px; /* Un poco más ancho para albergar los nuevos campos */
+    margin: 40px 15px; /* Margen para pantallas pequeñas si el contenido supera 100vh */
+}
+
+.login-footer {
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.login-footer a {
+    color: #419cfd;
+    font-weight: 600;
+}
+
+.login-footer a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
 /*---------------------------------------------PRODUCTOS (CATALOGO)-------------------------------------------- */
 
 .container img{
