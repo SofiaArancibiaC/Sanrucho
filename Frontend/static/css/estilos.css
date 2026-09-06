@@ -3,53 +3,211 @@ body {
     background-repeat: no-repeat;
     background-position: top center;
     background-size: 100% auto;   /* ancho completo, alto proporcional */
-    background-color: #fffdf5;    /* continúa en blanco después de la imagen */
-    background-attachment: scroll; 
-    min-height: 100vh;
+    /*background-color: #fffdf5;     continúa en blanco después de la imagen */
+    background-attachment: fixed; 
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 /*-----------------------------------------------------CONTACTO------------------------------------------------------------------------*/
 
-.problema-sugerencia {
-  width: auto;
-  padding: 40px;
+/* ==========================================================
+   ESTILOS GENERALES Y TIPOGRAFÍA
+   ========================================================== */
+body.contacto-body {
+  font-family: 'Quicksand', sans-serif;
+  background-color: #fff8fa;
+  color: #4f5366;
   margin: 0;
-  text-align: center;
-  background-color: white;
-  mask: linear-gradient(to bottom, black, 80%, transparent 100%);;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-.problema-sugerencia img {
-  max-width: 50%;
-  max-height: 50%;
-  object-fit: contain;
-}
-
-.problema-sugerencia h1{
-  margin: 0;
-  color: rgb(65, 132, 255);
-  font-size: 40px;
-}
-
-.contactanos{
-  position: absolute;
-  top: 300px;
-  right: 430px;
-  width: 600px;
-  height: auto;
-}
-
-.formulario-contacto{
+/* ==========================================================
+   SECCIÓN HERO / BANNER DE CONTACTO
+   ========================================================== */
+.hero-contacto {
+  background: linear-gradient(180deg, #ffffff 0%, #fff0f5 100%);
+  padding: 50px 0 45px;
+  border-bottom: 3px dashed #ffd5e1;
   position: relative;
-  width: 500px;
-  border: 10px solid rgb(255, 132, 152);
-  border-radius: 10px;
-  background-color: #ffffffab;
-  padding: 50px;
-  left: 430px;
-  top: 80px;
-  text-align: center;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Insignia superior tipo pastilla */
+.badge-sugerencia {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #ff6584;
+  border: 1.5px solid #ffccd9;
+  border-radius: 50px;
+  padding: 6px 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 10px rgba(255, 101, 132, 0.1);
+}
+
+/* Título y descripción */
+.titulo-contacto {
+  font-weight: 700;
+  color: #3b82f6;
+  font-size: clamp(1.85rem, 3.5vw, 2.6rem);
+  line-height: 1.25;
+  margin-bottom: 12px;
+  text-shadow: 1px 1px 0px rgba(59, 130, 246, 0.15);
+}
+
+.subtitulo-contacto {
+  font-size: 1.05rem;
+  color: #6b7280;
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+@media (min-width: 992px) {
+  .subtitulo-contacto {
+    margin: 0;
+  }
+}
+
+/* Contenedor e imagen */
+.mascota-wrapper {
+  display: inline-block;
+  padding: 15px;
+  border-radius: 50%;
+}
+
+.img-banner {
+  max-height: 220px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.35s ease;
+}
+
+.img-banner:hover {
+  transform: translateY(-6px) scale(1.03);
+}
+
+/* Columna izquierda */
+.contactanos-img {
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 18px rgba(255, 101, 132, 0.25));
+  transition: transform 0.3s ease;
+}
+
+.contactanos-img:hover {
+  transform: translateY(-4px);
+}
+
+.contacto-text {
+  font-size: 0.95rem;
+  color: #6c757d;
+  background-color: #ffffff;
+  border: 2px dashed #ffd5e1;
+  border-radius: 18px;
+  padding: 16px 22px;
+  margin-top: 14px;
+  display: inline-block;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.15);
+  line-height: 1.5;
+}
+
+.contacto-text span {
+  color: #3b82f6;
+  font-weight: 700;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+/* Columna derecha */
+.formulario-contacto {
+  background-color: #ffffff;
+  border: 4px solid #ff9ebb;
+  border-radius: 24px;
+  padding: 36px 30px;
+  box-shadow: 0 12px 30px rgba(255, 158, 187, 0.2) !important;
+}
+
+.form-label {
+  font-weight: 700;
+  color: #ff5277;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+/* Inputs y Textarea */
+.form-control-custom {
+  background-color: #fffbfc;
+  border: 2px solid #ffd8e2;
+  border-radius: 14px;
+  padding: 11px 16px;
+  font-size: 0.95rem;
+  color: #4b5563;
+  transition: all 0.25s ease;
+}
+
+.form-control-custom:focus {
+  background-color: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  outline: none;
+}
+
+.form-control-custom::placeholder {
+  color: #b5bdc9;
+}
+
+/* Botón de Enviar */
+.btn-enviar {
+  background-color: #ff6584;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 13px;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 6px 16px rgba(255, 101, 132, 0.35);
+  transition: all 0.25s ease;
+}
+
+.btn-enviar:hover {
+  background-color: #f4476c;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 101, 132, 0.45);
+}
+
+.btn-enviar:active {
+  transform: translateY(0);
+}
+
+/*Validacion*/
+.was-validated .form-control-custom:invalid {
+  border-color: #ff476d;
+  background-color: #fff5f7;
+  background-image: none;
+}
+
+.was-validated .form-control-custom:valid {
+  border-color: #48bb78;
+  background-color: #f7fdf9;
+  background-image: none;
+}
+
+.invalid-feedback {
+  color: #ff3b64;
+  font-weight: 700;
+  font-size: 0.82rem;
+  margin-top: 5px;
 }
 
 /*-----------------------------------------------------------INDEX-----------------------------------------------------------*/
@@ -145,48 +303,70 @@ body {
   color: white; 
 }
 /*---------------------------------------------------------------------------------------------- */
-.sesion{
+.sesion {
+  background-color: #ffffff;
+  border: 1px solid #f8d7da; /* Rosa suave y sutil */
+  border-radius: 24px;
+  padding: 40px 24px; /* Da respiro al contenido */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Sombra difusa moderna */
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  background-color: white;
-  border: 2px solid pink;
-  border-radius: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-  margin-top: 100px;
+  justify-content: center;
 }
 
-.container img{
-  max-width: 200px;
-}
-
-.crear-cuenta{
-  text-align: center;
-  font-size: 25px;
-}
-
+/* Botón principal */
 .shadow-effect {
-  border: none;
-  margin-top: 10px;
-  color: white;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 15px;
-  background-color: #eb4138; /* Color base del botón */
-  transition: box-shadow 0.3s ease-in-out; /* Transición suave del efecto de sombra */
+  display: inline-block;
+  background-color: #e63946;
+  color: #ffffff !important;
+  padding: 14px 28px;
+  border-radius: 50px; /* Bordes redondeados modernos tipo pill */
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+  transition: all 0.25s ease-in-out;
 }
 
 .shadow-effect:hover {
-  color: #ccc;
-  background-color: #c12d26;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.463); /* Aumenta el desplazamiento y la opacidad de la sombra */
+  background-color: #d62828;
+  transform: translateY(-2px); /* Pequeña elevación */
+  box-shadow: 0 8px 22px rgba(230, 57, 70, 0.4);
 }
 
-.shadow-effect h1 {
-  font-weight: bolder;
-  font-size: 25px;
+.shadow-effect:active {
+  transform: translateY(0);
 }
 
+/* Enlace secundario */
+.crear-cuenta {
+  margin-top: 14px;
+  font-size: 0.95rem;
+}
 
+.crear-cuenta a {
+  color: #6c757d;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.crear-cuenta a:hover {
+  color: #e63946;
+  text-decoration: underline;
+}
+
+/* Ajuste e integración de las imágenes laterales */
+.col-md-3 img {
+  max-width: 170px;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.06));
+  transition: transform 0.3s ease;
+}
+
+.col-md-3 img:hover {
+  transform: scale(1.04);
+}
 /*-------------------------------------------------LOGIN-----------------------------------------------*/
 
 .body-login {
@@ -265,4 +445,123 @@ button:hover {
 .body-login a {
   text-decoration: none;
   margin-bottom: 10px;
+}
+
+/*---------------------------------------------PRODUCTOS (CATALOGO)-------------------------------------------- */
+
+.container img{
+  max-width: 200px;
+}
+
+/* Tarjeta o panel lateral de filtros */
+.filter-card {
+    background-color: #ffffff;
+    border: 3px solid #ffccd9;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(255, 158, 187, 0.15);
+}
+
+.filter-card h4, 
+.filter-card h5 {
+    color: #ff5277;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* Card individual del producto */
+.product-card {
+    background-color: #ffffff;
+    border: 2px solid #ffd8e2;
+    border-radius: 20px;
+    padding: 16px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(255, 182, 193, 0.12);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    border-color: #ff9ebb;
+    box-shadow: 0 12px 25px rgba(255, 101, 132, 0.22) !important;
+}
+
+/* Contenedor de la imagen del producto */
+.card-img-wrapper {
+    height: 190px;
+    background: linear-gradient(180deg, #ffffff 0%, #fff8fa 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.product-img {
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.05));
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-img {
+    transform: scale(1.05);
+}
+
+/* Información del producto (título, precio, categoría) */
+.product-card .card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #4f5366;
+    margin-bottom: 6px;
+}
+
+.product-card .card-price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #3b82f6;
+    margin-bottom: 8px; 
+}
+
+.product-card .card-category {
+    display: inline-block;
+    background-color: #fff0f5;
+    color: #ff6584;
+    border: 1px solid #ffd5e1;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+/* Botón de acción dentro de la card (Añadir / Ver detalle) */
+.product-card .btn-product {
+    background-color: #ff6584;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.85rem;           /* Texto un poco más fino y pequeño */
+    border: none;
+    border-radius: 50px;
+    padding: 6px 16px;            /* Espaciado interno más balanceado */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;        /* Ya no ocupa el 100% del ancho */
+    width: auto;                  /* Se ajusta al tamaño de su texto */
+    align-self: center;           /* Se centra dentro del flexbox de la card */
+    margin-top: auto;
+    box-shadow: 0 3px 8px rgba(255, 101, 132, 0.25);
+    transition: all 0.25s ease;
+}
+
+.product-card .btn-product:hover {
+    background-color: #f4476c;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 101, 132, 0.4);
 }
