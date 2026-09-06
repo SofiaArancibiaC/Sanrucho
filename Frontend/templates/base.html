@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% block meta_desc %}Panel de administración de la tienda{% endblock %}">
+    <meta name="description" content="{% block meta_desc %}Panel de administración de Sanrucho{% endblock %}">
     <title>{% block title %}Panel de Administración{% endblock %}</title>
 
     <!-- Estilos base: compartidos por todas las páginas -->
@@ -17,11 +17,11 @@
     <!-- Barra superior compartida -->
     <header class="topbar">
         <div class="topbar-brand">
-            <a href="{{ url_for('index') }}">{% block brand %}Tienda Admin{% endblock %}</a>
+            <a href="{{ url_for('inicio') }}">{% block brand %}Tienda Sanrucho{% endblock %}</a>
         </div>
         <nav class="topbar-nav">
             {% block nav %}
-            <a href="{{ url_for('index') }}">Inicio</a>
+            <a href="{{ url_for('inicio') }}">Inicio</a>
             {% endblock %}
         </nav>
         <div class="topbar-user">
