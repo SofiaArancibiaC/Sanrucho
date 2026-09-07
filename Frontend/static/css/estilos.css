@@ -59,6 +59,11 @@ body {
   padding: 0;
 }
 
+/* Clase opcional si la vista "Nosotros" requiere fijar el fondo */
+body.bg-fixed {
+  background-attachment: fixed;
+}
+
 .main {
   min-height: 70vh;
   padding: 28px 0;
@@ -90,6 +95,7 @@ body {
 .btn-enviar,
 .btn-accent,
 .btn-add-cart,
+.btn-custom,
 .shadow-effect {
   background-color: var(--primary) !important;
   color: #ffffff !important;
@@ -107,6 +113,7 @@ body {
 .btn-enviar:hover,
 .btn-accent:hover,
 .btn-add-cart:hover,
+.btn-custom:hover,
 .shadow-effect:hover {
   background-color: var(--primary-hover) !important;
   transform: translateY(-2px);
@@ -116,6 +123,7 @@ body {
 .btn-enviar:active,
 .btn-accent:active,
 .btn-add-cart:active,
+.btn-custom:active,
 .shadow-effect:active {
   transform: translateY(0);
 }
@@ -396,8 +404,8 @@ body {
   object-fit: contain;
   padding: 12px;
 }
-/*---Flip Cards-------------------- */
 
+/* --- Flip Cards --- */
 .flip-card {
   background-color: transparent;
   width: 100%;
@@ -434,10 +442,8 @@ body {
   height: 100%;
   border-radius: 1rem;
   overflow: hidden;
-  /* Evita que se vea la cara trasera al girar */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* Fuerza aceleración por hardware para eliminar el parpadeo */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
@@ -446,7 +452,7 @@ body {
 .flip-card-front {
   background-color: #ffffff;
   z-index: 2;
-  transform: rotateY(0deg); /* Mantiene la cara anclada */
+  transform: rotateY(0deg);
 }
 
 .flip-card-front .card-body {
@@ -464,14 +470,12 @@ body {
   width: auto;
   height: auto;
   object-fit: contain;
-  /* Evita que el filtro rompa el contexto 3D */
   will-change: transform;
 }
 
 /* Cara Trasera */
 .flip-card-back {
   background-color: #ffffff;
-  /* Inicia rotada 180 grados en Y */
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
   padding: 1.5rem;
@@ -501,8 +505,6 @@ body {
   line-height: 1.4;
   margin: 0;
 }
-
-/* --------------------------------------------------------- */
 
 .algunos-productos {
   text-align: center;
@@ -904,7 +906,6 @@ body {
 /* ============================================================
    ADMINISTRACIÓN Y TABLAS
    ============================================================ */
-
 .modal-personalizado {
   display: none;
   position: fixed;
@@ -919,7 +920,7 @@ body {
 }
 
 .modal-personalizado.show {
-    display: flex !important;
+  display: flex !important;
 }
 
 .modal-personalizado .modal-contenido {
@@ -930,6 +931,7 @@ body {
   box-shadow: var(--shadow-lg);
   z-index: 1051;
 }
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -1013,13 +1015,9 @@ body {
 .badge-inactivo { background: #e6e6e6; color: #666; border-radius: var(--radius-pill); padding: 4px 10px; font-weight: 700; }
 .stock-critico { color: var(--color-error); font-weight: 700; }
 
-
-
 /* ============================================================
    ADMINISTRACIÓN: LAYOUT & SIDEBAR
    ============================================================ */
-
-/* Contenedor o wrapper general del panel admin */
 .admin-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
@@ -1034,7 +1032,6 @@ body {
   }
 }
 
-/* Sidebar Oscuro Sofisticado */
 .admin-sidebar {
   background: white;
   border: 1px solid white;
@@ -1045,7 +1042,6 @@ body {
   top: 24px;
 }
 
-/* Cabecera del sidebar */
 .admin-sidebar .admin-brand-header {
   padding-bottom: 14px;
   margin-bottom: 12px;
@@ -1063,7 +1059,6 @@ body {
   font-size: 0.85rem;
 }
 
-/* Separadores / Secciones */
 .admin-sidebar small.text-muted {
   color: black !important;
   letter-spacing: 0.9px;
@@ -1073,9 +1068,8 @@ body {
   display: block;
 }
 
-/* Links de navegación */
 .admin-sidebar .nav-link {
-  color: black!important;
+  color: black !important;
   font-size: 0.92rem;
   font-weight: 600;
   padding: 10px 14px;
@@ -1093,7 +1087,6 @@ body {
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-/* Hover de links */
 .admin-sidebar .nav-link:hover {
   background-color: rgba(255, 255, 255, 0.06);
   color: #e83860 !important;
@@ -1105,7 +1098,6 @@ body {
   transform: scale(1.1);
 }
 
-/* Link Activo */
 .admin-sidebar .nav-link.active {
   background: linear-gradient(135deg, rgba(255, 101, 132, 0.2) 0%, rgba(255, 101, 132, 0.08) 100%);
   color: #e83860 !important;
@@ -1117,7 +1109,6 @@ body {
   color: var(--primary) !important;
 }
 
-/* Pie del Sidebar */
 .admin-sidebar .admin-footer-nav {
   padding-top: 16px;
   margin-top: 16px;
@@ -1183,7 +1174,6 @@ body {
   }
 }
 
-/* Fila de Producto en la Tabla */
 .carrito-producto {
   display: flex;
   align-items: center;
@@ -1236,7 +1226,6 @@ body {
   font-size: 1.05rem;
 }
 
-/* Controles de Cantidad (+ / -) */
 .qty-control {
   display: inline-flex;
   align-items: center;
@@ -1279,7 +1268,6 @@ body {
   background: transparent;
 }
 
-/* Botón Eliminar fila */
 .btn-remove-item {
   background: transparent;
   border: none;
@@ -1297,7 +1285,6 @@ body {
   transform: scale(1.1);
 }
 
-/* Tarjeta Resumen */
 .resumen {
   background: var(--bg-card);
   border: 1.5px solid var(--border-pink-light);
@@ -1361,7 +1348,6 @@ body {
   transform: translateX(-3px);
 }
 
-/* Estado Vacío */
 .carrito-vacio-box {
   background: var(--bg-card);
   border: 2px dashed var(--border-pink);
@@ -1376,7 +1362,6 @@ body {
   gap: 14px;
 }
 
-/* Si usas una imagen o un ícono SVG */
 .carrito-vacio-box img,
 .carrito-vacio-box svg,
 .carrito-vacio-box i {
@@ -1396,7 +1381,6 @@ body {
   font-weight: 600;
 }
 
-/* Asegurar proporciones normales del botón */
 .carrito-vacio-box .btn-enviar {
   display: inline-flex !important;
   align-items: center;
@@ -1409,7 +1393,6 @@ body {
   font-size: 0.95rem;
   margin-top: 6px;
 }
-
 
 .carrito-articulos table img,
 .table-wrapper table img,
@@ -1431,6 +1414,7 @@ body {
 .table-wrapper td:first-child {
   max-width: 280px;
 }
+
 /* ============================================================
    SECCIÓN BLOG
    ============================================================ */
@@ -1439,7 +1423,6 @@ body {
   padding-bottom: 40px;
 }
 
-/* Cabecera del Blog con fondo sólido para aislar de la imagen de fondo */
 .blog-header {
   background-color: var(--bg-card);         
   border: 1.5px solid var(--border-pink-light);
@@ -1463,7 +1446,6 @@ body {
   margin-bottom: 0;
 }
 
-/* Barra de herramientas */
 .blog-toolbar {
   display: flex;
   justify-content: space-between;
@@ -1502,14 +1484,12 @@ body {
   font-size: 0.85rem;
 }
 
-/* Cuadrícula de artículos */
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 26px;
 }
 
-/* Tarjeta individual */
 .post-card {
   display: flex;
   flex-direction: column;
@@ -1579,7 +1559,6 @@ body {
   gap: 6px;
 }
 
-/* Caja de Sin Resultados */
 .sin-resultados-box {
   background: var(--bg-card);
   border: 2px dashed var(--border-pink);
@@ -1591,3 +1570,176 @@ body {
   margin-top: 20px;
 }
 
+/* ============================================================
+   SECCIÓN SOBRE NOSOTROS & CONTACTO AUXILIAR
+   ============================================================ */
+.sobre-nosotros {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 100px auto 0;
+  background: linear-gradient(145deg, #f2c467, #faf2a6);
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 1.5rem;
+}
+
+.sobre-nosotros h1 {
+  color: white;
+  font-weight: bold;
+  padding-top: 30px;
+}
+
+.sobre-nosotros p {
+  text-align: center;
+}
+
+.sobre-nosotros img {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sobre-nosotros img:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.avatar-circle {
+  background-color: #ffffff;
+  border: 8px solid #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.avatar-circle:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* Tamaños específicos de personajes */
+.maru {
+  width: 220px;
+}
+
+.gudetama {
+  width: 250px;
+}
+
+.gudetama img {
+  width: 50%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.cinna {
+  width: 220px;
+}
+
+.avatar-circle img {
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+}
+
+/* Paneles de dirección y contacto */
+.direccion-contacto aside {
+  display: flex;
+  gap: 16px;
+}
+
+.panel {
+  flex: 1;
+  padding: 16px;
+  background-color: #f4f4f5;
+  border-radius: 8px;
+}
+
+.info-card {
+  background-color: var(--bg-card);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.contact-card {
+  justify-content: space-between;
+}
+
+.card-header-custom {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background-color: #e7f1ff;
+  color: #0d6efd;
+  border-radius: 50%;
+  font-size: 1.1rem;
+}
+
+.card-title-custom {
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.card-description {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.social-wrapper {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #495057;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.social-link:hover {
+  color: var(--primary);
+}
+
+.social-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.card-action {
+  margin-top: 1rem;
+}
