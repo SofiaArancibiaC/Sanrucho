@@ -2,7 +2,7 @@
    Maneja las colecciones de localStorage (base de datos simulada),
    la sesion del usuario y la barra de navegacion comun a todas las paginas. */
 
-   const VERSION_DATOS = "v1.2";
+   const VERSION_DATOS = "v1.3";
 
 if (localStorage.getItem("sanrucho_version") !== VERSION_DATOS) {
     localStorage.clear();
@@ -124,9 +124,8 @@ function inicializarDatos() {
 
     if (!localStorage.getItem(SANRUCHO_KEYS.blog)) {
         guardarColeccion(SANRUCHO_KEYS.blog, [
-            { id: 1, titulo: "Nexo Gaming abre sus puertas", resumen: "Nace una nueva tienda online pensada por y para la comunidad gamer de Chile.", imagen: "blog/apertura.svg", fecha: "2026-08-01", slug: "detalle-1" },
-            { id: 2, titulo: "Los lanzamientos mas esperados del ano", resumen: "Repasamos los titulos que marcaran tendencia en los proximos meses.", imagen: "blog/lanzamientos.svg", fecha: "2026-08-10", slug: "detalle-2" },
-            { id: 3, titulo: "5 curiosidades del mundo gamer", resumen: "Datos curiosos que quizas no conocias sobre la industria de los videojuegos.", imagen: "blog/curiosidades.svg", fecha: "2026-08-20", slug: "detalle-1" }
+            { id: 1, titulo: "Sanrucho les da la bienvenida", resumen: "Nace una nueva tienda online pensada por y para la comunidad kawaii de Chile.", imagen: "blog/apertura.svg", fecha: "2026-09-01", slug: "detalle-1" },
+            { id: 2, titulo: "Como crear tu cuenta y hacer tu primer pedido", resumen: "Repasamos el paso a paso para armar tu carrito y completar tu primer pedido.", imagen: "blog/primer-pedido.svg", fecha: "2026-09-05", slug: "detalle-2" }
         ]);
     }
 
@@ -305,14 +304,6 @@ function generarSiguienteId(coleccion) {
     if (coleccion.length === 0) return 1;
     return Math.max(...coleccion.map(item => item.id)) + 1;
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    inicializarDatos();
-    actualizarNavbar();
-    actualizarBadgeCarrito();
-    marcarEnlaceActivo();
-});
-
 
 document.addEventListener("DOMContentLoaded", function () {
     inicializarDatos();

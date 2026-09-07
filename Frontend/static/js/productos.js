@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <!-- Imagen con enlace al detalle -->
                     <a href="/producto-detalle?codigo=${prod.codigo}" class="text-decoration-none">
                         <div class="card-img-wrapper bg-light text-center p-3">
-                            <img src="${prod.imagen}" class="card-img-top product-img" alt="${prod.nombre}" onerror="this.src='https://placehold.co/300x200?text=Sin+Imagen'">
+                            <img src="${rutaImagenProducto(prod)}" class="card-img-top product-img" alt="${prod.nombre}" onerror="this.src='https://placehold.co/300x200?text=Sin+Imagen'">
                         </div>
                     </a>
 

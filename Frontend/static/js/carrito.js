@@ -1,45 +1,22 @@
 // ============================================================
-// carrito.js — Lógica de la página Carrito de compras.
-// Utilidades de base.js: escaparHTML(), mostrarToast(), fetchJSON().
+// carrito.js — Logica de la pagina Carrito de compras.
+// Integrado con SANRUCHO_KEYS.carrito (storage.js) y el catalogo
+// real de productos (productos.js). Base.js aporta escaparHTML() y mostrarToast().
 // ============================================================
 
-// Productos de ejemplo mientras no exista un endpoint del carrito
-const PRODUCTOS_DE_PRUEBA = [
-    { id: 1,  nombre: 'Auriculares Sanrucho Pro',   categoria: 'Audio',  precio: 89.90 },
-    { id: 2,  nombre: 'Teclado mecánico RGB',   categoria: 'Accesorios', precio: 64.50 },
-    { id: 3,  nombre: 'Ratón inalámbrico',      categoria: 'Accesorios', precio: 39.90 },
-    { id: 4,  nombre: 'Pad de gran tamaño',     categoria: 'Accesorios', precio: 19.90 },
-];
-
-const STORAGE_KEY = 'sanrucho-carrito';
 let carrito = [];
 
-// ============================================================
-// Carga y persistencia del carrito (localStorage)
-// ============================================================
 function cargarCarrito() {
-    try {
-        carrito = JSON.parse(localStorage.getItem(STORAGE_KEY)) || inicializarDemo();
-    } catch (e) {
-        carrito = inicializarDemo();
-    }
-    guardarCarrito();
+    carrito = obtenerColeccion(SANRUCHO_KEYS.carrito) || [];
     return carrito;
 }
 
 function guardarCarrito() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(carrito));
+    guardarColeccion(SANRUCHO_KEYS.carrito, carrito);
 }
 
-function inicializarDemo() {
-    return [
-        { id: PRODUCTOS_DE_PRUEBA[0].id, cantidad: 1 },
-        { id: PRODUCTOS_DE_PRUEBA[2].id, cantidad: 2 },
-    ];
-}
-
-function buscarProducto(id) {
-    return PRODUCTOS_DE_PRUEBA.find(p => p.id === id);
+function buscarProducto(codigo) {
+    return obtenerProductos().find(function (p) { return p.codigo === codigo; });
 }
 
 // ============================================================
@@ -49,10 +26,10 @@ function renderCarrito() {
     const tbody = document.getElementById('carrito-body');
     const vacio = document.getElementById('carrito-vacio');
     const resumenArticulos = document.getElementById('resumen-articulos');
-    const tabla = document.querySelector('.carrito-articulos table');
 
     if (carrito.length === 0) {
         tbody.style.display = 'none';
+        tbody.innerHTML = '';
         vacio.style.display = 'flex';
         resumenArticulos.textContent = '0 artículos';
         vaciarResumen();
@@ -63,23 +40,25 @@ function renderCarrito() {
     vacio.style.display = 'none';
     resumenArticulos.textContent = contadorArticulos() + ' artículos';
 
-    tbody.innerHTML = carrito.map((item) => {
-        const p = buscarProducto(item.id);
+    tbody.innerHTML = carrito.map(function (item) {
+        const p = buscarProducto(item.codigo);
+        if (!p) return '';
         const subtotal = p.precio * item.cantidad;
         return '<tr>' +
             '<td><div class="carrito-producto">' +
-                '<div><div class="nombre">' + escaparHTML(p.nombre) + '</div>' +
-                '<div class="categoria">' + escaparHTML(p.categoria) + '</div></div>' +
+            '<img src="' + rutaImagenProducto(p) + '" alt="' + escaparHTML(p.nombre) + '">' +
+            '<div><div class="nombre">' + escaparHTML(p.nombre) + '</div>' +
+            '<div class="categoria">' + escaparHTML(obtenerNombreCategoria(p.categoriaId)) + '</div></div>' +
             '</div></td>' +
-            '<td>$' + formatearPrecio(p.precio) + '</td>' +
+            '<td>' + formatearPrecio(p.precio) + '</td>' +
             '<td><div class="qty-control">' +
-                '<button onclick="cambiarCantidad(' + p.id + ', -1)">-</button>' +
-                '<span class="qty-valor">' + item.cantidad + '</span>' +
-                '<button onclick="cambiarCantidad(' + p.id + ', 1)">+</button>' +
+            '<button onclick="cambiarCantidad(\'' + p.codigo + '\', -1)">-</button>' +
+            '<span class="qty-valor">' + item.cantidad + '</span>' +
+            '<button onclick="cambiarCantidad(\'' + p.codigo + '\', 1)">+</button>' +
             '</div></td>' +
-            '<td>$' + formatearPrecio(subtotal) + '</td>' +
-            '<td><button class="btn btn-danger btn-sm" onclick="eliminarArticulo(' + p.id + ')">Quitar</button></td>' +
-        '</tr>';
+            '<td>' + formatearPrecio(subtotal) + '</td>' +
+            '<td><button class="btn btn-danger btn-sm" onclick="eliminarArticulo(\'' + p.codigo + '\')">Quitar</button></td>' +
+            '</tr>';
     }).join('');
 
     actualizarResumen();
@@ -88,23 +67,33 @@ function renderCarrito() {
 // ============================================================
 // Operaciones sobre el carrito
 // ============================================================
-function cambiarCantidad(id, delta) {
-    const item = carrito.find(i => i.id === id);
+function cambiarCantidad(codigo, delta) {
+    const item = carrito.find(function (i) { return i.codigo === codigo; });
     if (!item) return;
-    item.cantidad += delta;
-    if (item.cantidad <= 0) {
-        eliminarArticulo(id);
+    const p = buscarProducto(codigo);
+
+    const nuevaCantidad = item.cantidad + delta;
+    if (nuevaCantidad <= 0) {
+        eliminarArticulo(codigo);
         return;
     }
+    if (p && nuevaCantidad > p.stock) {
+        mostrarToast('No hay más stock disponible', 'error');
+        return;
+    }
+
+    item.cantidad = nuevaCantidad;
     guardarCarrito();
     renderCarrito();
+    actualizarBadgeCarrito();
     mostrarToast('Cantidad actualizada', 'info');
 }
 
-function eliminarArticulo(id) {
-    carrito = carrito.filter(i => i.id !== id);
+function eliminarArticulo(codigo) {
+    carrito = carrito.filter(function (i) { return i.codigo !== codigo; });
     guardarCarrito();
     renderCarrito();
+    actualizarBadgeCarrito();
     mostrarToast('Artículo eliminado del carrito', 'info');
 }
 
@@ -112,34 +101,30 @@ function eliminarArticulo(id) {
 // Resumen del pedido
 // ============================================================
 function contadorArticulos() {
-    return carrito.reduce((total, i) => total + i.cantidad, 0);
+    return carrito.reduce(function (total, i) { return total + i.cantidad; }, 0);
 }
 
 function subtotalTotal() {
-    return carrito.reduce((total, i) => {
-        const p = buscarProducto(i.id);
+    return carrito.reduce(function (total, i) {
+        const p = buscarProducto(i.codigo);
         return total + (p ? p.precio * i.cantidad : 0);
     }, 0);
 }
 
 function vaciarResumen() {
-    document.getElementById('resumen-subtotal').textContent = '$0,00';
+    document.getElementById('resumen-subtotal').textContent = formatearPrecio(0);
     document.getElementById('resumen-envio').textContent = 'Gratis';
-    document.getElementById('resumen-total').textContent = '$0,00';
+    document.getElementById('resumen-total').textContent = formatearPrecio(0);
 }
 
 function actualizarResumen() {
     const sub = subtotalTotal();
-    const envio = sub >= 50 || sub === 0 ? 0 : 6.90;
-    document.getElementById('resumen-subtotal').textContent = '$' + formatearPrecio(sub);
+    const envio = sub === 0 || sub >= 30000 ? 0 : 3990;
+    document.getElementById('resumen-subtotal').textContent = formatearPrecio(sub);
     document.getElementById('resumen-envio').textContent =
-        envio === 0 ? 'Gratis' : '$' + formatearPrecio(envio);
+        envio === 0 ? 'Gratis' : formatearPrecio(envio);
     document.getElementById('resumen-total').textContent =
-        '$' + formatearPrecio(sub + envio);
-}
-
-function formatearPrecio(valor) {
-    return valor.toFixed(2).replace('.', ',');
+        formatearPrecio(sub + envio);
 }
 
 // ============================================================
@@ -150,12 +135,18 @@ function finalizarCompra() {
         mostrarToast('Tu carrito está vacío', 'error');
         return;
     }
+
+    const total = subtotalTotal();
+    mostrarToast('¡Pedido enviado! Total: ' + formatearPrecio(total), 'success');
+
+    carrito = [];
     guardarCarrito();
-    mostrarToast('Pedido enviado (demo): total $' + formatearPrecio(subtotalTotal()), 'success');
+    actualizarBadgeCarrito();
+    setTimeout(renderCarrito, 350);
 }
 
 // ============================================================
-// Inicialización
+// Inicializacion
 // ============================================================
 document.addEventListener('DOMContentLoaded', function () {
     cargarCarrito();

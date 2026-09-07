@@ -41,7 +41,19 @@
             Recibirás la confirmación de tu pedido al instante y podrás seguir su estado desde tu perfil.
             Si tienes dudas, nuestro equipo de soporte está a un mensaje de distancia.
         </p>
-        <a href="#" id="volver-blog" class="btn btn-accent mt-3">&larr; Volver al Blog</a>
+        <a href="{{ url_for('blog') }}" id="volver-blog" class="btn btn-accent mt-3">&larr; Volver al Blog</a>
     </article>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        document.addEventListener('scroll', function () {
+            const barra = document.getElementById('reading-progress');
+            if (!barra) return;
+            const altoTotal = document.documentElement.scrollHeight - window.innerHeight;
+            const progreso = altoTotal <= 0 ? 100 : Math.round((window.scrollY / altoTotal) * 100);
+            barra.style.width = progreso + '%';
+        });
+    </script>
 {% endblock %}
 
