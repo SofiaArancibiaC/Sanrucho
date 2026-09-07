@@ -2,18 +2,7 @@
    Maneja las colecciones de localStorage (base de datos simulada),
    la sesion del usuario y la barra de navegacion comun a todas las paginas. */
 
-const VERSION_DATOS = "v1.2";
-
-if (localStorage.getItem("sanrucho_version") !== VERSION_DATOS) {
-    const sesionRespaldada = localStorage.getItem("sanrucho_sesion"); // Guarda la sesión actual si existe
-    localStorage.clear();
-    localStorage.setItem("sanrucho_version", VERSION_DATOS);
-    if (sesionRespaldada) {
-        localStorage.setItem("sanrucho_sesion", sesionRespaldada); // Restaura la sesión
-    }
-    inicializarDatos();
-}
-
+const VERSION_DATOS = "v1.3";
 
 const SANRUCHO_KEYS = {
     usuarios: "sanrucho_usuarios",
@@ -28,6 +17,16 @@ const SANRUCHO_KEYS = {
     resenas: "sanrucho_resenas", 
     sesion: "sanrucho_sesion"
 };
+
+if (localStorage.getItem("sanrucho_version") !== VERSION_DATOS) {
+    const sesionRespaldada = localStorage.getItem("sanrucho_sesion"); // Guarda la sesión actual si existe
+    localStorage.clear();
+    localStorage.setItem("sanrucho_version", VERSION_DATOS);
+    if (sesionRespaldada) {
+        localStorage.setItem("sanrucho_sesion", sesionRespaldada); // Restaura la sesión
+    }
+    inicializarDatos();
+}
 
 function obtenerColeccion(clave) {
     return JSON.parse(localStorage.getItem(clave)) || [];
@@ -84,7 +83,7 @@ function inicializarDatos() {
         guardarColeccion(SANRUCHO_KEYS.usuarios, [
             {
                 run: "123456785", nombre: "Dueño", apellidos: "Sanrucho",
-                correo: "dueño@gmail.com", password: "dueño123",
+                correo: "dueno@gmail.com", password: "dueno123",
                 fechaNacimiento: "1990-01-01", rolId: 1,
                 regionId: 1, comunaId: 1, direccion: "Av. Principal 123",
                 estado: "Activo"
