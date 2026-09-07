@@ -2,11 +2,15 @@
    Maneja las colecciones de localStorage (base de datos simulada),
    la sesion del usuario y la barra de navegacion comun a todas las paginas. */
 
-   const VERSION_DATOS = "v1.3";
+const VERSION_DATOS = "v1.2";
 
 if (localStorage.getItem("sanrucho_version") !== VERSION_DATOS) {
+    const sesionRespaldada = localStorage.getItem("sanrucho_sesion"); // Guarda la sesión actual si existe
     localStorage.clear();
     localStorage.setItem("sanrucho_version", VERSION_DATOS);
+    if (sesionRespaldada) {
+        localStorage.setItem("sanrucho_sesion", sesionRespaldada); // Restaura la sesión
+    }
     inicializarDatos();
 }
 
@@ -190,12 +194,21 @@ function obtenerNombreRol(rolId) {
 /* Protege paginas administrativas segun el rol permitido. */
 function protegerPaginaAdmin(rolesPermitidos) {
     const sesion = obtenerSesion();
-    if (!sesion || rolesPermitidos.indexOf(sesion.rolId) === -1) {
+    
+    // Mapear rol en texto si viniera de backend
+    let rolId = sesion ? sesion.rolId : null;
+    if (sesion && !rolId && sesion.rol) {
+        if (sesion.rol === 'DUEÑO') rolId = 1;
+        else if (sesion.rol === 'ADMIN') rolId = 2;
+        else if (sesion.rol === 'CLIENTE') rolId = 3;
+    }
+
+    if (!sesion || rolesPermitidos.indexOf(rolId) === -1) {
         Swal.fire({
             title: "Acceso restringido",
-            text: "Debes iniciar sesion con una cuenta autorizada para ver esta pagina.",
+            text: "Debes iniciar sesión con una cuenta autorizada para ver esta página.",
             icon: "warning",
-            confirmButtonText: "Ir a Iniciar sesion"
+            confirmButtonText: "Ir a Iniciar sesión"
         }).then(function () {
             window.location.href = "/login";
         });
@@ -216,24 +229,37 @@ function actualizarNavbar() {
 
     if (!navInvitado || !navUsuario) return;
 
-    if (sesion) {
-        navInvitado.style.display = "none";
-        navUsuario.style.display = "block";
-        if (navUsuarioNombre) navUsuarioNombre.textContent = sesion.nombre;
-        if (navAdminItem && (sesion.rolId === 1 || sesion.rolId === 2)) {
-            navAdminItem.style.display = "block";
+    // Se verifica que exista sesion y que tenga al menos un nombre o correo válido
+    if (sesion && (sesion.nombre || sesion.correo || sesion.run)) {
+        // 1. Ocultar bloque invitado completamente
+        navInvitado.style.setProperty("display", "none", "important");
+
+        // 2. Mostrar bloque usuario
+        navUsuario.style.setProperty("display", "inline-flex", "important");
+        if (navUsuarioNombre) {
+            navUsuarioNombre.textContent = sesion.nombre || "Cliente";
+        }
+
+        // 3. Control de rol: Solo Dueño (1) y Admin (2) ven 'Panel Admin'
+        if (navAdminItem) {
+            const esAdminODueno = Number(sesion.rolId) === 1 || Number(sesion.rolId === 2) || sesion.rol === 'ADMIN' || sesion.rol === 'DUEÑO';
+            navAdminItem.style.display = esAdminODueno ? "inline-block" : "none";
         }
     } else {
-        navInvitado.style.display = "flex";
-        navUsuario.style.display = "none";
-        if (navAdminItem) navAdminItem.style.display = "none";
+        // Sin sesión: Mostrar invitado, ocultar usuario y admin
+        navInvitado.style.setProperty("display", "inline-flex", "important");
+        navUsuario.style.setProperty("display", "none", "important");
+
+        if (navAdminItem) {
+            navAdminItem.style.display = "none";
+        }
     }
 
     if (btnCerrarSesion) {
-        btnCerrarSesion.addEventListener("click", function (evento) {
+        btnCerrarSesion.onclick = function (evento) {
             evento.preventDefault();
             cerrarSesion();
-        });
+        };
     }
 }
 

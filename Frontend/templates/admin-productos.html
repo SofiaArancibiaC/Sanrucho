@@ -1,43 +1,67 @@
 {% extends "base.html" %}
-{% block title %}Productos - Administracion{% endblock %}
+{% block title %}Productos - Administración{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+{% endblock %}
 
 {% block content %}
+<!-- Cabecera en admin-productos.html -->
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 pb-2 border-bottom">
+    <h1 class="fw-bold m-0" style="color: var(--primary);">Productos</h1>
+    <a href="{{ url_for('admin_producto_form') }}" id="btnNuevoProducto" class="btn-accent text-decoration-none">
+        <i class="bi bi-plus-lg"></i> + Nuevo producto
+    </a>
+</div>
 <div class="container-fluid">
     <div class="row">
+        <!-- Sidebar lateral -->
         <div class="col-lg-3 col-xl-2 d-none d-lg-block px-0">
             {% include "_admin-sidebar.html" %}
         </div>
+
+        <!-- Botón para móvil -->
         <div class="col-12 d-lg-none px-3 pt-3">
-            <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
-                <i class="bi bi-list"></i> Menu administrativo
+            <button class="btn btn-outline-accent" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
+                <i class="bi bi-list"></i> Menú administrativo
             </button>
         </div>
+
+        <!-- Contenido principal -->
         <div class="col-lg-9 col-xl-10 p-4">
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-                <h1 class="section-title mb-0">Productos</h1>
-                <a href="{{ url_for('admin_producto_form') }}" id="btnNuevoProducto" class="btn btn-accent"><i class="bi bi-plus-lg"></i> Nuevo producto</a>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 pb-2 border-bottom">
+                <h1 class="fw-bold m-0" style="color: var(--primary);">Productos</h1>
+                <a href="{{ url_for('admin_producto_form') }}" id="btnNuevoProducto" class="btn-accent text-decoration-none">
+                    <i class="bi bi-plus-lg"></i> Nuevo producto
+                </a>
             </div>
 
-            <div class="table-responsive bg-nexo-panel rounded p-3">
-                <table id="tablaProductos" class="table table-dark table-hover align-middle w-100">
+            <!-- Contenedor adaptado a estilos.css -->
+            <div class="table-wrapper">
+                <table id="tablaProductos">
                     <thead>
                         <tr>
-                            <th>Codigo</th>
+                            <th>Código</th>
                             <th>Imagen</th>
                             <th>Nombre</th>
-                            <th>Categoria</th>
+                            <th>Categoría</th>
                             <th>Precio</th>
                             <th>Stock</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="cuerpoTablaProductos"></tbody>
+                    <tbody id="cuerpoTablaProductos">
+                        <tr>
+                            <td colspan="8" class="text-center py-4 text-muted">Cargando productos...</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
 {% include "_admin-offcanvas.html" %}
 {% endblock %}
 

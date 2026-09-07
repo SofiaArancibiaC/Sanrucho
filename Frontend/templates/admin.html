@@ -7,85 +7,96 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <!-- Cabecera de la página -->
-        <div class="header">
-            <div>
-                <h1>Panel  Administrativo</h1>
-            </div>
-            <button class="btn btn-success" onclick="abrirModalNuevo()">+ Nuevo registro</button>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar lateral para escritorio -->
+        <div class="col-lg-3 col-xl-2 d-none d-lg-block px-0">
+            {% include "_admin-sidebar.html" %}
         </div>
 
-        <!-- Indicadores -->
-        <div class="cards-grid">
-            <div class="card usuarios">
-                <div class="card-title">Usuarios</div>
-                <div class="card-value" data-card="usuarios">-</div>
-                <div class="card-desc">Usuarios registrados</div>
-            </div>
-            <div class="card productos">
-                <div class="card-title">Productos</div>
-                <div class="card-value" data-card="productos">-</div>
-                <div class="card-desc">Productos en catálogo</div>
-            </div>
-            <div class="card pedidos">
-                <div class="card-title">Pedidos</div>
-                <div class="card-value" data-card="pedidos">-</div>
-                <div class="card-desc">Pedidos (próximamente)</div>
-            </div>
-            <div class="card catalogo">
-                <div class="card-title">Catálogo</div>
-                <div class="card-value" data-card="catalogo">-</div>
-                <div class="card-desc">Categorías</div>
-            </div>
+        <!-- Botón para abrir el menú en dispositivos móviles -->
+        <div class="col-12 d-lg-none px-3 pt-3">
+            <button class="btn btn-outline-accent" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
+                <i class="bi bi-list"></i> Menú administrativo
+            </button>
         </div>
 
-        <!-- Barra de herramientas -->
-        <div class="toolbar">
-            <div class="search-box">
-                <input type="text" id="busqueda" placeholder="Buscar...">
+        <!-- Contenido principal del panel -->
+        <div class="col-lg-9 col-xl-10 p-4">
+            <!-- Cabecera de la página -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 pb-2 border-bottom">
+                <h1 class="fw-bold m-0" style="color: var(--primary);">Panel Administrativo</h1>
+                <button class="btn-accent" id="btnNuevoRegistro" onclick="abrirModalNuevo()">+ Nuevo registro</button>
             </div>
-            <span class="text-muted">Sección: <strong id="seccion-actual">usuarios</strong></span>
-            <select id="selector-seccion" onchange="cambiarSeccion(this.value)">
-                <option value="usuarios">Usuarios</option>
-                <option value="productos">Productos</option>
-                <option value="pedidos">Pedidos</option>
-                <option value="catalogo">Catálogo</option>
-            </select>
-            <button class="btn btn-primary" onclick="cargarDatos()">&#8635; Recargar</button>
-        </div>
 
-        <!-- Tabla -->
-        <div class="table-wrapper">
-            <table>
-                <thead id="tabla-head"></thead>
-                <tbody id="tabla-body">
-                    <tr class="loading-row">
-                        <td colspan="6">Cargando datos...</td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Indicadores (KPIs) -->
+            <div class="cards-grid">
+                <div class="card kpi-card">
+                    <div class="card-title">Usuarios</div>
+                    <div class="card-value" data-card="usuarios">-</div>
+                    <div class="card-desc">Usuarios registrados</div>
+                </div>
+                <div class="card kpi-card">
+                    <div class="card-title">Productos</div>
+                    <div class="card-value" data-card="productos">-</div>
+                    <div class="card-desc">Productos en catálogo</div>
+                </div>
+                <div class="card kpi-card">
+                    <div class="card-title">Pedidos</div>
+                    <div class="card-value" data-card="pedidos">-</div>
+                    <div class="card-desc">Pedidos registrados</div>
+                </div>
+                <div class="card kpi-card">
+                    <div class="card-title">Catálogo</div>
+                    <div class="card-value" data-card="catalogo">-</div>
+                    <div class="card-desc">Categorías activas</div>
+                </div>
+            </div>
+
+            <!-- Barra de herramientas limpia (sin selector de dropdown) -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                <div class="flex-grow-1" style="max-width: 400px;">
+                    <input type="text" id="busqueda" class="form-control-custom" placeholder="Buscar registros...">
+                </div>
+                <button class="btn btn-outline-accent" onclick="cargarDatos()">&#8635; Recargar</button>
+            </div>
+
+            <!-- Tabla adaptada a estilos.css -->
+            <div class="table-wrapper">
+                <table>
+                    <thead id="tabla-head"></thead>
+                    <tbody id="tabla-body">
+                        <tr class="loading-row">
+                            <td colspan="6" class="text-center py-4 text-muted">Cargando datos...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- Offcanvas para móvil -->
+{% include "_admin-offcanvas.html" %}
 {% endblock %}
 
 {% block modals %}
     <!-- Modal Crear / Editar -->
-    <div class="modal-backdrop" id="modal-registro">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 id="modal-titulo">Nuevo registro</h2>
-                <button class="modal-close" onclick="cerrarModal()">&times;</button>
+    <div class="modal-personalizado" id="modal-registro">
+        <div class="modal-contenido card p-4">
+            <div class="modal-header d-flex justify-content-between align-items-center mb-3">
+                <h3 id="modal-titulo" class="card-title m-0">Nuevo registro</h3>
+                <button class="btn-close" onclick="cerrarModal()"></button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="campo-principal">Valor</label>
-                    <input type="text" id="campo-principal" placeholder="Escribe un valor...">
+                <div class="form-group mb-3">
+                    <label for="campo-principal" class="form-label">Valor</label>
+                    <input type="text" id="campo-principal" class="form-control-custom" placeholder="Escribe un valor...">
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
-                <button class="btn btn-primary" onclick="guardarRegistro()">Guardar</button>
+            <div class="modal-footer d-flex justify-content-end gap-2 mt-3">
+                <button class="btn btn-outline-accent" onclick="cerrarModal()">Cancelar</button>
+                <button class="btn-accent" onclick="guardarRegistro()">Guardar</button>
             </div>
         </div>
     </div>
@@ -93,4 +104,5 @@
 
 {% block extra_js %}
     <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
 {% endblock %}

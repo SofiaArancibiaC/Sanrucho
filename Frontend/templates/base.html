@@ -22,19 +22,55 @@
 <body>
 
     <!-- Barra superior compartida -->
-    <header class="topbar">
-        <div class="topbar-brand">
-            <a href="{{ url_for('inicio') }}">{% block brand %}Tienda Sanrucho{% endblock %}</a>
+    <!-- Barra superior compartida -->
+<!-- Barra superior compartida -->
+<!-- Barra superior compartida -->
+<header class="topbar">
+    <div class="topbar-brand d-flex align-items-center">
+        <!-- Solo la imagen del logo -->
+        <a href="{{ url_for('home') }}" class="d-flex align-items-center text-decoration-none">
+            <img src="{{ url_for('static', filename='img/logo-sanrucho.png') }}" 
+                 alt="Sanrucho" 
+                 style="height: 48px; width: auto; object-fit: contain;">
+        </a>
+    </div>
+
+    <!-- Navegación común -->
+    <nav class="topbar-nav d-flex align-items-center">
+        {% block nav %}
+        <a href="{{ url_for('home') }}">Inicio</a>
+        <a href="{{ url_for('productos') }}">Productos</a>
+        <a href="{{ url_for('blog') }}">Blog</a>
+        <!-- Enlace exclusivo para Dueño/Admin -->
+        <a href="{{ url_for('admin') }}" id="navAdminItem" style="display: none;">Panel Admin</a>
+        {% endblock %}
+    </nav>
+
+    <!-- Sección derecha: Carrito y Control de Sesión -->
+    <div class="topbar-user d-flex align-items-center gap-3">
+        <!-- Ícono del Carrito con Badge de cantidad -->
+        <a href="{{ url_for('carrito') }}" class="btn btn-sm btn-outline-accent position-relative d-inline-flex align-items-center me-2" title="Ver carrito">
+            <i class="bi bi-cart3 fs-5"></i>
+            <span id="carritoBadge" 
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
+                  style="display: none; font-size: 0.72rem;">
+                0
+            </span>
+        </a>
+
+        <!-- 1. Visto si NO hay sesión iniciada -->
+        <div id="navInvitado" class="d-flex align-items-center gap-2">
+            <a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-accent">Iniciar sesión</a>
+            <a href="{{ url_for('registro') }}" class="btn btn-sm btn-accent">Registrarse</a>
         </div>
-        <nav class="topbar-nav">
-            {% block nav %}
-            <a href="{{ url_for('inicio') }}">Inicio</a>
-            {% endblock %}
-        </nav>
-        <div class="topbar-user">
-            {% block user_info %}Administrador{% endblock %}
+
+        <!-- 2. Visto si HAY sesión iniciada -->
+        <div id="navUsuario" class="align-items-center gap-2" style="display: none;">
+            <span class="me-2">Hola, <strong id="navUsuarioNombre">Usuario</strong></span>
+            <a href="#" id="btnCerrarSesion" class="btn btn-sm btn-outline-danger">Cerrar sesión</a>
         </div>
-    </header>
+    </div>
+</header>
 
     <!-- Contenido principal de cada página -->
     <main class="main">
@@ -42,9 +78,7 @@
     </main>
 
     <!-- Pie de página compartido -->
-    <footer class="footer">
-        <span>{% block footer_text %}Panel de administración · Tienda{% endblock %}</span>
-    </footer>
+    {% include '_footer.html' %}
 
     <!-- Modales: cada vista agrega aquí los suyos -->
     {% block modals %}{% endblock %}

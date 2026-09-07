@@ -9,49 +9,68 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <!-- Cabecera de la página -->
-        <div class="header">
+    <div class="container blog-container">
+        <!-- Cabecera del Blog -->
+        <header class="blog-header">
             <div>
-                <h1>Blog</h1>
-                <div class="subtitle">Novedades, anuncios y guías de Sanrucho</div>
+                <span class="badge-sugerencia">
+                    <i class="bi bi-journal-text"></i> Novedades y Guías
+                </span>
+                <h1 class="blog-title">Blog Sanrucho</h1>
+                <p class="blog-subtitle">Consejos, anuncios y novedades pensadas para tu comodidad.</p>
             </div>
+        </header>
+
+        <!-- Barra de herramientas (Búsqueda y Contador) -->
+        <div class="blog-toolbar">
+            <div class="blog-search-box">
+                <i class="bi bi-search search-icon"></i>
+                <input 
+                    type="text" 
+                    id="busqueda" 
+                    class="form-control-custom blog-input" 
+                    placeholder="Buscar artículos por título o contenido..." 
+                    oninput="filtrarArticulos()"
+                >
+            </div>
+            <span class="blog-badge-count" id="contador">2 artículos</span>
         </div>
 
-        <!-- Barra de herramientas -->
-        <div class="toolbar">
-            <div class="search-box">
-                <input type="text" id="busqueda" placeholder="Buscar artículos..." oninput="filtrarArticulos()">
-            </div>
-            <span class="text-muted" id="contador">2 artículos</span>
-        </div>
-
-        <!-- Listado de artículos -->
-        <div class="cards-grid" id="lista-articulos">
+        <!-- Listado de artículos en cuadrícula -->
+        <div class="blog-grid" id="lista-articulos">
             <article class="post-card">
-                <img class="post-thumb" src="{{ url_for('static', filename='img/logo-sanrucho.png') }}" alt="Sanrucho les da la bienvenida">
+                <div class="post-thumb-wrapper">
+                    <img class="post-thumb" src="{{ url_for('static', filename='img/logo-sanrucho.png') }}" alt="Sanrucho les da la bienvenida">
+                </div>
                 <div class="post-card-body">
-                    <span class="text-muted small">01 de Septiembre, 2026</span>
+                    <span class="post-date"><i class="bi bi-calendar3"></i> 01 de Septiembre, 2026</span>
                     <h2 class="post-card-title">Sanrucho les da la bienvenida</h2>
                     <p class="post-card-excerpt">Después de meses de trabajo, hoy nace Sanrucho, una nueva tienda online pensada para la comodidad de nuestros clientes.</p>
-                    <a class="btn btn-accent btn-sm" href="{{ url_for('blog_detalle_1') }}">Leer más &rarr;</a>
+                    <a class="btn-accent post-btn" href="{{ url_for('blog_detalle_1') }}">
+                        Leer más <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </article>
 
             <article class="post-card">
-                <img class="post-thumb" src="{{ url_for('static', filename='img/blog/primer-pedido.svg') }}" alt="Cómo crear tu cuenta y hacer tu primer pedido en Sanrucho">
+                <div class="post-thumb-wrapper">
+                    <img class="post-thumb" src="{{ url_for('static', filename='img/comprar.png') }}" alt="Cómo crear tu cuenta y hacer tu primer pedido en Sanrucho">
+                </div>
                 <div class="post-card-body">
-                    <span class="text-muted small">04 de Septiembre, 2026</span>
+                    <span class="post-date"><i class="bi bi-calendar3"></i> 04 de Septiembre, 2026</span>
                     <h2 class="post-card-title">Cómo crear tu cuenta y hacer tu primer pedido en Sanrucho</h2>
                     <p class="post-card-excerpt">Una guía paso a paso para crear tu cuenta, recorrer el catálogo y completar tu primer pedido sin complicaciones.</p>
-                    <a class="btn btn-accent btn-sm" href="{{ url_for('blog_detalle_2') }}">Leer más &rarr;</a>
+                    <a class="btn-accent post-btn" href="{{ url_for('blog_detalle_2') }}">
+                        Leer más <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </article>
         </div>
 
-        <!-- Mensaje cuando el buscador no encuentra nada -->
-        <div class="sin-resultados" id="sin-resultados" style="display: none;">
-            No se encontraron artículos para tu búsqueda.
+        <!-- Mensaje cuando el buscador no encuentra resultados -->
+        <div class="sin-resultados-box" id="sin-resultados" style="display: none;">
+            <i class="bi bi-search fs-1 text-muted mb-2"></i>
+            <p>No se encontraron artículos que coincidan con tu búsqueda.</p>
         </div>
     </div>
 {% endblock %}

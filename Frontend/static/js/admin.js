@@ -82,10 +82,28 @@ function actualizarTarjetas() {
 }
 
 function abrirModalNuevo() {
-    document.getElementById('modal-titulo').textContent = 'Nuevo registro en ' + SECCIONES[seccionActual].nombre;
-    document.getElementById('campo-principal').value = '';
-    document.getElementById('modal-registro').classList.add('show');
-    document.getElementById('campo-principal').focus();
+    if (seccionActual === 'productos') {
+        // Redirige directamente al formulario de creación de productos
+        window.location.href = "{{ url_for('admin_producto_form') }}"; // O la ruta directa: '/admin/productos/nuevo'
+        return;
+    }
+    
+    if (seccionActual === 'usuarios') {
+        window.location.href = "{{ url_for('admin_usuario_form') }}"; // O '/admin/usuarios/nuevo'
+        return;
+    }
+
+    // Para categorías u otras secciones que usen el modal rápido
+    const modal = document.getElementById('modal-registro');
+    const titulo = document.getElementById('modal-titulo');
+    const input = document.getElementById('campo-principal');
+
+    if (modal) {
+        if (titulo) titulo.textContent = 'Nuevo registro en ' + SECCIONES[seccionActual].nombre;
+        if (input) input.value = '';
+        modal.classList.add('show');
+        if (input) input.focus();
+    }
 }
 
 function cerrarModal() {
@@ -94,8 +112,27 @@ function cerrarModal() {
 }
 
 function guardarRegistro() {
+    const valor = document.getElementById('campo-principal').value.trim();
+    if (!valor) {
+        mostrarToast('Por favor ingrese un valor válido.', 'warning');
+        return;
+    }
+
+    const info = SECCIONES[seccionActual];
+    const coleccion = obtenerColeccion(SANRUCHO_KEYS[info.clave]);
+    
+    // Crear objeto básico según sección
+    const nuevoItem = {
+        id: Date.now(),
+        nombre: valor
+    };
+
+    coleccion.push(nuevoItem);
+    guardarColeccion(SANRUCHO_KEYS[info.clave], coleccion);
+
     cerrarModal();
-    mostrarToast('Guardado simulado: el alta se maneja desde cada seccion.', 'info');
+    cargarDatos();
+    mostrarToast('Registro añadido exitosamente', 'success');
 }
 
 function eliminarRegistro(indice) {
@@ -123,8 +160,23 @@ function eliminarRegistro(indice) {
 document.addEventListener('DOMContentLoaded', function () {
     const tabla = document.getElementById('tabla-body');
     if (!tabla) return;
+
+    if (!protegerPaginaAdmin([1, 2])) return;
+            ocultarUsuariosSiVendedor();
+    // Detectar si viene una sección en la URL (?seccion=catalogo)
+    const params = new URLSearchParams(window.location.search);
+    const seccionUrl = params.get('seccion');
+    if (seccionUrl && SECCIONES[seccionUrl]) {
+        seccionActual = seccionUrl;
+        const selector = document.getElementById('selector-seccion');
+        const etiqueta = document.getElementById('seccion-actual');
+        if (selector) selector.value = seccionUrl;
+        if (etiqueta) etiqueta.textContent = seccionUrl;
+    }
+
     const busqueda = document.getElementById('busqueda');
     buscar();
     if (busqueda) busqueda.addEventListener('input', buscar);
     cargarDatos();
 });
+            
