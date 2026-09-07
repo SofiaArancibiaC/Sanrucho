@@ -1,210 +1,4 @@
 /* ============================================================ */
-/* ARCHIVO: .\static\css\estilos-nosotros.css */
-/* ============================================================ */
-
-body {
-    background-image: url('/static/img/Fondo-Sanrucho.png');
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: 100% auto;   /* ancho completo, alto proporcional */
-    background-color: #fffdf5;    /* continúa en blanco después de la imagen */
-    background-attachment: fixed; 
-    min-height: 100vh;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.sobre-nosotros {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto;
-
-  background: linear-gradient(145deg, #f2c467, #faf2a6);
-
-  margin-top: 100px;
-  padding:20px;
-  box-sizing: border-box;
-  overflow: hidden;
-  border-radius: 1.5rem;
-}
-
-.sobre-nosotros h1{
-    color: white;
-    font-weight: bold;
-    padding-top: 30px;
-}
-
-.sobre-nosotros p{
-    text-align: center;
-}
-.sobre-nosotros img {
-  width: 100%;
-  max-width: 460px;
-  height: auto;
-  object-fit: contain;
-
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.sobre-nosotros img:hover {
-  transform: translateY(-6px) scale(1.02);
-}
-
-.avatar-circle {
-    background-color: #ffffff;
-    border: 8px solid #ffffff;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); /* Sombra para que resalte */
-    border-radius: 50%;
-    aspect-ratio: 1 / 1;
-    overflow: hidden; /* Corta la imagen en círculo si desborda */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto; /* Centra el círculo en la columna */
-}
-
-.avatar-circle:hover {
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    transform: translateY(-6px) scale(1.02)
-}
-/* Tamaños específicos */
-.maru {
-    width: 220px;
-}
-
-.gudetama {
-    width: 250px;
-}
-
-.gudetama img {
-    width: 50%;
-    height: 70%;
-    object-fit: contain; 
-}
-
-.cinna {
-    width: 220px;
-}
-
-.avatar-circle img {
-    width: 85%;
-    height: 85%;
-    object-fit: contain;
-}
-
-.direccion-contacto aside {
-  display: flex;
-  gap: 16px; /* Espacio de separación entre ambos */
-}
-
-.panel {
-  flex: 1; /* Hace que ambos ocupen exactamente el 50% del ancho disponible */
-  padding: 16px;
-  background-color: #f4f4f5;
-  border-radius: 8px;
-}
-
-.info-card {
-    background-color: #ffffff;
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-}
-
-.contact-card {
-    justify-content: space-between;
-}
-
-/* Encabezado con ícono y título */
-.card-header-custom {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-}
-
-.card-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    background-color: #e7f1ff;
-    color: #0d6efd;
-    border-radius: 50%;
-    font-size: 1.1rem;
-}
-
-.card-title-custom {
-    font-weight: 700;
-    color: #212529;
-    margin: 0;
-    font-size: 1.15rem;
-}
-
-/* Texto de descripción */
-.card-description {
-    color: #6c757d;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-}
-
-/* Sección de red social (Instagram) */
-.social-wrapper {
-    margin-top: auto;
-    padding-top: 0.75rem;
-    border-top: 1px solid #f0f0f0;
-}
-
-.social-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    color: #495057;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-
-.social-icon {
-    width: 22px;
-    height: 22px;
-    object-fit: contain;
-}
-
-/* Botón de acción */
-.card-action {
-    margin-top: 1rem;
-}
-
-.btn-custom {
-    display: inline-block;
-    background-color: #f74d9c;
-    color: #ffffff;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 0.5rem 1.25rem;
-    border-radius: 50px;
-    box-shadow: 0 2px 6px rgba(13, 110, 253, 0.2);
-    transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-.btn-custom:hover {
-    background-color: #d02173;
-    color: #ffffff;
-    transform: translateY(-1px);
-}
-
-/* ============================================================ */
 /* ARCHIVO: .\static\css\estilos.css */
 /* ============================================================ */
 
@@ -269,6 +63,11 @@ body {
   padding: 0;
 }
 
+/* Clase opcional si la vista "Nosotros" requiere fijar el fondo */
+body.bg-fixed {
+  background-attachment: fixed;
+}
+
 .main {
   min-height: 70vh;
   padding: 28px 0;
@@ -300,6 +99,7 @@ body {
 .btn-enviar,
 .btn-accent,
 .btn-add-cart,
+.btn-custom,
 .shadow-effect {
   background-color: var(--primary) !important;
   color: #ffffff !important;
@@ -317,6 +117,7 @@ body {
 .btn-enviar:hover,
 .btn-accent:hover,
 .btn-add-cart:hover,
+.btn-custom:hover,
 .shadow-effect:hover {
   background-color: var(--primary-hover) !important;
   transform: translateY(-2px);
@@ -326,6 +127,7 @@ body {
 .btn-enviar:active,
 .btn-accent:active,
 .btn-add-cart:active,
+.btn-custom:active,
 .shadow-effect:active {
   transform: translateY(0);
 }
@@ -606,8 +408,8 @@ body {
   object-fit: contain;
   padding: 12px;
 }
-/*---Flip Cards-------------------- */
 
+/* --- Flip Cards --- */
 .flip-card {
   background-color: transparent;
   width: 100%;
@@ -644,10 +446,8 @@ body {
   height: 100%;
   border-radius: 1rem;
   overflow: hidden;
-  /* Evita que se vea la cara trasera al girar */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* Fuerza aceleración por hardware para eliminar el parpadeo */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
@@ -656,7 +456,7 @@ body {
 .flip-card-front {
   background-color: #ffffff;
   z-index: 2;
-  transform: rotateY(0deg); /* Mantiene la cara anclada */
+  transform: rotateY(0deg);
 }
 
 .flip-card-front .card-body {
@@ -674,14 +474,12 @@ body {
   width: auto;
   height: auto;
   object-fit: contain;
-  /* Evita que el filtro rompa el contexto 3D */
   will-change: transform;
 }
 
 /* Cara Trasera */
 .flip-card-back {
   background-color: #ffffff;
-  /* Inicia rotada 180 grados en Y */
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
   padding: 1.5rem;
@@ -711,8 +509,6 @@ body {
   line-height: 1.4;
   margin: 0;
 }
-
-/* --------------------------------------------------------- */
 
 .algunos-productos {
   text-align: center;
@@ -1114,6 +910,32 @@ body {
 /* ============================================================
    ADMINISTRACIÓN Y TABLAS
    ============================================================ */
+.modal-personalizado {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-personalizado.show {
+  display: flex !important;
+}
+
+.modal-personalizado .modal-contenido {
+  width: 90%;
+  max-width: 480px;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 1051;
+}
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -1197,13 +1019,9 @@ body {
 .badge-inactivo { background: #e6e6e6; color: #666; border-radius: var(--radius-pill); padding: 4px 10px; font-weight: 700; }
 .stock-critico { color: var(--color-error); font-weight: 700; }
 
-
-
 /* ============================================================
    ADMINISTRACIÓN: LAYOUT & SIDEBAR
    ============================================================ */
-
-/* Contenedor o wrapper general del panel admin */
 .admin-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
@@ -1218,7 +1036,6 @@ body {
   }
 }
 
-/* Sidebar Oscuro Sofisticado */
 .admin-sidebar {
   background: white;
   border: 1px solid white;
@@ -1229,7 +1046,6 @@ body {
   top: 24px;
 }
 
-/* Cabecera del sidebar */
 .admin-sidebar .admin-brand-header {
   padding-bottom: 14px;
   margin-bottom: 12px;
@@ -1247,7 +1063,6 @@ body {
   font-size: 0.85rem;
 }
 
-/* Separadores / Secciones */
 .admin-sidebar small.text-muted {
   color: black !important;
   letter-spacing: 0.9px;
@@ -1257,9 +1072,8 @@ body {
   display: block;
 }
 
-/* Links de navegación */
 .admin-sidebar .nav-link {
-  color: black!important;
+  color: black !important;
   font-size: 0.92rem;
   font-weight: 600;
   padding: 10px 14px;
@@ -1277,7 +1091,6 @@ body {
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-/* Hover de links */
 .admin-sidebar .nav-link:hover {
   background-color: rgba(255, 255, 255, 0.06);
   color: #e83860 !important;
@@ -1289,7 +1102,6 @@ body {
   transform: scale(1.1);
 }
 
-/* Link Activo */
 .admin-sidebar .nav-link.active {
   background: linear-gradient(135deg, rgba(255, 101, 132, 0.2) 0%, rgba(255, 101, 132, 0.08) 100%);
   color: #e83860 !important;
@@ -1301,7 +1113,6 @@ body {
   color: var(--primary) !important;
 }
 
-/* Pie del Sidebar */
 .admin-sidebar .admin-footer-nav {
   padding-top: 16px;
   margin-top: 16px;
@@ -1367,7 +1178,6 @@ body {
   }
 }
 
-/* Fila de Producto en la Tabla */
 .carrito-producto {
   display: flex;
   align-items: center;
@@ -1420,7 +1230,6 @@ body {
   font-size: 1.05rem;
 }
 
-/* Controles de Cantidad (+ / -) */
 .qty-control {
   display: inline-flex;
   align-items: center;
@@ -1463,7 +1272,6 @@ body {
   background: transparent;
 }
 
-/* Botón Eliminar fila */
 .btn-remove-item {
   background: transparent;
   border: none;
@@ -1481,7 +1289,6 @@ body {
   transform: scale(1.1);
 }
 
-/* Tarjeta Resumen */
 .resumen {
   background: var(--bg-card);
   border: 1.5px solid var(--border-pink-light);
@@ -1545,7 +1352,6 @@ body {
   transform: translateX(-3px);
 }
 
-/* Estado Vacío */
 .carrito-vacio-box {
   background: var(--bg-card);
   border: 2px dashed var(--border-pink);
@@ -1560,7 +1366,6 @@ body {
   gap: 14px;
 }
 
-/* Si usas una imagen o un ícono SVG */
 .carrito-vacio-box img,
 .carrito-vacio-box svg,
 .carrito-vacio-box i {
@@ -1580,7 +1385,6 @@ body {
   font-weight: 600;
 }
 
-/* Asegurar proporciones normales del botón */
 .carrito-vacio-box .btn-enviar {
   display: inline-flex !important;
   align-items: center;
@@ -1593,7 +1397,6 @@ body {
   font-size: 0.95rem;
   margin-top: 6px;
 }
-
 
 .carrito-articulos table img,
 .table-wrapper table img,
@@ -1615,6 +1418,7 @@ body {
 .table-wrapper td:first-child {
   max-width: 280px;
 }
+
 /* ============================================================
    SECCIÓN BLOG
    ============================================================ */
@@ -1623,7 +1427,6 @@ body {
   padding-bottom: 40px;
 }
 
-/* Cabecera del Blog con fondo sólido para aislar de la imagen de fondo */
 .blog-header {
   background-color: var(--bg-card);         
   border: 1.5px solid var(--border-pink-light);
@@ -1647,7 +1450,6 @@ body {
   margin-bottom: 0;
 }
 
-/* Barra de herramientas */
 .blog-toolbar {
   display: flex;
   justify-content: space-between;
@@ -1686,14 +1488,12 @@ body {
   font-size: 0.85rem;
 }
 
-/* Cuadrícula de artículos */
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 26px;
 }
 
-/* Tarjeta individual */
 .post-card {
   display: flex;
   flex-direction: column;
@@ -1763,7 +1563,6 @@ body {
   gap: 6px;
 }
 
-/* Caja de Sin Resultados */
 .sin-resultados-box {
   background: var(--bg-card);
   border: 2px dashed var(--border-pink);
@@ -1775,7 +1574,179 @@ body {
   margin-top: 20px;
 }
 
+/* ============================================================
+   SECCIÓN SOBRE NOSOTROS & CONTACTO AUXILIAR
+   ============================================================ */
+.sobre-nosotros {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 100px auto 0;
+  background: linear-gradient(145deg, #f2c467, #faf2a6);
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 1.5rem;
+}
 
+.sobre-nosotros h1 {
+  color: white;
+  font-weight: bold;
+  padding-top: 30px;
+}
+
+.sobre-nosotros p {
+  text-align: center;
+}
+
+.sobre-nosotros img {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sobre-nosotros img:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.avatar-circle {
+  background-color: #ffffff;
+  border: 8px solid #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.avatar-circle:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* Tamaños específicos de personajes */
+.maru {
+  width: 220px;
+}
+
+.gudetama {
+  width: 250px;
+}
+
+.gudetama img {
+  width: 50%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.cinna {
+  width: 220px;
+}
+
+.avatar-circle img {
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+}
+
+/* Paneles de dirección y contacto */
+.direccion-contacto aside {
+  display: flex;
+  gap: 16px;
+}
+
+.panel {
+  flex: 1;
+  padding: 16px;
+  background-color: #f4f4f5;
+  border-radius: 8px;
+}
+
+.info-card {
+  background-color: var(--bg-card);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.contact-card {
+  justify-content: space-between;
+}
+
+.card-header-custom {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background-color: #e7f1ff;
+  color: #0d6efd;
+  border-radius: 50%;
+  font-size: 1.1rem;
+}
+
+.card-title-custom {
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.card-description {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.social-wrapper {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #495057;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.social-link:hover {
+  color: var(--primary);
+}
+
+.social-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.card-action {
+  margin-top: 1rem;
+}
 
 /* ============================================================ */
 /* ARCHIVO: .\static\js\admin.js */
@@ -1865,10 +1836,28 @@ function actualizarTarjetas() {
 }
 
 function abrirModalNuevo() {
-    document.getElementById('modal-titulo').textContent = 'Nuevo registro en ' + SECCIONES[seccionActual].nombre;
-    document.getElementById('campo-principal').value = '';
-    document.getElementById('modal-registro').classList.add('show');
-    document.getElementById('campo-principal').focus();
+    if (seccionActual === 'productos') {
+        // Redirige directamente al formulario de creación de productos
+        window.location.href = "{{ url_for('admin_producto_form') }}"; // O la ruta directa: '/admin/productos/nuevo'
+        return;
+    }
+    
+    if (seccionActual === 'usuarios') {
+        window.location.href = "{{ url_for('admin_usuario_form') }}"; // O '/admin/usuarios/nuevo'
+        return;
+    }
+
+    // Para categorías u otras secciones que usen el modal rápido
+    const modal = document.getElementById('modal-registro');
+    const titulo = document.getElementById('modal-titulo');
+    const input = document.getElementById('campo-principal');
+
+    if (modal) {
+        if (titulo) titulo.textContent = 'Nuevo registro en ' + SECCIONES[seccionActual].nombre;
+        if (input) input.value = '';
+        modal.classList.add('show');
+        if (input) input.focus();
+    }
 }
 
 function cerrarModal() {
@@ -1877,8 +1866,27 @@ function cerrarModal() {
 }
 
 function guardarRegistro() {
+    const valor = document.getElementById('campo-principal').value.trim();
+    if (!valor) {
+        mostrarToast('Por favor ingrese un valor válido.', 'warning');
+        return;
+    }
+
+    const info = SECCIONES[seccionActual];
+    const coleccion = obtenerColeccion(SANRUCHO_KEYS[info.clave]);
+    
+    // Crear objeto básico según sección
+    const nuevoItem = {
+        id: Date.now(),
+        nombre: valor
+    };
+
+    coleccion.push(nuevoItem);
+    guardarColeccion(SANRUCHO_KEYS[info.clave], coleccion);
+
     cerrarModal();
-    mostrarToast('Guardado simulado: el alta se maneja desde cada seccion.', 'info');
+    cargarDatos();
+    mostrarToast('Registro añadido exitosamente', 'success');
 }
 
 function eliminarRegistro(indice) {
@@ -1907,6 +1915,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const tabla = document.getElementById('tabla-body');
     if (!tabla) return;
 
+    if (!protegerPaginaAdmin([1, 2])) return;
+            ocultarUsuariosSiVendedor();
     // Detectar si viene una sección en la URL (?seccion=catalogo)
     const params = new URLSearchParams(window.location.search);
     const seccionUrl = params.get('seccion');
@@ -1923,6 +1933,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (busqueda) busqueda.addEventListener('input', buscar);
     cargarDatos();
 });
+            
 
 /* ============================================================ */
 /* ARCHIVO: .\static\js\base.js */
@@ -2158,6 +2169,48 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 /* ============================================================ */
+/* ARCHIVO: .\static\js\contacto.js */
+/* ============================================================ */
+
+// contacto.js — Buzón de mensajes: guarda los mensajes enviados
+// en la coleccion SANRUCHO_KEYS.contactos (localStorage) junto a storage.js.
+
+document.addEventListener("DOMContentLoaded", function () {
+    const formulario = document.querySelector(".formulario-contacto form");
+    if (!formulario) return;
+
+    formulario.addEventListener("submit", function (evento) {
+        evento.preventDefault();
+        evento.stopPropagation();
+
+        if (!formulario.checkValidity()) {
+            formulario.classList.add("was-validated");
+            return;
+        }
+
+        const contactos = obtenerColeccion(SANRUCHO_KEYS.contactos);
+        contactos.push({
+            id: generarSiguienteId(contactos),
+            nombre: document.getElementById("nombre").value.trim(),
+            email: document.getElementById("email").value.trim().toLowerCase(),
+            mensaje: document.getElementById("mensaje").value.trim(),
+            fecha: new Date().toISOString().slice(0, 10)
+        });
+        guardarColeccion(SANRUCHO_KEYS.contactos, contactos);
+
+        Swal.fire({
+            title: "¡Mensaje enviado!",
+            text: "Gracias por escribirnos, te responderemos pronto.",
+            icon: "success",
+            confirmButtonText: "Listo"
+        });
+
+        formulario.reset();
+        formulario.classList.remove("was-validated");
+    });
+});
+
+/* ============================================================ */
 /* ARCHIVO: .\static\js\detalle-producto.js */
 /* ============================================================ */
 
@@ -2251,6 +2304,19 @@ function renderizarDetalle(producto, nombreCategoria) {
 }
 
 function agregarAlCarrito(producto) {
+    const sesion = obtenerSesion();
+    if (!sesion || !(sesion.correo || sesion.run || sesion.nombre)) {
+        Swal.fire({
+            title: "Inicia sesión",
+            text: "Debes iniciar sesión para agregar productos al carrito.",
+            icon: "warning",
+            confirmButtonText: "Ir a Iniciar sesión"
+        }).then(function () {
+            window.location.href = "/login";
+        });
+        return;
+    }
+
     const inputCantidad = document.getElementById("inputCantidad");
     const cantidad = parseInt(inputCantidad.value);
 
@@ -2364,11 +2430,306 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ARCHIVO: .\static\js\productos.js */
 /* ============================================================ */
 
-/* catalogo.js - Renderizado y filtrado interactivo */
-/* Sanrucho - productos.js
-   Catalogo publico (companera) + mantenedor administrativo de productos
-   (agregado con SANRUCHO_KEYS). En las paginas administrativas el catalogo
-   no se renderiza (guard por existencia de elementos). */
+/* ============================================================
+   Sanrucho - productos.js
+   Catálogo público + mantenedor administrativo de productos
+   ============================================================ */
+
+/* ==================== FUNCIONES AUXILIARES ==================== */
+
+function obtenerProductos() {
+    if (typeof obtenerColeccion !== "function" || typeof SANRUCHO_KEYS === "undefined") return [];
+    return obtenerColeccion(SANRUCHO_KEYS.productos);
+}
+
+function obtenerProductoPorCodigo(codigo) {
+    return obtenerProductos().find(function (p) { return p.codigo === codigo; });
+}
+
+function obtenerColeccionCategorias() {
+    let cats = [];
+    if (typeof obtenerColeccion === "function" && typeof SANRUCHO_KEYS !== "undefined") {
+        cats = obtenerColeccion(SANRUCHO_KEYS.categorias || SANRUCHO_KEYS.catalogo || "categorias");
+    }
+    // Respaldo base en caso de que aún no existan en localStorage
+    if (!cats || cats.length === 0) {
+        cats = [
+            { id: 1, nombre: "Anillos" },
+            { id: 2, nombre: "Collares" },
+            { id: 3, nombre: "Aros" },
+            { id: 4, nombre: "Pulseras" }
+        ];
+    }
+    return cats;
+}
+
+function obtenerNombreCategoria(categoriaId) {
+    const cats = obtenerColeccionCategorias();
+    const encontrada = cats.find(function (c) { 
+        return Number(c.id) === Number(categoriaId) || c.nombre === categoriaId; 
+    });
+    return encontrada ? encontrada.nombre : "General";
+}
+
+function rutaImagenProducto(producto) {
+    if (!producto || !producto.imagen) return "/static/img/logo-sanrucho.png";
+    if (/^(https?:)?\//.test(producto.imagen)) return producto.imagen;
+    return "/static/img/" + producto.imagen;
+}
+
+function guardarProducto(producto) {
+    const productos = obtenerProductos();
+    const indice = productos.findIndex(function (p) { return p.codigo === producto.codigo; });
+    if (indice === -1) {
+        productos.push(producto);
+    } else {
+        productos[indice] = producto;
+    }
+    guardarColeccion(SANRUCHO_KEYS.productos, productos);
+}
+
+function eliminarProducto(codigo) {
+    const productos = obtenerProductos().filter(function (p) { return p.codigo !== codigo; });
+    guardarColeccion(SANRUCHO_KEYS.productos, productos);
+}
+
+/* ==================== MANTENEDOR ADMINISTRATIVO ==================== */
+
+function llenarSelectCategorias(idSelect, incluirTodas) {
+    const select = document.getElementById(idSelect);
+    if (!select) return;
+
+    const categorias = obtenerColeccionCategorias();
+
+    select.innerHTML = "";
+    if (incluirTodas) {
+        select.innerHTML += '<option value="">Todas las categorías</option>';
+    } else {
+        select.innerHTML += '<option value="" selected disabled>Selecciona una categoría...</option>';
+    }
+
+    categorias.forEach(function (cat) {
+        const id = cat.id != null ? cat.id : cat.nombre;
+        const nombre = cat.nombre || cat.titulo || cat.id;
+        select.innerHTML += '<option value="' + id + '">' + nombre + '</option>';
+    });
+}
+
+function cargarTablaProductosAdmin() {
+    const productos = obtenerProductos();
+    const cuerpoTabla = document.getElementById("cuerpoTablaProductos");
+    if (!cuerpoTabla) return;
+
+    cuerpoTabla.innerHTML = "";
+
+    // Asegurar que el botón nuevo esté siempre visible para administradores
+    const botonNuevo = document.getElementById("btnNuevoProducto");
+    if (botonNuevo) botonNuevo.style.display = "inline-block";
+
+    if (productos.length === 0) {
+        cuerpoTabla.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-muted">No hay productos registrados.</td></tr>';
+        return;
+    }
+
+    productos.forEach(function (producto) {
+        const critico = producto.stockCritico != null && producto.stock <= producto.stockCritico;
+        const fila = document.createElement("tr");
+
+        const acciones = 
+            '<button class="btn btn-sm btn-outline-accent me-1" onclick="verProductoAdmin(\'' + producto.codigo + '\')" title="Ver"><i class="bi bi-eye"></i></button>' +
+            '<button class="btn btn-sm btn-outline-primary me-1" onclick="window.location.href=\'/admin/productos/form?codigo=' + producto.codigo + '\'" title="Editar"><i class="bi bi-pencil"></i></button>' +
+            '<button class="btn btn-sm btn-outline-danger" onclick="confirmarEliminarProducto(\'' + producto.codigo + '\')" title="Eliminar"><i class="bi bi-trash"></i></button>';
+
+        fila.innerHTML =
+            '<td><strong>' + producto.codigo + '</strong></td>' +
+            '<td><img src="' + rutaImagenProducto(producto) + '" alt="' + producto.nombre + '" height="40" style="object-fit:contain; border-radius:6px;"></td>' +
+            '<td>' + producto.nombre + '</td>' +
+            '<td>' + obtenerNombreCategoria(producto.categoriaId) + '</td>' +
+            '<td>' + (typeof formatearPrecio === "function" ? formatearPrecio(producto.precio) : "$" + producto.precio) + '</td>' +
+            '<td class="' + (critico ? "stock-critico text-danger fw-bold" : "") + '">' + producto.stock + (critico ? ' <i class="bi bi-exclamation-triangle-fill"></i>' : '') + '</td>' +
+            '<td><span class="badge ' + (producto.estado === "Activo" ? "bg-success" : "bg-secondary") + '">' + producto.estado + '</span></td>' +
+            '<td class="text-nowrap">' + acciones + '</td>';
+
+        cuerpoTabla.appendChild(fila);
+    });
+
+    if (window.jQuery && $.fn && $.fn.DataTable) {
+        if ($.fn.DataTable.isDataTable("#tablaProductos")) {
+            $("#tablaProductos").DataTable().destroy();
+        }
+        $("#tablaProductos").DataTable({
+            language: { url: "https://cdn.datatables.net/plug-ins/1.13.11/i18n/es-ES.json" },
+            order: []
+        });
+    }
+}
+
+function verProductoAdmin(codigo) {
+    const producto = obtenerProductoPorCodigo(codigo);
+    if (!producto) return;
+    Swal.fire({
+        title: producto.nombre,
+        html:
+            '<img src="' + rutaImagenProducto(producto) + '" class="img-fluid mb-3" style="max-height:160px;"><br>' +
+            '<p class="text-start"><strong>Código:</strong> ' + producto.codigo + '<br>' +
+            '<strong>Categoría:</strong> ' + obtenerNombreCategoria(producto.categoriaId) + '<br>' +
+            '<strong>Precio:</strong> ' + (typeof formatearPrecio === "function" ? formatearPrecio(producto.precio) : "$" + producto.precio) + '<br>' +
+            '<strong>Stock:</strong> ' + producto.stock + '<br>' +
+            '<strong>Stock crítico:</strong> ' + (producto.stockCritico != null ? producto.stockCritico : "-") + '<br>' +
+            '<strong>Descripción:</strong> ' + (producto.descripcion || "-") + '</p>',
+        confirmButtonText: "Cerrar"
+    });
+}
+
+function confirmarEliminarProducto(codigo) {
+    Swal.fire({
+        title: "¿Eliminar producto?",
+        text: "Esta acción no se puede deshacer.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar"
+    }).then(function (resultado) {
+        if (resultado.isConfirmed) {
+            eliminarProducto(codigo);
+            Swal.fire("Eliminado", "El producto fue eliminado correctamente.", "success");
+            cargarTablaProductosAdmin();
+        }
+    });
+}
+
+function inicializarFormularioProducto() {
+    llenarSelectCategorias("categoriaProducto", false);
+
+    const parametros = new URLSearchParams(window.location.search);
+    const codigo = parametros.get("codigo");
+
+    if (codigo) {
+        const producto = obtenerProductoPorCodigo(codigo);
+        if (producto) {
+            const titulo = document.getElementById("tituloFormularioProducto");
+            if (titulo) titulo.textContent = "Editar producto";
+            
+            document.getElementById("codigoProducto").value = producto.codigo;
+            document.getElementById("codigoProducto").readOnly = true;
+            document.getElementById("nombreProducto").value = producto.nombre;
+            document.getElementById("descripcionProducto").value = producto.descripcion || "";
+            document.getElementById("precioProducto").value = producto.precio;
+            document.getElementById("stockProducto").value = producto.stock;
+            document.getElementById("stockCriticoProducto").value = producto.stockCritico != null ? producto.stockCritico : "";
+            document.getElementById("categoriaProducto").value = producto.categoriaId;
+            document.getElementById("imagenProducto").value = producto.imagen || "";
+            document.getElementById("estadoProducto").value = producto.estado || "Activo";
+        }
+    }
+
+    const form = document.getElementById("formularioProducto");
+    if (form) {
+        form.addEventListener("submit", function (evento) {
+            evento.preventDefault();
+            procesarFormularioProducto(codigo);
+        });
+    }
+}
+
+function procesarFormularioProducto(codigoOriginal) {
+    const codigo = document.getElementById("codigoProducto");
+    const nombre = document.getElementById("nombreProducto");
+    const descripcion = document.getElementById("descripcionProducto");
+    const precio = document.getElementById("precioProducto");
+    const stock = document.getElementById("stockProducto");
+    const stockCritico = document.getElementById("stockCriticoProducto");
+    const categoria = document.getElementById("categoriaProducto");
+    const imagen = document.getElementById("imagenProducto");
+    const estado = document.getElementById("estadoProducto");
+
+    let esValido = true;
+
+    if (typeof textoRequerido === "function" ? (textoRequerido(codigo.value, null) && codigo.value.trim().length >= 3) : codigo.value.trim().length >= 3) {
+        if (typeof marcarValido === "function") marcarValido(codigo);
+    } else {
+        if (typeof marcarInvalido === "function") marcarInvalido(codigo);
+        esValido = false;
+    }
+
+    const codigoDuplicado = obtenerProductos().some(function (p) {
+        return p.codigo === codigo.value.trim() && p.codigo !== codigoOriginal;
+    });
+    if (codigoDuplicado) {
+        if (typeof marcarInvalido === "function") marcarInvalido(codigo);
+        esValido = false;
+    }
+
+    if (typeof textoRequerido === "function" ? textoRequerido(nombre.value, 100) : (nombre.value.trim() !== "")) {
+        if (typeof marcarValido === "function") marcarValido(nombre);
+    } else {
+        if (typeof marcarInvalido === "function") marcarInvalido(nombre);
+        esValido = false;
+    }
+
+    if (!descripcion.value || descripcion.value.trim().length <= 500) {
+        if (typeof marcarValido === "function") marcarValido(descripcion);
+    } else {
+        if (typeof marcarInvalido === "function") marcarInvalido(descripcion);
+        esValido = false;
+    }
+
+    if (precio.value !== "" && Number(precio.value) >= 0) {
+        if (typeof marcarValido === "function") marcarValido(precio);
+    } else {
+        if (typeof marcarInvalido === "function") marcarInvalido(precio);
+        esValido = false;
+    }
+
+    if (stock.value !== "" && Number(stock.value) >= 0) {
+        if (typeof marcarValido === "function") marcarValido(stock);
+    } else {
+        if (typeof marcarInvalido === "function") marcarInvalido(stock);
+        esValido = false;
+    }
+
+    if (!stockCritico.value || Number(stockCritico.value) >= 0) {
+        if (typeof marcarValido === "function") marcarValido(stockCritico);
+    } else {
+        if (typeof marcarInvalido === "function") marcarInvalido(stockCritico);
+        esValido = false;
+    }
+
+    if (categoria.value) {
+        if (typeof marcarValido === "function") marcarValido(categoria);
+    } else {
+        if (typeof marcarInvalido === "function") marcarInvalido(categoria);
+        esValido = false;
+    }
+
+    if (!esValido) {
+        Swal.fire("Revisa el formulario", "Existen campos obligatorios o inválidos.", "error");
+        return;
+    }
+
+    const producto = {
+        codigo: codigo.value.trim(),
+        nombre: nombre.value.trim(),
+        descripcion: descripcion.value.trim(),
+        precio: Number(precio.value),
+        stock: Number(stock.value),
+        stockCritico: stockCritico.value ? Number(stockCritico.value) : null,
+        categoriaId: isNaN(Number(categoria.value)) ? categoria.value : Number(categoria.value),
+        imagen: imagen.value.trim() || "logo-sanrucho.png",
+        estado: estado.value
+    };
+
+    guardarProducto(producto);
+
+    let mensajeExtra = "";
+    if (producto.stockCritico != null && producto.stock <= producto.stockCritico) {
+        mensajeExtra = " El stock está en o bajo el nivel crítico.";
+    }
+
+    Swal.fire("Correcto", "Producto guardado correctamente." + mensajeExtra, "success").then(function () {
+        window.location.href = "/admin/productos";
+    });
+}
 
 /* ==================== CATALOGO PUBLICO ==================== */
 
@@ -2381,14 +2742,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnLimpiar = document.getElementById("btnLimpiarFiltros");
     const contador = document.getElementById("contadorProductos");
 
-    // Guard: solo la pagina publica de productos tiene estos elementos.
-    // En paginas administrativas no se ejecuta el catalogo.
     if (!contenedor || !filtroCat || !filtroPrecio || !precioEtiqueta || !buscarInput || !btnLimpiar || !contador) return;
 
-    const categorias = obtenerColeccion(SANRUCHO_KEYS.categorias);
-    const productos = obtenerColeccion(SANRUCHO_KEYS.productos);
+    const categorias = obtenerColeccionCategorias();
+    const productos = obtenerProductos();
 
-    // Cargar select de categorías
     function poblarCategorias() {
         categorias.forEach(function (cat) {
             const opcion = document.createElement("option");
@@ -2398,12 +2756,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function obtenerNombreCategoria(catId) {
-        const encontrada = categorias.find(c => c.id === catId);
-        return encontrada ? encontrada.nombre : "General";
-    }
-
-    // Renderizar tarjetas en el DOM
     function renderizarProductos(lista) {
         contenedor.innerHTML = "";
         contador.textContent = `Mostrando ${lista.length} productos`;
@@ -2426,27 +2778,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="card h-100 shadow-sm border-0 product-card position-relative">
                     ${bajoStock ? '<span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">Últimas unidades</span>' : ''}
                     ${agotado ? '<span class="badge bg-danger position-absolute top-0 start-0 m-2">Agotado</span>' : ''}
-                    
-                    <!-- Imagen con enlace al detalle -->
                     <a href="/producto-detalle?codigo=${prod.codigo}" class="text-decoration-none">
                         <div class="card-img-wrapper bg-light text-center p-3">
                             <img src="${rutaImagenProducto(prod)}" class="card-img-top product-img" alt="${prod.nombre}" onerror="this.src='https://placehold.co/300x200?text=Sin+Imagen'">
                         </div>
                     </a>
-
                     <div class="card-body d-flex flex-column">
                         <span class="card-category">${obtenerNombreCategoria(prod.categoriaId)}</span>
-                        
-                        <!-- Título con enlace al detalle -->
                         <a href="/producto-detalle?codigo=${prod.codigo}" class="text-decoration-none text-reset">
                             <h6 class="card-title fw-bold mt-1 mb-2 text-truncate" title="${prod.nombre}">${prod.nombre}</h6>
                         </a>
-                        
-                        <p class="card-text text-muted small flex-grow-1">${prod.descripcion}</p>
-                        
-                        <div class="card-price mb-2">${formatearPrecio(prod.precio)}</div>
-
-                        <!-- Botones de acción: Ver detalle y Agregar -->
+                        <p class="card-text text-muted small flex-grow-1">${prod.descripcion || ""}</p>
+                        <div class="card-price mb-2">${typeof formatearPrecio === "function" ? formatearPrecio(prod.precio) : "$" + prod.precio}</div>
                         <div class="d-flex gap-2 mt-auto">
                             <a href="/producto-detalle?codigo=${prod.codigo}" class="btn btn-outline-secondary btn-sm rounded-pill flex-grow-1">
                                 Ver detalle
@@ -2459,42 +2802,52 @@ document.addEventListener("DOMContentLoaded", function () {
                             </button>
                         </div>
                     </div>
-                </div>
-            `;
+                </div>`;
             contenedor.appendChild(col);
         });
 
         asignarEventosCarrito();
     }
 
-    // Filtrar elementos
     function aplicarFiltros() {
         const texto = buscarInput.value.toLowerCase().trim();
         const catSeleccionada = parseInt(filtroCat.value, 10);
         const precioMaximo = parseInt(filtroPrecio.value, 10);
 
-        precioEtiqueta.textContent = formatearPrecio(precioMaximo);
+        if (precioEtiqueta) {
+            precioEtiqueta.textContent = typeof formatearPrecio === "function" ? formatearPrecio(precioMaximo) : "$" + precioMaximo;
+        }
 
         const filtrados = productos.filter(function (prod) {
             if (prod.estado !== "Activo") return false;
-
             const coincideTexto = prod.nombre.toLowerCase().includes(texto) || prod.codigo.toLowerCase().includes(texto);
-            const coincideCat = (catSeleccionada === 0 || prod.categoriaId === catSeleccionada);
+            const coincideCat = (catSeleccionada === 0 || isNaN(catSeleccionada) || prod.categoriaId === catSeleccionada);
             const coincidePrecio = prod.precio <= precioMaximo;
-
             return coincideTexto && coincideCat && coincidePrecio;
         });
 
         renderizarProductos(filtrados);
     }
 
-    // Agregar producto a SANRUCHO_KEYS.carrito
     function asignarEventosCarrito() {
         document.querySelectorAll(".btn-agregar").forEach(function (btn) {
             btn.addEventListener("click", function () {
                 const codigo = this.getAttribute("data-codigo");
                 const producto = productos.find(p => p.codigo === codigo);
                 if (!producto) return;
+
+                const sesion = obtenerSesion();
+                if (!sesion || !(sesion.correo || sesion.run || sesion.nombre)) {
+                    Swal.fire({
+                        title: "Inicia sesión",
+                        text: "Debes iniciar sesión para agregar productos al carrito.",
+                        icon: "warning",
+                        confirmButtonText: "Ir a Iniciar sesión"
+                    }).then(function () {
+                        window.location.href = "/login";
+                    });
+                    return;
+                }
 
                 let carrito = obtenerColeccion(SANRUCHO_KEYS.carrito);
                 const itemExistente = carrito.find(item => item.codigo === codigo);
@@ -2520,7 +2873,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 guardarColeccion(SANRUCHO_KEYS.carrito, carrito);
-                actualizarBadgeCarrito();
+                if (typeof actualizarBadgeCarrito === "function") actualizarBadgeCarrito();
 
                 Swal.fire({
                     toast: true,
@@ -2534,7 +2887,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Inicialización y Listeners
     poblarCategorias();
     aplicarFiltros();
 
@@ -2549,266 +2901,6 @@ document.addEventListener("DOMContentLoaded", function () {
         aplicarFiltros();
     });
 });
-
-/* ==================== MANTENEDOR ADMINISTRATIVO ==================== */
-
-function obtenerProductos() {
-    return obtenerColeccion(SANRUCHO_KEYS.productos);
-}
-
-function obtenerProductoPorCodigo(codigo) {
-    return obtenerProductos().find(function (p) { return p.codigo === codigo; });
-}
-
-function obtenerNombreCategoria(categoriaId) {
-    const categoria = obtenerColeccion(SANRUCHO_KEYS.categorias).find(function (c) { return c.id === Number(categoriaId); });
-    return categoria ? categoria.nombre : "Sin categoria";
-}
-
-/* Las imagenes de los productos pueden venir con ruta completa (/static/img/...)
-   o como una ruta relativa dentro de static/img. */
-function rutaImagenProducto(producto) {
-    if (!producto.imagen) return "/static/img/logo-sanrucho.png";
-    if (/^(https?:)?\//.test(producto.imagen)) return producto.imagen;
-    return "/static/img/" + producto.imagen;
-}
-
-function llenarSelectCategorias(idSelect, incluirTodas) {
-    const select = document.getElementById(idSelect);
-    if (!select) return;
-    const categorias = obtenerColeccion(SANRUCHO_KEYS.categorias);
-
-    select.innerHTML = "";
-    if (incluirTodas) {
-        select.innerHTML += '<option value="">Todas las categorias</option>';
-    } else {
-        select.innerHTML += '<option value="">Seleccione una categoria</option>';
-    }
-    categorias.forEach(function (categoria) {
-        select.innerHTML += '<option value="' + categoria.id + '">' + categoria.nombre + '</option>';
-    });
-}
-
-function guardarProducto(producto) {
-    const productos = obtenerProductos();
-    const indice = productos.findIndex(function (p) { return p.codigo === producto.codigo; });
-    if (indice === -1) {
-        productos.push(producto);
-    } else {
-        productos[indice] = producto;
-    }
-    guardarColeccion(SANRUCHO_KEYS.productos, productos);
-}
-
-function eliminarProducto(codigo) {
-    const productos = obtenerProductos().filter(function (p) { return p.codigo !== codigo; });
-    guardarColeccion(SANRUCHO_KEYS.productos, productos);
-}
-
-function cargarTablaProductosAdmin() {
-    const productos = obtenerProductos();
-    const cuerpoTabla = document.getElementById("cuerpoTablaProductos");
-    cuerpoTabla.innerHTML = "";
-
-    const sesion = obtenerSesion();
-    // Rol 2 (Admin) con la misma restriccion de solo lectura del esquema del profe.
-    const soloLectura = sesion && sesion.rolId === 2;
-    const botonNuevo = document.getElementById("btnNuevoProducto");
-    if (botonNuevo && soloLectura) botonNuevo.style.display = "none";
-
-    productos.forEach(function (producto) {
-        const critico = producto.stockCritico != null && producto.stock <= producto.stockCritico;
-        const fila = document.createElement("tr");
-        const acciones = soloLectura
-            ? '<button class="btn btn-sm btn-outline-accent" onclick="verProductoAdmin(\'' + producto.codigo + '\')" title="Ver"><i class="bi bi-eye"></i></button>'
-            : '<button class="btn btn-sm btn-outline-accent me-1" onclick="verProductoAdmin(\'' + producto.codigo + '\')" title="Ver"><i class="bi bi-eye"></i></button>' +
-              '<button class="btn btn-sm btn-outline-light me-1" onclick="window.location.href=\'/admin/productos/form?codigo=' + producto.codigo + '\'" title="Editar"><i class="bi bi-pencil"></i></button>' +
-              '<button class="btn btn-sm btn-outline-danger" onclick="confirmarEliminarProducto(\'' + producto.codigo + '\')" title="Eliminar"><i class="bi bi-trash"></i></button>';
-
-        fila.innerHTML =
-            '<td>' + producto.codigo + '</td>' +
-            '<td><img src="' + rutaImagenProducto(producto) + '" alt="' + producto.nombre + '" height="40"></td>' +
-            '<td>' + producto.nombre + '</td>' +
-            '<td>' + obtenerNombreCategoria(producto.categoriaId) + '</td>' +
-            '<td>' + formatearPrecio(producto.precio) + '</td>' +
-            '<td class="' + (critico ? "stock-critico" : "") + '">' + producto.stock + (critico ? ' <i class="bi bi-exclamation-triangle-fill"></i>' : '') + '</td>' +
-            '<td><span class="badge ' + (producto.estado === "Activo" ? "bg-success" : "bg-secondary") + '">' + producto.estado + '</span></td>' +
-            '<td class="text-nowrap">' + acciones + '</td>';
-        cuerpoTabla.appendChild(fila);
-    });
-
-    if ($.fn.DataTable.isDataTable("#tablaProductos")) {
-        $("#tablaProductos").DataTable().destroy();
-    }
-    $("#tablaProductos").DataTable({
-        language: { url: "https://cdn.datatables.net/plug-ins/1.13.11/i18n/es-ES.json" },
-        order: []
-    });
-}
-
-function verProductoAdmin(codigo) {
-    const producto = obtenerProductoPorCodigo(codigo);
-    if (!producto) return;
-    Swal.fire({
-        title: producto.nombre,
-        html:
-            '<img src="' + rutaImagenProducto(producto) + '" class="img-fluid mb-3" style="max-height:160px;"><br>' +
-            '<p class="text-start"><strong>Codigo:</strong> ' + producto.codigo + '<br>' +
-            '<strong>Categoria:</strong> ' + obtenerNombreCategoria(producto.categoriaId) + '<br>' +
-            '<strong>Precio:</strong> ' + formatearPrecio(producto.precio) + '<br>' +
-            '<strong>Stock:</strong> ' + producto.stock + '<br>' +
-            '<strong>Stock critico:</strong> ' + (producto.stockCritico != null ? producto.stockCritico : "-") + '<br>' +
-            '<strong>Descripcion:</strong> ' + (producto.descripcion || "-") + '</p>',
-        confirmButtonText: "Cerrar"
-    });
-}
-
-function confirmarEliminarProducto(codigo) {
-    Swal.fire({
-        title: "Eliminar producto?",
-        text: "Esta accion no se puede deshacer.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Eliminar",
-        cancelButtonText: "Cancelar"
-    }).then(function (resultado) {
-        if (resultado.isConfirmed) {
-            eliminarProducto(codigo);
-            Swal.fire("Eliminado", "El producto fue eliminado correctamente.", "success");
-            cargarTablaProductosAdmin();
-        }
-    });
-}
-
-/* Prepara el formulario Nuevo/Editar segun exista ?codigo= en la URL. */
-function inicializarFormularioProducto() {
-    llenarSelectCategorias("categoriaProducto", false);
-
-    const parametros = new URLSearchParams(window.location.search);
-    const codigo = parametros.get("codigo");
-
-    if (codigo) {
-        const producto = obtenerProductoPorCodigo(codigo);
-        if (producto) {
-            document.getElementById("tituloFormularioProducto").textContent = "Editar producto";
-            document.getElementById("codigoProducto").value = producto.codigo;
-            document.getElementById("codigoProducto").readOnly = true;
-            document.getElementById("nombreProducto").value = producto.nombre;
-            document.getElementById("descripcionProducto").value = producto.descripcion || "";
-            document.getElementById("precioProducto").value = producto.precio;
-            document.getElementById("stockProducto").value = producto.stock;
-            document.getElementById("stockCriticoProducto").value = producto.stockCritico != null ? producto.stockCritico : "";
-            document.getElementById("categoriaProducto").value = producto.categoriaId;
-            document.getElementById("imagenProducto").value = producto.imagen || "";
-            document.getElementById("estadoProducto").value = producto.estado || "Activo";
-        }
-    }
-
-    document.getElementById("formularioProducto").addEventListener("submit", function (evento) {
-        evento.preventDefault();
-        procesarFormularioProducto(codigo);
-    });
-}
-
-function procesarFormularioProducto(codigoOriginal) {
-    const codigo = document.getElementById("codigoProducto");
-    const nombre = document.getElementById("nombreProducto");
-    const descripcion = document.getElementById("descripcionProducto");
-    const precio = document.getElementById("precioProducto");
-    const stock = document.getElementById("stockProducto");
-    const stockCritico = document.getElementById("stockCriticoProducto");
-    const categoria = document.getElementById("categoriaProducto");
-    const imagen = document.getElementById("imagenProducto");
-    const estado = document.getElementById("estadoProducto");
-
-    let esValido = true;
-
-    if (textoRequerido(codigo.value, null) && codigo.value.trim().length >= 3) {
-        marcarValido(codigo);
-    } else {
-        marcarInvalido(codigo);
-        esValido = false;
-    }
-
-    const codigoDuplicado = obtenerProductos().some(function (p) {
-        return p.codigo === codigo.value.trim() && p.codigo !== codigoOriginal;
-    });
-    if (codigoDuplicado) {
-        marcarInvalido(codigo);
-        esValido = false;
-    }
-
-    if (textoRequerido(nombre.value, 100)) {
-        marcarValido(nombre);
-    } else {
-        marcarInvalido(nombre);
-        esValido = false;
-    }
-
-    if (!descripcion.value || descripcion.value.trim().length <= 500) {
-        marcarValido(descripcion);
-    } else {
-        marcarInvalido(descripcion);
-        esValido = false;
-    }
-
-    if (numeroEnRango(precio.value, 0)) {
-        marcarValido(precio);
-    } else {
-        marcarInvalido(precio);
-        esValido = false;
-    }
-
-    if (enteroEnRango(stock.value, 0)) {
-        marcarValido(stock);
-    } else {
-        marcarInvalido(stock);
-        esValido = false;
-    }
-
-    if (!stockCritico.value || enteroEnRango(stockCritico.value, 0)) {
-        marcarValido(stockCritico);
-    } else {
-        marcarInvalido(stockCritico);
-        esValido = false;
-    }
-
-    if (categoria.value) {
-        marcarValido(categoria);
-    } else {
-        marcarInvalido(categoria);
-        esValido = false;
-    }
-
-    if (!esValido) {
-        Swal.fire("Revisa el formulario", "Existen campos obligatorios o invalidos.", "error");
-        return;
-    }
-
-    const producto = {
-        codigo: codigo.value.trim(),
-        nombre: nombre.value.trim(),
-        descripcion: descripcion.value.trim(),
-        precio: Number(precio.value),
-        stock: Number(stock.value),
-        stockCritico: stockCritico.value ? Number(stockCritico.value) : null,
-        categoriaId: Number(categoria.value),
-        imagen: imagen.value.trim() || "logo-sanrucho.png",
-        estado: estado.value
-    };
-
-    guardarProducto(producto);
-
-    let mensajeExtra = "";
-    if (producto.stockCritico != null && producto.stock <= producto.stockCritico) {
-        mensajeExtra = " El stock esta en o bajo el nivel critico.";
-    }
-
-    Swal.fire("Correcto", "Producto guardado correctamente." + mensajeExtra, "success").then(function () {
-        window.location.href = "/admin/productos";
-    });
-}
-
 
 /* ============================================================ */
 /* ARCHIVO: .\static\js\resenas.js */
@@ -2953,18 +3045,7 @@ document.addEventListener("DOMContentLoaded", function () {
    Maneja las colecciones de localStorage (base de datos simulada),
    la sesion del usuario y la barra de navegacion comun a todas las paginas. */
 
-const VERSION_DATOS = "v1.2";
-
-if (localStorage.getItem("sanrucho_version") !== VERSION_DATOS) {
-    const sesionRespaldada = localStorage.getItem("sanrucho_sesion"); // Guarda la sesión actual si existe
-    localStorage.clear();
-    localStorage.setItem("sanrucho_version", VERSION_DATOS);
-    if (sesionRespaldada) {
-        localStorage.setItem("sanrucho_sesion", sesionRespaldada); // Restaura la sesión
-    }
-    inicializarDatos();
-}
-
+const VERSION_DATOS = "v1.3";
 
 const SANRUCHO_KEYS = {
     usuarios: "sanrucho_usuarios",
@@ -2979,6 +3060,16 @@ const SANRUCHO_KEYS = {
     resenas: "sanrucho_resenas", 
     sesion: "sanrucho_sesion"
 };
+
+if (localStorage.getItem("sanrucho_version") !== VERSION_DATOS) {
+    const sesionRespaldada = localStorage.getItem("sanrucho_sesion"); // Guarda la sesión actual si existe
+    localStorage.clear();
+    localStorage.setItem("sanrucho_version", VERSION_DATOS);
+    if (sesionRespaldada) {
+        localStorage.setItem("sanrucho_sesion", sesionRespaldada); // Restaura la sesión
+    }
+    inicializarDatos();
+}
 
 function obtenerColeccion(clave) {
     return JSON.parse(localStorage.getItem(clave)) || [];
@@ -3035,7 +3126,7 @@ function inicializarDatos() {
         guardarColeccion(SANRUCHO_KEYS.usuarios, [
             {
                 run: "123456785", nombre: "Dueño", apellidos: "Sanrucho",
-                correo: "dueño@gmail.com", password: "dueño123",
+                correo: "dueno@gmail.com", password: "dueno123",
                 fechaNacimiento: "1990-01-01", rolId: 1,
                 regionId: 1, comunaId: 1, direccion: "Av. Principal 123",
                 estado: "Activo"
@@ -3306,13 +3397,6 @@ function cargarUsuarios() {
     const tbody = document.getElementById('tabla-usuarios');
     const usuarios = obtenerColeccion(SANRUCHO_KEYS.usuarios);
 
-    document.getElementById('contador').textContent = usuarios.length + ' usuario(s)';
-
-    if (usuarios.length === 0) {
-        tbody.innerHTML = '<tr class="loading-row"><td colspan="8">No hay usuarios para mostrar.</td></tr>';
-        return;
-    }
-
     tbody.innerHTML = usuarios.map(function (u) {
         const rolNombre = u.rolId ? obtenerNombreRol(u.rolId) : (u.rol || '');
         const rolBadge = u.rolId === 3 ? 'badge-cliente' : 'badge-admin';
@@ -3332,50 +3416,19 @@ function cargarUsuarios() {
             '</div></td>' +
             '</tr>';
     }).join('');
-}
 
-function filtrarTabla() {
-    const termino = document.getElementById('busqueda').value.trim().toLowerCase();
-    const usuarios = obtenerColeccion(SANRUCHO_KEYS.usuarios);
-    if (!termino) {
-        cargarUsuarios();
-        return;
+    if (window.jQuery && $.fn && $.fn.DataTable) {
+        if ($.fn.DataTable.isDataTable('#tablaUsuarios')) {
+            $('#tablaUsuarios').DataTable().destroy();
+        }
+        $('#tablaUsuarios').DataTable({
+            responsive: true,
+            pageLength: 10,
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
+            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.11/i18n/es-ES.json' },
+            columnDefs: [{ orderable: false, targets: [7] }]
+        });
     }
-    const filtrados = usuarios.filter(function (u) {
-        return (u.nombre || '').toLowerCase().includes(termino) ||
-            (u.apellidos || '').toLowerCase().includes(termino) ||
-            (u.correo || '').toLowerCase().includes(termino) ||
-            (u.run || '').toLowerCase().includes(termino) ||
-            (u.direccion || '').toLowerCase().includes(termino) ||
-            (obtenerNombreRol(u.rolId) || '').toLowerCase().includes(termino);
-    });
-    const tbody = document.getElementById('tabla-usuarios');
-    document.getElementById('contador').textContent = filtrados.length + ' usuario(s)';
-    if (filtrados.length === 0) {
-        tbody.innerHTML = '<tr class="loading-row"><td colspan="8">Sin resultados para la búsqueda.</td></tr>';
-        return;
-    }
-    const original = obtenerColeccion(SANRUCHO_KEYS.usuarios);
-    const runSet = filtrados.map(function (u) { return u.run; });
-    tbody.innerHTML = original.map(function (u) {
-        if (runSet.indexOf(u.run) === -1) return '';
-        const rolNombre = u.rolId ? obtenerNombreRol(u.rolId) : '';
-        const rolBadge = u.rolId === 3 ? 'badge-cliente' : 'badge-admin';
-        const activo = u.estado === 'Activo';
-        return '<tr>' +
-            '<td>' + escaparHTML(u.run) + '</td>' +
-            '<td><strong>' + escaparHTML(u.nombre) + '</strong> ' + (u.apellidos ? escaparHTML(u.apellidos) : '') + '</td>' +
-            '<td>' + escaparHTML(u.correo) + '</td>' +
-            '<td>' + (u.direccion ? escaparHTML(u.direccion) : '—') + '</td>' +
-            '<td><span class="badge ' + rolBadge + '">' + escaparHTML(rolNombre) + '</span></td>' +
-            '<td><span class="badge ' + (activo ? 'badge-activo' : 'badge-inactivo') + '">' + (activo ? 'Activo' : 'Inactivo') + '</span></td>' +
-            '<td>' + (u.fechaNacimiento || '—') + '</td>' +
-            '<td><div class="actions">' +
-            '<button class="btn btn-edit btn-sm" onclick="window.location.href=\'/admin/usuarios/form?run=' + encodeURIComponent(u.run) + '\'">Editar</button>' +
-            '<button class="btn btn-danger btn-sm" onclick="eliminarUsuario(\'' + u.run + '\')">Eliminar</button>' +
-            '</div></td>' +
-            '</tr>';
-    }).join('');
 }
 
 function eliminarUsuario(run) {
@@ -3395,6 +3448,10 @@ function eliminarUsuario(run) {
 /* =========================== REGISTRO Y LOGIN (paginas publicas) =========================== */
 
 document.addEventListener("DOMContentLoaded", function () {
+    if (document.getElementById("tablaUsuarios")) {
+        cargarUsuarios();
+    }
+
     const formRegistro = document.querySelector(".registro-container form");
     if (formRegistro) {
         formRegistro.addEventListener("submit", function (evento) {
@@ -3800,76 +3857,84 @@ function enteroEnRango(valor, minimo) {
 /* ARCHIVO: .\templates\admin-producto-form.html */
 /* ============================================================ */
 
-<!--Edita o crea productos-->
 {% extends "base.html" %}
-{% block title %}Producto - Administracion{% endblock %}
+{% block title %}Producto - Administración{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
     <div class="row">
+        <!-- Sidebar lateral -->
         <div class="col-lg-3 col-xl-2 d-none d-lg-block px-0">
             {% include "_admin-sidebar.html" %}
         </div>
+
+        <!-- Botón para móvil -->
         <div class="col-12 d-lg-none px-3 pt-3">
-            <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
-                <i class="bi bi-list"></i> Menu administrativo
+            <button class="btn btn-outline-accent" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
+                <i class="bi bi-list"></i> Menú administrativo
             </button>
         </div>
-        <div class="col-lg-9 col-xl-10 p-4">
-            <h1 class="section-title" id="tituloFormularioProducto">Nuevo producto</h1>
 
-            <form id="formularioProducto" novalidate class="bg-nexo-panel rounded p-4">
+        <!-- Contenido principal -->
+        <div class="col-lg-9 col-xl-10 p-4">
+            <h1 class="fw-bold mb-4" id="tituloFormularioProducto" style="color: var(--primary);">Nuevo producto</h1>
+
+            <form id="formularioProducto" novalidate class="card p-4">
                 <div class="row g-3">
                     <div class="col-md-4">
-                        <label for="codigoProducto" class="form-label">Codigo</label>
-                        <input type="text" class="form-control" id="codigoProducto" placeholder="Ej: SR-009">
-                        <div class="invalid-feedback">Codigo obligatorio, minimo 3 caracteres y unico.</div>
+                        <label for="codigoProducto" class="form-label">Código</label>
+                        <input type="text" class="form-control form-control-custom" id="codigoProducto" placeholder="Ej: SR-009">
+                        <div class="invalid-feedback">Código obligatorio, mínimo 3 caracteres y único.</div>
                     </div>
                     <div class="col-md-8">
                         <label for="nombreProducto" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombreProducto" maxlength="100">
-                        <div class="invalid-feedback">El nombre es obligatorio (maximo 100 caracteres).</div>
+                        <input type="text" class="form-control form-control-custom" id="nombreProducto" maxlength="100">
+                        <div class="invalid-feedback">El nombre es obligatorio (máximo 100 caracteres).</div>
                     </div>
                     <div class="col-12">
-                        <label for="descripcionProducto" class="form-label">Descripcion</label>
-                        <textarea class="form-control" id="descripcionProducto" rows="3" maxlength="500"></textarea>
-                        <div class="invalid-feedback">Maximo 500 caracteres.</div>
+                        <label for="descripcionProducto" class="form-label">Descripción</label>
+                        <textarea class="form-control form-control-custom" id="descripcionProducto" rows="3" maxlength="500"></textarea>
+                        <div class="invalid-feedback">Máximo 500 caracteres.</div>
                     </div>
                     <div class="col-md-3">
                         <label for="precioProducto" class="form-label">Precio</label>
-                        <input type="number" class="form-control" id="precioProducto" min="0" step="1">
+                        <input type="number" class="form-control form-control-custom" id="precioProducto" min="0" step="1">
                         <div class="invalid-feedback">El precio debe ser mayor o igual a 0.</div>
                     </div>
                     <div class="col-md-3">
                         <label for="stockProducto" class="form-label">Stock</label>
-                        <input type="number" class="form-control" id="stockProducto" min="0" step="1">
+                        <input type="number" class="form-control form-control-custom" id="stockProducto" min="0" step="1">
                         <div class="invalid-feedback">El stock debe ser un entero mayor o igual a 0.</div>
                     </div>
                     <div class="col-md-3">
-                        <label for="stockCriticoProducto" class="form-label">Stock critico</label>
-                        <input type="number" class="form-control" id="stockCriticoProducto" min="0" step="1">
+                        <label for="stockCriticoProducto" class="form-label">Stock crítico</label>
+                        <input type="number" class="form-control form-control-custom" id="stockCriticoProducto" min="0" step="1">
                         <div class="invalid-feedback">Debe ser un entero mayor o igual a 0.</div>
                     </div>
                     <div class="col-md-3">
-                        <label for="categoriaProducto" class="form-label">Categoria</label>
-                        <select class="form-select" id="categoriaProducto"></select>
-                        <div class="invalid-feedback">Selecciona una categoria.</div>
+                        <label for="categoriaProducto" class="form-label">Categoría</label>
+                        <select class="form-select form-control-custom" id="categoriaProducto"></select>
+                        <div class="invalid-feedback">Selecciona una categoría.</div>
                     </div>
                     <div class="col-md-8">
                         <label for="imagenProducto" class="form-label">Imagen (ruta completa o dentro de static/img)</label>
-                        <input type="text" class="form-control" id="imagenProducto" placeholder="/static/img/productos/mi-producto.webp">
+                        <input type="text" class="form-control form-control-custom" id="imagenProducto" placeholder="/static/img/productos/mi-producto.webp">
                     </div>
                     <div class="col-md-4">
                         <label for="estadoProducto" class="form-label">Estado</label>
-                        <select class="form-select" id="estadoProducto">
+                        <select class="form-select form-control-custom" id="estadoProducto">
                             <option value="Activo">Activo</option>
                             <option value="Inactivo">Inactivo</option>
                         </select>
                     </div>
                 </div>
                 <div class="d-flex gap-2 mt-4">
-                    <button type="submit" class="btn btn-accent">Guardar</button>
-                    <a href="{{ url_for('admin_productos') }}" class="btn btn-outline-light">Cancelar</a>
+                    <button type="submit" class="btn-accent">Guardar</button>
+                    <a href="{{ url_for('admin_productos') }}" class="btn btn-outline-accent">Cancelar</a>
                 </div>
             </form>
         </div>
@@ -3884,64 +3949,79 @@ function enteroEnRango(valor, minimo) {
 document.addEventListener("DOMContentLoaded", function () {
     if (!protegerPaginaAdmin([1, 2])) return;
     ocultarUsuariosSiVendedor();
-
-    const sesion = obtenerSesion();
-    if (sesion.rolId === 2) {
-        Swal.fire("Acceso restringido", "Tu rol no permite crear o editar productos.", "warning")
-            .then(function () { window.location.href = "/admin/productos"; });
-        return;
-    }
-
     inicializarFormularioProducto();
 });
 </script>
 {% endblock %}
-
 
 /* ============================================================ */
 /* ARCHIVO: .\templates\admin-productos.html */
 /* ============================================================ */
 
 {% extends "base.html" %}
-{% block title %}Productos - Administracion{% endblock %}
+{% block title %}Productos - Administración{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+{% endblock %}
 
 {% block content %}
+<!-- Cabecera en admin-productos.html -->
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 pb-2 border-bottom">
+    <h1 class="fw-bold m-0" style="color: var(--primary);">Productos</h1>
+    <a href="{{ url_for('admin_producto_form') }}" id="btnNuevoProducto" class="btn-accent text-decoration-none">
+        <i class="bi bi-plus-lg"></i> + Nuevo producto
+    </a>
+</div>
 <div class="container-fluid">
     <div class="row">
+        <!-- Sidebar lateral -->
         <div class="col-lg-3 col-xl-2 d-none d-lg-block px-0">
             {% include "_admin-sidebar.html" %}
         </div>
+
+        <!-- Botón para móvil -->
         <div class="col-12 d-lg-none px-3 pt-3">
-            <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
-                <i class="bi bi-list"></i> Menu administrativo
+            <button class="btn btn-outline-accent" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
+                <i class="bi bi-list"></i> Menú administrativo
             </button>
         </div>
+
+        <!-- Contenido principal -->
         <div class="col-lg-9 col-xl-10 p-4">
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-                <h1 class="section-title mb-0">Productos</h1>
-                <a href="{{ url_for('admin_producto_form') }}" id="btnNuevoProducto" class="btn btn-accent"><i class="bi bi-plus-lg"></i> Nuevo producto</a>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 pb-2 border-bottom">
+                <h1 class="fw-bold m-0" style="color: var(--primary);">Productos</h1>
+                <a href="{{ url_for('admin_producto_form') }}" id="btnNuevoProducto" class="btn-accent text-decoration-none">
+                    <i class="bi bi-plus-lg"></i> Nuevo producto
+                </a>
             </div>
 
-            <div class="table-responsive bg-nexo-panel rounded p-3">
-                <table id="tablaProductos" class="table table-dark table-hover align-middle w-100">
+            <!-- Contenedor adaptado a estilos.css -->
+            <div class="table-wrapper">
+                <table id="tablaProductos">
                     <thead>
                         <tr>
-                            <th>Codigo</th>
+                            <th>Código</th>
                             <th>Imagen</th>
                             <th>Nombre</th>
-                            <th>Categoria</th>
+                            <th>Categoría</th>
                             <th>Precio</th>
                             <th>Stock</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="cuerpoTablaProductos"></tbody>
+                    <tbody id="cuerpoTablaProductos">
+                        <tr>
+                            <td colspan="8" class="text-center py-4 text-muted">Cargando productos...</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
 {% include "_admin-offcanvas.html" %}
 {% endblock %}
 
@@ -3956,93 +4036,100 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 {% endblock %}
 
-
 /* ============================================================ */
 /* ARCHIVO: .\templates\admin-usuario-form.html */
 /* ============================================================ */
 
-<!-- Edita o crea usuarios -->
 {% extends "base.html" %}
-{% block title %}Usuario - Administracion{% endblock %}
+{% block title %}Usuario - Administración{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
     <div class="row">
+        <!-- Sidebar lateral -->
         <div class="col-lg-3 col-xl-2 d-none d-lg-block px-0">
             {% include "_admin-sidebar.html" %}
         </div>
+
+        <!-- Botón para móvil -->
         <div class="col-12 d-lg-none px-3 pt-3">
-            <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
-                <i class="bi bi-list"></i> Menu administrativo
+            <button class="btn btn-outline-accent" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
+                <i class="bi bi-list"></i> Menú administrativo
             </button>
         </div>
-        <div class="col-lg-9 col-xl-10 p-4">
-            <h1 class="section-title" id="tituloFormularioUsuario">Nuevo usuario</h1>
 
-            <form id="formularioUsuario" novalidate class="bg-nexo-panel rounded p-4">
+        <!-- Contenido principal -->
+        <div class="col-lg-9 col-xl-10 p-4">
+            <h1 class="fw-bold mb-4" id="tituloFormularioUsuario" style="color: var(--primary);">Nuevo usuario</h1>
+
+            <form id="formularioUsuario" novalidate class="card p-4">
                 <div class="row g-3">
                     <div class="col-md-4">
                         <label for="runUsuario" class="form-label">RUN (sin puntos ni guion)</label>
-                        <input type="text" class="form-control" id="runUsuario" placeholder="Ej: 123456785" maxlength="9">
-                        <div class="invalid-feedback">RUN invalido o ya registrado.</div>
+                        <input type="text" class="form-control form-control-custom" id="runUsuario" placeholder="Ej: 123456785" maxlength="9">
+                        <div class="invalid-feedback">RUN inválido o ya registrado.</div>
                     </div>
                     <div class="col-md-4">
                         <label for="nombreUsuario" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombreUsuario" maxlength="50">
-                        <div class="invalid-feedback">Obligatorio (maximo 50 caracteres).</div>
+                        <input type="text" class="form-control form-control-custom" id="nombreUsuario" maxlength="50">
+                        <div class="invalid-feedback">Obligatorio (máximo 50 caracteres).</div>
                     </div>
                     <div class="col-md-4">
                         <label for="apellidosUsuario" class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" id="apellidosUsuario" maxlength="100">
-                        <div class="invalid-feedback">Obligatorio (maximo 100 caracteres).</div>
+                        <input type="text" class="form-control form-control-custom" id="apellidosUsuario" maxlength="100">
+                        <div class="invalid-feedback">Obligatorio (máximo 100 caracteres).</div>
                     </div>
                     <div class="col-md-6">
                         <label for="correoUsuario" class="form-label">Correo</label>
-                        <input type="email" class="form-control" id="correoUsuario" maxlength="100">
+                        <input type="email" class="form-control form-control-custom" id="correoUsuario" maxlength="100">
                         <div class="invalid-feedback">Solo @duoc.cl, @profesor.duoc.cl o @gmail.com.</div>
                     </div>
                     <div class="col-md-6">
-                        <label for="passwordUsuario" class="form-label">Contrasena</label>
-                        <input type="text" class="form-control" id="passwordUsuario" maxlength="10">
+                        <label for="passwordUsuario" class="form-label">Contraseña</label>
+                        <input type="text" class="form-control form-control-custom" id="passwordUsuario" maxlength="10">
                         <div class="invalid-feedback">Entre 4 y 10 caracteres.</div>
                     </div>
                     <div class="col-md-4">
                         <label for="fechaNacimientoUsuario" class="form-label">Fecha de nacimiento</label>
-                        <input type="date" class="form-control" id="fechaNacimientoUsuario">
+                        <input type="date" class="form-control form-control-custom" id="fechaNacimientoUsuario">
                     </div>
                     <div class="col-md-4">
                         <label for="rolUsuario" class="form-label">Tipo de usuario</label>
-                        <select class="form-select" id="rolUsuario"></select>
+                        <select class="form-select form-control-custom" id="rolUsuario"></select>
                         <div class="invalid-feedback">Selecciona un tipo de usuario.</div>
                     </div>
                     <div class="col-md-4">
                         <label for="estadoUsuario" class="form-label">Estado</label>
-                        <select class="form-select" id="estadoUsuario">
+                        <select class="form-select form-control-custom" id="estadoUsuario">
                             <option value="Activo">Activo</option>
                             <option value="Inactivo">Inactivo</option>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="regionUsuario" class="form-label">Region</label>
-                        <select class="form-select" id="regionUsuario"></select>
-                        <div class="invalid-feedback">Selecciona una region.</div>
+                        <label for="regionUsuario" class="form-label">Región</label>
+                        <select class="form-select form-control-custom" id="regionUsuario"></select>
+                        <div class="invalid-feedback">Selecciona una región.</div>
                     </div>
                     <div class="col-md-6">
                         <label for="comunaUsuario" class="form-label">Comuna</label>
-                        <select class="form-select" id="comunaUsuario">
-                            <option value="">Seleccione una region primero</option>
+                        <select class="form-select form-control-custom" id="comunaUsuario">
+                            <option value="">Seleccione una región primero</option>
                         </select>
                         <div class="invalid-feedback">Selecciona una comuna.</div>
                     </div>
                     <div class="col-12">
-                        <label for="direccionUsuario" class="form-label">Direccion</label>
-                        <input type="text" class="form-control" id="direccionUsuario" maxlength="300">
-                        <div class="invalid-feedback">Obligatoria (maximo 300 caracteres).</div>
+                        <label for="direccionUsuario" class="form-label">Dirección</label>
+                        <input type="text" class="form-control form-control-custom" id="direccionUsuario" maxlength="300">
+                        <div class="invalid-feedback">Obligatoria (máximo 300 caracteres).</div>
                     </div>
                 </div>
                 <div class="d-flex gap-2 mt-4">
-                    <button type="submit" class="btn btn-accent">Guardar</button>
-                    <a href="{{ url_for('admin_usuarios') }}" class="btn btn-outline-light">Cancelar</a>
+                    <button type="submit" class="btn-accent">Guardar</button>
+                    <a href="{{ url_for('admin_usuarios') }}" class="btn btn-outline-accent">Cancelar</a>
                 </div>
             </form>
         </div>
@@ -4055,12 +4142,12 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    if (!protegerPaginaAdmin([1])) return;
+    // Cambia [1] por [1, 2] si ambos roles pueden crear usuarios
+    if (!protegerPaginaAdmin([1, 2])) return;
     inicializarFormularioUsuarioAdmin();
 });
 </script>
 {% endblock %}
-
 
 /* ============================================================ */
 /* ARCHIVO: .\templates\admin-usuarios.html */
@@ -4084,7 +4171,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <!-- Botón para móvil -->
         <div class="col-12 d-lg-none px-3 pt-3">
-            <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
+            <button class="btn btn-outline-accent" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
                 <i class="bi bi-list"></i> Menú administrativo
             </button>
         </div>
@@ -4092,25 +4179,20 @@ document.addEventListener("DOMContentLoaded", function () {
         <!-- Contenido principal -->
         <div class="col-lg-9 col-xl-10 p-4">
             <!-- Cabecera -->
-            <div class="header">
-                <div>
-                    <h1>Administración de Usuarios</h1>
-                </div>
-                <a href="{{ url_for('admin_usuario_form') }}" class="btn btn-success">+ Nuevo usuario</a>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 pb-2 border-bottom">
+                <h1 class="fw-bold m-0" style="color: var(--primary);">Administración de Usuarios</h1>
+                <a href="{{ url_for('admin_usuario_form') }}" class="btn-accent text-decoration-none">+ Nuevo usuario</a>
             </div>
 
             <!-- Barra de herramientas -->
-            <div class="toolbar">
-                <div class="search-box">
-                    <input type="text" id="busqueda" placeholder="Buscar por nombre, email o rol..." oninput="filtrarTabla()">
-                </div>
-                <span class="text-muted" id="contador">0 usuarios</span>
-                <button class="btn btn-primary" onclick="cargarUsuarios()">&#8635; Recargar</button>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                <span class="badge-sugerencia mb-0">Listado de usuarios</span>
+                <button class="btn btn-outline-accent" onclick="cargarUsuarios()">&#8635; Recargar</button>
             </div>
 
-            <!-- Tabla -->
+            <!-- Tabla (DataTables) -->
             <div class="table-wrapper">
-                <table>
+                <table id="tablaUsuarios" class="table table-striped table-hover align-middle">
                     <thead>
                         <tr>
                             <th>RUN</th>
@@ -4124,9 +4206,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         </tr>
                     </thead>
                     <tbody id="tabla-usuarios">
-                        <tr class="loading-row">
-                            <td colspan="8">Cargando usuarios...</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -4140,12 +4219,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 {% block extra_js %}
     <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (!protegerPaginaAdmin([1])) return;
-            cargarUsuarios();
-        });
-    </script>
 {% endblock %}
 
 /* ============================================================ */
@@ -4170,7 +4243,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <!-- Botón para abrir el menú en dispositivos móviles -->
         <div class="col-12 d-lg-none px-3 pt-3">
-            <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
+            <button class="btn btn-outline-accent" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
                 <i class="bi bi-list"></i> Menú administrativo
             </button>
         </div>
@@ -4178,59 +4251,50 @@ document.addEventListener("DOMContentLoaded", function () {
         <!-- Contenido principal del panel -->
         <div class="col-lg-9 col-xl-10 p-4">
             <!-- Cabecera de la página -->
-            <div class="header">
-                <div>
-                    <h1>Panel Administrativo</h1>
-                </div>
-                <button class="btn btn-success" onclick="abrirModalNuevo()">+ Nuevo registro</button>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 pb-2 border-bottom">
+                <h1 class="fw-bold m-0" style="color: var(--primary);">Panel Administrativo</h1>
+                <button class="btn-accent" id="btnNuevoRegistro" onclick="abrirModalNuevo()">+ Nuevo registro</button>
             </div>
 
-            <!-- Indicadores -->
+            <!-- Indicadores (KPIs) -->
             <div class="cards-grid">
-                <div class="card usuarios">
+                <div class="card kpi-card">
                     <div class="card-title">Usuarios</div>
                     <div class="card-value" data-card="usuarios">-</div>
                     <div class="card-desc">Usuarios registrados</div>
                 </div>
-                <div class="card productos">
+                <div class="card kpi-card">
                     <div class="card-title">Productos</div>
                     <div class="card-value" data-card="productos">-</div>
                     <div class="card-desc">Productos en catálogo</div>
                 </div>
-                <div class="card pedidos">
+                <div class="card kpi-card">
                     <div class="card-title">Pedidos</div>
                     <div class="card-value" data-card="pedidos">-</div>
-                    <div class="card-desc">Pedidos (próximamente)</div>
+                    <div class="card-desc">Pedidos registrados</div>
                 </div>
-                <div class="card catalogo">
+                <div class="card kpi-card">
                     <div class="card-title">Catálogo</div>
                     <div class="card-value" data-card="catalogo">-</div>
-                    <div class="card-desc">Categorías</div>
+                    <div class="card-desc">Categorías activas</div>
                 </div>
             </div>
 
-            <!-- Barra de herramientas -->
-            <div class="toolbar">
-                <div class="search-box">
-                    <input type="text" id="busqueda" placeholder="Buscar...">
+            <!-- Barra de herramientas limpia (sin selector de dropdown) -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                <div class="flex-grow-1" style="max-width: 400px;">
+                    <input type="text" id="busqueda" class="form-control-custom" placeholder="Buscar registros...">
                 </div>
-                <span class="text-muted">Sección: <strong id="seccion-actual">usuarios</strong></span>
-                <select id="selector-seccion" onchange="cambiarSeccion(this.value)">
-                    <option value="usuarios">Usuarios</option>
-                    <option value="productos">Productos</option>
-                    <option value="pedidos">Pedidos</option>
-                    <option value="catalogo">Catálogo</option>
-                </select>
-                <button class="btn btn-primary" onclick="cargarDatos()">&#8635; Recargar</button>
+                <button class="btn btn-outline-accent" onclick="cargarDatos()">&#8635; Recargar</button>
             </div>
 
-            <!-- Tabla -->
+            <!-- Tabla adaptada a estilos.css -->
             <div class="table-wrapper">
                 <table>
                     <thead id="tabla-head"></thead>
                     <tbody id="tabla-body">
                         <tr class="loading-row">
-                            <td colspan="6">Cargando datos...</td>
+                            <td colspan="6" class="text-center py-4 text-muted">Cargando datos...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -4245,21 +4309,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 {% block modals %}
     <!-- Modal Crear / Editar -->
-    <div class="modal-backdrop" id="modal-registro">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 id="modal-titulo">Nuevo registro</h2>
-                <button class="modal-close" onclick="cerrarModal()">&times;</button>
+    <div class="modal-personalizado" id="modal-registro">
+        <div class="modal-contenido card p-4">
+            <div class="modal-header d-flex justify-content-between align-items-center mb-3">
+                <h3 id="modal-titulo" class="card-title m-0">Nuevo registro</h3>
+                <button class="btn-close" onclick="cerrarModal()"></button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="campo-principal">Valor</label>
-                    <input type="text" id="campo-principal" placeholder="Escribe un valor...">
+                <div class="form-group mb-3">
+                    <label for="campo-principal" class="form-label">Valor</label>
+                    <input type="text" id="campo-principal" class="form-control-custom" placeholder="Escribe un valor...">
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
-                <button class="btn btn-primary" onclick="guardarRegistro()">Guardar</button>
+            <div class="modal-footer d-flex justify-content-end gap-2 mt-3">
+                <button class="btn btn-outline-accent" onclick="cerrarModal()">Cancelar</button>
+                <button class="btn-accent" onclick="guardarRegistro()">Guardar</button>
             </div>
         </div>
     </div>
@@ -4267,12 +4331,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 {% block extra_js %}
     <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (!protegerPaginaAdmin([1, 2])) return;
-            ocultarUsuariosSiVendedor();
-        });
-    </script>
+
 {% endblock %}
 
 /* ============================================================ */
@@ -4680,24 +4739,10 @@ document.addEventListener("DOMContentLoaded", function () {
 {% extends 'base.html' %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sanrucho - Contacto</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
-</head>
-<body class="contacto-body">
     <section class="problema-hero-contacto">
         <div class="container hero-content">
             <div class="row align-items-center justify-content-center text-center text-lg-start g-4">
-                
+
                 <div class="col-12 col-lg-7">
                     <div class="badge-sugerencia">
                         <i class="fa-solid fa-heart text-danger"></i> Buzón de Mensajes & Soporte
@@ -4720,7 +4765,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <main class="contacto-container my-5">
         <div class="row align-items-center justify-content-center g-4">
-            
+
             <!-- Columna izquierda: Imagen decorativa + Texto explicativo -->
             <div class="col-12 col-md-5 text-center">
                 <div class="columna-info-contacto">
@@ -4765,12 +4810,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         </div>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ url_for('static', filename='js/validaciones.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/contacto.js') }}"></script>
 {% endblock %}
 
 /* ============================================================ */
@@ -4914,51 +4956,37 @@ document.addEventListener("DOMContentLoaded", function () {
 {% extends 'base.html' %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    
-    <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
-    
-</head>
-<body class="body-login">
+    <main class="container my-5 d-flex justify-content-center">
+        <div class="login-container">
+            <a href="{{ url_for('home') }}" class="d-inline-block mb-3 text-decoration-none">← Volver</a>
+            <h2 class="mb-4">Iniciar Sesión</h2>
 
-    <div class="login-container">
-        <a href="{{ url_for('home') }}" class="d-inline-block mb-3 text-decoration-none">← Volver</a>
-        <h2 class="mb-4">Iniciar Sesión</h2>
+            <form class="needs-validation" novalidate method="POST">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" id="email" name="email" required placeholder="tu@correo.com">
+                    <div class="invalid-feedback">Por favor, ingresa tu correo electrónico.</div>
+                </div>
 
-        <form class="needs-validation" novalidate method="POST">
-            <div class="mb-3">
-                <label for="email" class="form-label">Correo electrónico</label>
-                <input type="email" class="form-control" id="email" name="email" required placeholder="tu@correo.com">
-                <div class="invalid-feedback">Por favor, ingresa tu correo electrónico.</div>
-            </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" required placeholder="********">
+                    <div class="invalid-feedback">Por favor, ingresa tu contraseña.</div>
+                </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" name="password" required placeholder="********">
-                <div class="invalid-feedback">Por favor, ingresa tu contraseña.</div>
-            </div>
+                <button type="submit" class="btn btn-primary w-100 mb-3">Entrar</button>
 
-            <button type="submit" class="btn btn-primary w-100 mb-3">Entrar</button>
+                <div class="login-footer text-center">
+                    ¿No tienes una cuenta? <a href="{{ url_for('registro') }}">Regístrate aquí</a>
+                </div>
+            </form>
+        </div>
+    </main>
 
-            <div class="login-footer text-center">
-                ¿No tienes una cuenta? <a href="{{ url_for('registro') }}">Regístrate aquí</a>
-            </div>
-        </form>
-    </div>
-
-    
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
     <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
     <script src="{{ url_for('static', filename='js/validaciones.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
 {% endblock %}
 
 /* ============================================================ */
@@ -4968,107 +4996,96 @@ document.addEventListener("DOMContentLoaded", function () {
 {% extends 'base.html' %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title> Sanrucho - Sobre Nosotros</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos-nosotros.css') }}">
-</head>
-<body>
-    <div class="sobre-nosotros">
-        <img src="/static/img/nosotros/Hola.png">
-        <h1>
-            Somos un equipo de tres mujeres <br> que aman Sanrio.
-        </h1>
-        <p>
-            Este amor nos inspiró a hacer una tienda que pudiera extender el mismo sentimiento a más personas en Chile. <br>
-            No nos limitamos a traer solo los personajes más conocidos, sino que queremos que todos puedan disfrutar de productos de sus personajes favoritos, <br> por muy poco conocidos que sean.
-        </p>
-    </div>
+    <main class="my-5">
+        <div class="sobre-nosotros">
+            <img src="/static/img/nosotros/Hola.png" alt="Hola">
+            <h1>
+                Somos un equipo de tres mujeres <br> que aman Sanrio.
+            </h1>
+            <p>
+                Este amor nos inspiró a hacer una tienda que pudiera extender el mismo sentimiento a más personas en Chile. <br>
+                No nos limitamos a traer solo los personajes más conocidos, sino que queremos que todos puedan disfrutar de productos de sus personajes favoritos, <br> por muy poco conocidos que sean.
+            </p>
+        </div>
 
-    <div class="container-personajes my-5">
-        <div class="row align-items-center text-center">
-            <!-- Izquierda -->
-            <div class="col-md-3 mb-4 mb-md-0">
-                <div class="avatar-circle maru">
-                    <img src="/static/img/nosotros/badtz-maru2.png" alt="Badtz Maru">
+        <div class="container-personajes my-5">
+            <div class="row align-items-center text-center">
+                <!-- Izquierda -->
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <div class="avatar-circle maru">
+                        <img src="/static/img/nosotros/badtz-maru2.png" alt="Badtz Maru">
+                    </div>
+                    <p>Nancy</p>
                 </div>
-                <p>Nancy</p>
-            </div>
 
-            <!-- Centro -->
-            <div class="col-md-6 mb-4 mb-md-0">
-                <div class="avatar-circle gudetama">
-                    <img src="/static/img/nosotros/gudetama2.png" alt="Gudetama">
+                <!-- Centro -->
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <div class="avatar-circle gudetama">
+                        <img src="/static/img/nosotros/gudetama2.png" alt="Gudetama">
+                    </div>
+                    <p>Camila</p>
                 </div>
-                <p>Camila</p>
-            </div>
 
-            <!-- Derecha -->
-            <div class="col-md-3 mb-4 mb-md-0">
-                <div class="avatar-circle cinna">
-                    <img src="/static/img/nosotros/cinnamoroll1.png" alt="Cinnamoroll">
+                <!-- Derecha -->
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <div class="avatar-circle cinna">
+                        <img src="/static/img/nosotros/cinnamoroll1.png" alt="Cinnamoroll">
+                    </div>
+                    <p>Sofía</p>
                 </div>
-                <p>Sofía</p>
             </div>
         </div>
-    </div>
 
-    <div class="container my-4">
-        <div class="row g-4">
-            <!-- Tarjeta de Información / Ubicación -->
-            <aside class="col-md-6">
-                <div class="info-card">
-                    <div class="card-header-custom">
-                        <span class="card-badge">
-                            <i class="bi bi-geo-alt-fill"></i>
-                        </span>
-                        <h5 class="card-title-custom">Encuéntranos</h5>
-                    </div>
-                    
-                    <p class="card-description">
-                        Avenida Libertador Bernardo O'Higgins 123
-                    </p>
-
-                    <div class="social-wrapper">
-                            <img src="/static/img/nosotros/instagram.png" alt="Instagram" class="social-icon">
-                            <span>@sanrucho</span>
-                        </a>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- Tarjeta de Contacto -->
-            <aside class="col-md-6">
-                <div class="info-card contact-card">
-                    <div>
+        <div class="container my-4">
+            <div class="row g-4">
+                <!-- Tarjeta de Información / Ubicación -->
+                <aside class="col-md-6">
+                    <div class="info-card">
                         <div class="card-header-custom">
                             <span class="card-badge">
-                                <i class="bi bi-envelope-fill"></i>
+                                <i class="bi bi-geo-alt-fill"></i>
                             </span>
-                            <h5 class="card-title-custom">¿Necesitas contactarnos?</h5>
+                            <h5 class="card-title-custom">Encuéntranos</h5>
                         </div>
+                        
                         <p class="card-description">
-                            Llena nuestro formulario y nos pondremos en contacto contigo.
+                            Avenida Libertador Bernardo O'Higgins 123
                         </p>
-                    </div>
 
-                    <div class="card-action">
-                        <a href="{{ url_for('contacto') }}" class="btn-custom">
-                            Ir al formulario
-                        </a>
+                        <div class="social-wrapper">
+                            <img src="/static/img/nosotros/instagram.png" alt="Instagram" class="social-icon">
+                            <span>@sanrucho</span>
+                        </div>
                     </div>
-                </div>
-            </aside>
+                </aside>
+
+                <!-- Tarjeta de Contacto -->
+                <aside class="col-md-6">
+                    <div class="info-card contact-card">
+                        <div>
+                            <div class="card-header-custom">
+                                <span class="card-badge">
+                                    <i class="bi bi-envelope-fill"></i>
+                                </span>
+                                <h5 class="card-title-custom">¿Necesitas contactarnos?</h5>
+                            </div>
+                            <p class="card-description">
+                                Llena nuestro formulario y nos pondremos en contacto contigo.
+                            </p>
+                        </div>
+
+                        <div class="card-action">
+                            <a href="{{ url_for('contacto') }}" class="btn-custom">
+                                Ir al formulario
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
+    </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}
 
 /* ============================================================ */
@@ -5078,21 +5095,10 @@ document.addEventListener("DOMContentLoaded", function () {
 {% extends 'base.html' %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanrucho - Detalle del Producto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
-</head>
-<body>
     <main class="producto-container my-5">
 
         <div class="volver-mb-4">
-            <a href="/productos" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+            <a href="/productos" class="btn btn-add-cart flex-grow-1">
                 &larr; Volver al catálogo
             </a>
         </div>
@@ -5173,8 +5179,6 @@ document.addEventListener("DOMContentLoaded", function () {
     <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
     <script src="{{ url_for('static', filename='js/detalle-producto.js') }}"></script>
     <script src="{{ url_for('static', filename='js/resenas.js') }}"></script>
-</body>
-</html>
 
 {% endblock %}
 
@@ -5185,16 +5189,6 @@ document.addEventListener("DOMContentLoaded", function () {
 {% extends 'base.html' %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanrucho - Catálogo de Productos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
-</head>
-<body>
     <main class="container my-5">
         <div class="row">
             <aside class="col-lg-3 mb-4">
@@ -5232,7 +5226,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
 
                 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="contenedorProductos">
-                    </div>
+                </div>
             </section>
         </div>
     </main>
@@ -5241,9 +5235,6 @@ document.addEventListener("DOMContentLoaded", function () {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
     <script src="{{ url_for('static', filename='js/productos.js') }}"></script>
-</body>
-</html>
-
 {% endblock %}
 
 /* ============================================================ */
@@ -5253,61 +5244,49 @@ document.addEventListener("DOMContentLoaded", function () {
 {% extends 'base.html' %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Crear Cuenta</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
-</head>
-<body class="body-login">
-{% include '_navbar.html' %}
-    <div class="login-container registro-container">
-        <a href="{{ url_for('home') }}" class="boton-volver">← Volver</a>
-        <h2>Crear Cuenta</h2>
-        
-        <form action="{{ url_for('registro') }}" method="POST" class="row g-3 needs-validation" novalidate>
-            <div>
-                <label for="nombre">Nombre completo</label>
-                <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
-                <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
-            </div>
+    <main class="container my-5 d-flex justify-content-center">
+        <div class="login-container registro-container">
+            <a href="{{ url_for('home') }}" class="boton-volver">← Volver</a>
+            <h2>Crear Cuenta</h2>
+            
+            <form action="{{ url_for('registro') }}" method="POST" class="row g-3 needs-validation" novalidate>
+                <div>
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+                    <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
+                </div>
 
-            <div>
-                <label for="email">Correo electrónico</label>
-                <input type="email" id="email" name="email" required placeholder="tu@correo.com">
-                <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
-            </div>
+                <div>
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" name="email" required placeholder="tu@correo.com">
+                    <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
+                </div>
 
-            <div>
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" required minlength="6" placeholder="Mínimo 6 caracteres">
-                <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
-            </div>
+                <div>
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required minlength="6" placeholder="Mínimo 6 caracteres">
+                    <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+                </div>
 
-            <div>
-                <label for="confirm_password">Confirmar contraseña</label>
-                <input type="password" id="confirm_password" name="confirm_password" required placeholder="Repite tu contraseña">
-                <div class="invalid-feedback">Confirma tu contraseña.</div>
-            </div>
+                <div>
+                    <label for="confirm_password">Confirmar contraseña</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required placeholder="Repite tu contraseña">
+                    <div class="invalid-feedback">Confirma tu contraseña.</div>
+                </div>
 
-            <button type="submit">Registrarse</button>
+                <button type="submit">Registrarse</button>
 
-            <div class="login-footer">
-                ¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a>
-            </div>
-        </form>
-    </div>
+                <div class="login-footer">
+                    ¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a>
+                </div>
+            </form>
+        </div>
+    </main>
 
-    {% include '_footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
     <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
     <script src="{{ url_for('static', filename='js/validaciones.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
-
 {% endblock %}
 
 /* ============================================================ */
