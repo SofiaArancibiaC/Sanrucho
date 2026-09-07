@@ -10,13 +10,6 @@ function cargarUsuarios() {
     const tbody = document.getElementById('tabla-usuarios');
     const usuarios = obtenerColeccion(SANRUCHO_KEYS.usuarios);
 
-    document.getElementById('contador').textContent = usuarios.length + ' usuario(s)';
-
-    if (usuarios.length === 0) {
-        tbody.innerHTML = '<tr class="loading-row"><td colspan="8">No hay usuarios para mostrar.</td></tr>';
-        return;
-    }
-
     tbody.innerHTML = usuarios.map(function (u) {
         const rolNombre = u.rolId ? obtenerNombreRol(u.rolId) : (u.rol || '');
         const rolBadge = u.rolId === 3 ? 'badge-cliente' : 'badge-admin';
@@ -36,50 +29,19 @@ function cargarUsuarios() {
             '</div></td>' +
             '</tr>';
     }).join('');
-}
 
-function filtrarTabla() {
-    const termino = document.getElementById('busqueda').value.trim().toLowerCase();
-    const usuarios = obtenerColeccion(SANRUCHO_KEYS.usuarios);
-    if (!termino) {
-        cargarUsuarios();
-        return;
+    if (window.jQuery && $.fn && $.fn.DataTable) {
+        if ($.fn.DataTable.isDataTable('#tablaUsuarios')) {
+            $('#tablaUsuarios').DataTable().destroy();
+        }
+        $('#tablaUsuarios').DataTable({
+            responsive: true,
+            pageLength: 10,
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
+            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.11/i18n/es-ES.json' },
+            columnDefs: [{ orderable: false, targets: [7] }]
+        });
     }
-    const filtrados = usuarios.filter(function (u) {
-        return (u.nombre || '').toLowerCase().includes(termino) ||
-            (u.apellidos || '').toLowerCase().includes(termino) ||
-            (u.correo || '').toLowerCase().includes(termino) ||
-            (u.run || '').toLowerCase().includes(termino) ||
-            (u.direccion || '').toLowerCase().includes(termino) ||
-            (obtenerNombreRol(u.rolId) || '').toLowerCase().includes(termino);
-    });
-    const tbody = document.getElementById('tabla-usuarios');
-    document.getElementById('contador').textContent = filtrados.length + ' usuario(s)';
-    if (filtrados.length === 0) {
-        tbody.innerHTML = '<tr class="loading-row"><td colspan="8">Sin resultados para la búsqueda.</td></tr>';
-        return;
-    }
-    const original = obtenerColeccion(SANRUCHO_KEYS.usuarios);
-    const runSet = filtrados.map(function (u) { return u.run; });
-    tbody.innerHTML = original.map(function (u) {
-        if (runSet.indexOf(u.run) === -1) return '';
-        const rolNombre = u.rolId ? obtenerNombreRol(u.rolId) : '';
-        const rolBadge = u.rolId === 3 ? 'badge-cliente' : 'badge-admin';
-        const activo = u.estado === 'Activo';
-        return '<tr>' +
-            '<td>' + escaparHTML(u.run) + '</td>' +
-            '<td><strong>' + escaparHTML(u.nombre) + '</strong> ' + (u.apellidos ? escaparHTML(u.apellidos) : '') + '</td>' +
-            '<td>' + escaparHTML(u.correo) + '</td>' +
-            '<td>' + (u.direccion ? escaparHTML(u.direccion) : '—') + '</td>' +
-            '<td><span class="badge ' + rolBadge + '">' + escaparHTML(rolNombre) + '</span></td>' +
-            '<td><span class="badge ' + (activo ? 'badge-activo' : 'badge-inactivo') + '">' + (activo ? 'Activo' : 'Inactivo') + '</span></td>' +
-            '<td>' + (u.fechaNacimiento || '—') + '</td>' +
-            '<td><div class="actions">' +
-            '<button class="btn btn-edit btn-sm" onclick="window.location.href=\'/admin/usuarios/form?run=' + encodeURIComponent(u.run) + '\'">Editar</button>' +
-            '<button class="btn btn-danger btn-sm" onclick="eliminarUsuario(\'' + u.run + '\')">Eliminar</button>' +
-            '</div></td>' +
-            '</tr>';
-    }).join('');
 }
 
 function eliminarUsuario(run) {
@@ -99,6 +61,10 @@ function eliminarUsuario(run) {
 /* =========================== REGISTRO Y LOGIN (paginas publicas) =========================== */
 
 document.addEventListener("DOMContentLoaded", function () {
+    if (document.getElementById("tablaUsuarios")) {
+        cargarUsuarios();
+    }
+
     const formRegistro = document.querySelector(".registro-container form");
     if (formRegistro) {
         formRegistro.addEventListener("submit", function (evento) {
