@@ -1,6 +1,6 @@
 <!--Edita o crea productos-->
 {% extends "base.html" %}
-{% block title %}Videojuego - Administracion{% endblock %}
+{% block title %}Producto - Administracion{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
@@ -14,13 +14,13 @@
             </button>
         </div>
         <div class="col-lg-9 col-xl-10 p-4">
-            <h1 class="section-title" id="tituloFormularioProducto">Nuevo videojuego</h1>
+            <h1 class="section-title" id="tituloFormularioProducto">Nuevo producto</h1>
 
             <form id="formularioProducto" novalidate class="bg-nexo-panel rounded p-4">
                 <div class="row g-3">
                     <div class="col-md-4">
                         <label for="codigoProducto" class="form-label">Codigo</label>
-                        <input type="text" class="form-control" id="codigoProducto" placeholder="Ej: NG-009">
+                        <input type="text" class="form-control" id="codigoProducto" placeholder="Ej: SR-009">
                         <div class="invalid-feedback">Codigo obligatorio, minimo 3 caracteres y unico.</div>
                     </div>
                     <div class="col-md-8">
@@ -54,8 +54,8 @@
                         <div class="invalid-feedback">Selecciona una categoria.</div>
                     </div>
                     <div class="col-md-8">
-                        <label for="imagenProducto" class="form-label">Imagen (ruta dentro de static/img)</label>
-                        <input type="text" class="form-control" id="imagenProducto" placeholder="productos/mi-juego.svg">
+                        <label for="imagenProducto" class="form-label">Imagen (ruta completa o dentro de static/img)</label>
+                        <input type="text" class="form-control" id="imagenProducto" placeholder="/static/img/productos/mi-producto.webp">
                     </div>
                     <div class="col-md-4">
                         <label for="estadoProducto" class="form-label">Estado</label>
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const sesion = obtenerSesion();
     if (sesion.rolId === 2) {
-        Swal.fire("Acceso restringido", "Tu rol no permite crear o editar videojuegos.", "warning")
+        Swal.fire("Acceso restringido", "Tu rol no permite crear o editar productos.", "warning")
             .then(function () { window.location.href = "/admin/productos"; });
         return;
     }
