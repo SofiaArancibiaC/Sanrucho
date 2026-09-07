@@ -42,7 +42,7 @@
                 <!-- Mensaje cuando el carrito está vacío -->
                 <div class="sin-resultados" id="carrito-vacio" style="display: none;">
                     <p>Tu carrito está vacío.</p>
-                    <a class="btn btn-accent" href="{{ url_for('inicio') }}">Ir a la tienda</a>
+                    <a class="btn btn-accent" href="{{ url_for('home') }}">Ir a la tienda</a>
                 </div>
             </section>
 
@@ -65,7 +65,7 @@
                 <button class="btn btn-accent btn-block" id="btn-finalizar" onclick="finalizarCompra()">
                     Finalizar compra
                 </button>
-                <a class="seguir-comprando" href="{{ url_for('inicio') }}">&larr; Seguir comprando</a>
+                <a class="seguir-comprando" href="{{ url_for('productos') }}">&larr; Seguir comprando</a>
             </aside>
         </div>
     </div>

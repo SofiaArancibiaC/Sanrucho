@@ -17,11 +17,11 @@
     <!-- Barra superior compartida -->
     <header class="topbar">
         <div class="topbar-brand">
-            <a href="{{ url_for('inicio') }}">{% block brand %}Tienda Sanrucho{% endblock %}</a>
+            <a href="{{ url_for('home') }}">{% block brand %}Tienda Sanrucho{% endblock %}</a>
         </div>
         <nav class="topbar-nav">
             {% block nav %}
-            <a href="{{ url_for('inicio') }}">Inicio</a>
+            <a href="{{ url_for('home') }}">Inicio</a>
             {% endblock %}
         </nav>
         <div class="topbar-user">

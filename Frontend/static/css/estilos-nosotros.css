@@ -19,6 +19,7 @@ body {
 
   background: linear-gradient(145deg, #f2c467, #faf2a6);
 
+  margin-top: 100px;
   padding:20px;
   box-sizing: border-box;
   overflow: hidden;
@@ -169,10 +170,6 @@ body {
     transition: color 0.2s ease;
 }
 
-.social-link:hover {
-    color: #e1306c; /* Color característico de Instagram */
-}
-
 .social-icon {
     width: 22px;
     height: 22px;
@@ -186,7 +183,7 @@ body {
 
 .btn-custom {
     display: inline-block;
-    background-color: #0d6efd;
+    background-color: #f74d9c;
     color: #ffffff;
     font-weight: 500;
     text-decoration: none;
@@ -197,7 +194,7 @@ body {
 }
 
 .btn-custom:hover {
-    background-color: #0b5ed7;
+    background-color: #d02173;
     color: #ffffff;
     transform: translateY(-1px);
 }

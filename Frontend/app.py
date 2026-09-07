@@ -3,16 +3,12 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route("/")
-def inicio():
+def home():
     return render_template("index.html")
 
 @app.route("/base")
 def ficha():
     return render_template("base.html")
-
-@app.route("/admin-usuarios")
-def admin_usuarios():
-    return render_template("admin-usuarios.html")
 
 @app.route("/admin")
 def admin():
@@ -57,6 +53,7 @@ def productos():
 @app.route("/producto-detalle")
 def producto_detalle():
     return render_template("producto-detalle.html")
+
 @app.route("/adminoffcanvas")
 def admin_offcanvas():
     return render_template("_admin-offcanvas.html")
@@ -75,18 +72,20 @@ def navbar():
 
 @app.route("/adminproductoform")
 def admin_producto_form():
-    return render_template("_admin-producto-form.html")
+    return render_template("admin-producto-form.html")
 
 @app.route("/adminproductos")
 def admin_productos():
-    return render_template("_admin-productos.html")
+    return render_template("admin-productos.html")
 
 @app.route("/adminusuarioform")
 def admin_usuario_form():
-    return render_template("_admin-usuario-form.html")
+    return render_template("admin-usuario-form.html")
 
 @app.route("/adminusuarios")
 def admin_usuarios():
-    return render_template("_admin-usuarios.html")
+    return render_template("admin-usuarios.html")
 
 
+if __name__ == "__main__":
+    app.run(debug=True)
