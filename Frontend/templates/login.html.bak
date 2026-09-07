@@ -8,9 +8,8 @@
 </head>
 <body class="body-login">
 
-{% include '_navbar.html' %}
     <div class="login-container">
-        <a href="{{ url_for('home') }}">← Volver</a>
+        <a href="{{ url_for('inicio') }}">← Volver</a>
         <h2>Iniciar Sesión</h2>
         <form class="row g-3 needs-validation" novalidate>
             <label for="email">Correo electrónico</label>
@@ -27,7 +26,7 @@
             </div>
         </form>
     </div>
-    {% include '_footer.html' %}
+
     <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
     <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
     <script src="{{ url_for('static', filename='js/validaciones.js') }}"></script>

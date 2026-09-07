@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
 </head>
 <body class="body-login">
-{% include '_navbar.html' %}
+
     <div class="login-container registro-container">
-        <a href="{{ url_for('home') }}" class="boton-volver">← Volver</a>
+        <a href="{{ url_for('inicio') }}" class="boton-volver">← Volver</a>
         <h2>Crear Cuenta</h2>
         
         <form action="{{ url_for('registro') }}" method="POST" class="row g-3 needs-validation" novalidate>
@@ -45,7 +45,6 @@
         </form>
     </div>
 
-    {% include '_footer.html' %}
     <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
     <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
     <script src="{{ url_for('static', filename='js/validaciones.js') }}"></script>

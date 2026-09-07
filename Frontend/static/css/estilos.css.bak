@@ -4,7 +4,7 @@ body {
   background-position: top center;
   background-size: 100% auto;
   /* ancho completo, alto proporcional */
-  background-color: #fefcf4;
+  background-color: #ffffff;
   /* continúa en blanco después de la imagen */
   background-attachment: scroll;
   min-height: 100vh;
@@ -75,7 +75,7 @@ body.contacto-body {
 .mascota-wrapper {
   display: inline-flex;
   align-items: center;
-}
+  
 .logo {
   height: 100px;
   /* controla el tamaño según la altura, no el ancho */
