@@ -158,3 +158,41 @@ function mostrarError(mensaje) {
         </div>
     `;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const stars = document.querySelectorAll('#starRatingGroup .star-btn');
+  const inputCalificacion = document.getElementById('inputCalificacion');
+
+  function pintarEstrellas(valor) {
+    stars.forEach(star => {
+      const starVal = parseInt(star.getAttribute('data-value'), 10);
+      if (starVal <= valor) {
+        star.classList.remove('bi-star');
+        star.classList.add('bi-star-fill', 'active');
+      } else {
+        star.classList.remove('bi-star-fill', 'active');
+        star.classList.add('bi-star');
+      }
+    });
+  }
+
+  pintarEstrellas(5);
+
+  stars.forEach(star => {
+
+    star.addEventListener('click', () => {
+      const rating = parseInt(star.getAttribute('data-value'), 10);
+      inputCalificacion.value = rating;
+      pintarEstrellas(rating);
+    });
+
+
+    star.addEventListener('mouseenter', () => {
+      pintarEstrellas(parseInt(star.getAttribute('data-value'), 10));
+    });
+  });
+
+  document.getElementById('starRatingGroup').addEventListener('mouseleave', () => {
+    pintarEstrellas(parseInt(inputCalificacion.value, 10));
+  });
+});

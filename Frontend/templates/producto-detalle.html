@@ -10,9 +10,9 @@
 </head>
 <body>
 
-    <main class="container my-5">
+    <main class="producto-container my-5">
 
-        <div class="mb-4">
+        <div class="volver-mb-4">
             <a href="/productos" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
                 &larr; Volver al catálogo
             </a>
@@ -27,9 +27,72 @@
         </div>
     </main>
 
+    <section class="seccion-resenas my-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h3 class="resenas-titulo">Opiniones de nuestros clientes</h3>
+                <p class="text-muted">Conoce lo que opinan quienes ya compraron este producto</p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+
+                <div class="col-lg-7 col-md-12">
+                
+                    <div id="resumenResenas" class="resenas-resumen-box mb-4"></div>
+                    <div id="contenedorResenas" class="d-flex flex-column gap-3"></div>
+                </div>
+
+                <div class="col-lg-5 col-md-8">
+                    <div class="resena-form-card sticky-top" style="top: 2rem;">
+                    <h5 class="mb-2">Deja tu reseña</h5>
+                    <p class="text-muted small mb-4">Comparte tu experiencia para ayudar a otros usuarios.</p>
+
+                    <!-- Aviso para usuarios sin sesión -->
+                    <div id="avisoLoginResena" class="alert alert-light border-pink d-none text-center">
+                        Debes <a href="/login" class="fw-bold text-pink">iniciar sesión</a> para dejar una opinión.
+                    </div>
+
+                        <!-- Formulario -->
+                        <form id="formResena" class="needs-validation d-none" novalidate>
+                            <!-- Selector visual interactivo por estrellas -->
+                            <div class="mb-3 text-center text-sm-start">
+                            <label class="form-label d-block">Tu calificación</label>
+                            <div class="star-rating-input d-inline-flex gap-1" id="starRatingGroup">
+                                <i class="bi bi-star star-btn" data-value="1"></i>
+                                <i class="bi bi-star star-btn" data-value="2"></i>
+                                <i class="bi bi-star star-btn" data-value="3"></i>
+                                <i class="bi bi-star star-btn" data-value="4"></i>
+                                <i class="bi bi-star star-btn" data-value="5"></i>
+                            </div>
+                            <input type="hidden" name="calificacion" id="inputCalificacion" value="5" required>
+                            </div>
+
+                            <div class="mb-3">
+                            <label class="form-label" for="inputComentario">Tu opinión</label>
+                            <textarea 
+                                class="form-control" 
+                                id="inputComentario" 
+                                rows="4" 
+                                placeholder="¿Qué te gustó o disgustó del producto? ¿Cómo fue la calidad?"
+                                required
+                            ></textarea>
+                            <div class="invalid-feedback">Por favor, escribe un comentario sobre el producto.</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-add-cart w-100 py-2">
+                            Publicar reseña
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
     <script src="{{ url_for('static', filename='js/detalle-producto.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/resenas.js') }}"></script>
 </body>
 </html>

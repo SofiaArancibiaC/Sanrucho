@@ -21,6 +21,7 @@ const SANRUCHO_KEYS = {
     carrito: "sanrucho_carrito",
     contactos: "sanrucho_contactos",
     blog: "sanrucho_blog",
+    resenas: "sanrucho_resenas", 
     sesion: "sanrucho_sesion"
 };
 
@@ -136,6 +137,35 @@ function inicializarDatos() {
     if (!localStorage.getItem(SANRUCHO_KEYS.contactos)) {
         guardarColeccion(SANRUCHO_KEYS.contactos, []);
     }
+
+    if (!localStorage.getItem(SANRUCHO_KEYS.resenas)) {
+    guardarColeccion(SANRUCHO_KEYS.resenas, [
+        {
+            id: 1,
+            productoCodigo: "HK-PLUSH-001",
+            usuarioNombre: "Camila S.",
+            calificacion: 5,
+            comentario: "Hermoso peluche, la calidad de la tela es muy buena y llegó bien empacado.",
+            fecha: "2026-07-15"
+        },
+        {
+            id: 2,
+            productoCodigo: "HK-PLUSH-001",
+            usuarioNombre: "Diego F.",
+            calificacion: 4,
+            comentario: "Muy lindo, un poco más pequeño de lo que esperaba pero cumple.",
+            fecha: "2026-07-28"
+        },
+        {
+            id: 3,
+            productoCodigo: "CN-PLUSH-004",
+            usuarioNombre: "Camila S.",
+            calificacion: 5,
+            comentario: "Cinnamoroll quedó perfecto en mi pieza, se ve igual que en la foto.",
+            fecha: "2026-08-02"
+        }
+    ]);
+}
 }
 
 /* ---------- Sesion ---------- */
@@ -269,6 +299,11 @@ function actualizarBannerIndex() {
         bannerInvitado.style.display = "block";
         if (bannerLogueado) bannerLogueado.style.display = "none";
     }
+}
+
+function generarSiguienteId(coleccion) {
+    if (coleccion.length === 0) return 1;
+    return Math.max(...coleccion.map(item => item.id)) + 1;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
