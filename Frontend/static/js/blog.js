@@ -1,6 +1,6 @@
 // ============================================================
 // blog.js — Lógica de la página Blog (listado de artículos).
-// Utilidades de base.js: mostrarToast(). --> ver  cual js tiene las funciones--
+// Utilidades de base.js: mostrarToast().
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', function () {
