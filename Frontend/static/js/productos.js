@@ -404,6 +404,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 const producto = productos.find(p => p.codigo === codigo);
                 if (!producto) return;
 
+                const sesion = obtenerSesion();
+                if (!sesion || !(sesion.correo || sesion.run || sesion.nombre)) {
+                    Swal.fire({
+                        title: "Inicia sesión",
+                        text: "Debes iniciar sesión para agregar productos al carrito.",
+                        icon: "warning",
+                        confirmButtonText: "Ir a Iniciar sesión"
+                    }).then(function () {
+                        window.location.href = "/login";
+                    });
+                    return;
+                }
+
                 let carrito = obtenerColeccion(SANRUCHO_KEYS.carrito);
                 const itemExistente = carrito.find(item => item.codigo === codigo);
 

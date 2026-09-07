@@ -88,6 +88,19 @@ function renderizarDetalle(producto, nombreCategoria) {
 }
 
 function agregarAlCarrito(producto) {
+    const sesion = obtenerSesion();
+    if (!sesion || !(sesion.correo || sesion.run || sesion.nombre)) {
+        Swal.fire({
+            title: "Inicia sesión",
+            text: "Debes iniciar sesión para agregar productos al carrito.",
+            icon: "warning",
+            confirmButtonText: "Ir a Iniciar sesión"
+        }).then(function () {
+            window.location.href = "/login";
+        });
+        return;
+    }
+
     const inputCantidad = document.getElementById("inputCantidad");
     const cantidad = parseInt(inputCantidad.value);
 
