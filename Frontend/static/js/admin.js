@@ -84,12 +84,12 @@ function actualizarTarjetas() {
 function abrirModalNuevo() {
     if (seccionActual === 'productos') {
         // Redirige directamente al formulario de creación de productos
-        window.location.href = "{{ url_for('admin_producto_form') }}"; // O la ruta directa: '/admin/productos/nuevo'
+        window.location.href = "{{ url_for('/admin/productos/form') }}"; 
         return;
     }
     
     if (seccionActual === 'usuarios') {
-        window.location.href = "{{ url_for('admin_usuario_form') }}"; // O '/admin/usuarios/nuevo'
+        window.location.href = "{{ url_for('/admin/usuarios/form') }}"; 
         return;
     }
 

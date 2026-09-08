@@ -3045,7 +3045,7 @@ document.addEventListener("DOMContentLoaded", function () {
    Maneja las colecciones de localStorage (base de datos simulada),
    la sesion del usuario y la barra de navegacion comun a todas las paginas. */
 
-const VERSION_DATOS = "v1.3";
+//const VERSION_DATOS = "v1.3";
 
 const SANRUCHO_KEYS = {
     usuarios: "sanrucho_usuarios",
@@ -3061,15 +3061,15 @@ const SANRUCHO_KEYS = {
     sesion: "sanrucho_sesion"
 };
 
-if (localStorage.getItem("sanrucho_version") !== VERSION_DATOS) {
-    const sesionRespaldada = localStorage.getItem("sanrucho_sesion"); // Guarda la sesión actual si existe
-    localStorage.clear();
-    localStorage.setItem("sanrucho_version", VERSION_DATOS);
-    if (sesionRespaldada) {
-        localStorage.setItem("sanrucho_sesion", sesionRespaldada); // Restaura la sesión
-    }
-    inicializarDatos();
-}
+// if (localStorage.getItem("sanrucho_version") !== VERSION_DATOS) {
+//     const sesionRespaldada = localStorage.getItem("sanrucho_sesion"); // Guarda la sesión actual si existe
+//     localStorage.clear();
+//     localStorage.setItem("sanrucho_version", VERSION_DATOS);
+//     if (sesionRespaldada) {
+//         localStorage.setItem("sanrucho_sesion", sesionRespaldada); // Restaura la sesión
+//     }
+//     inicializarDatos();
+// }
 
 function obtenerColeccion(clave) {
     return JSON.parse(localStorage.getItem(clave)) || [];
