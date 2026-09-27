@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Administración de Usuarios{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar lateral -->
+        <div class="col-lg-3 col-xl-2 d-none d-lg-block px-0">
+            {% include "_admin-sidebar.html" %}
+        </div>
+
+        <!-- Botón para móvil -->
+        <div class="col-12 d-lg-none px-3 pt-3">
+            <button class="btn btn-outline-accent" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
+                <i class="bi bi-list"></i> Menú administrativo
+            </button>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="col-lg-9 col-xl-10 p-4">
+            <!-- Cabecera -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 pb-2 border-bottom">
+                <h1 class="fw-bold m-0" style="color: var(--primary);">Administración de Usuarios</h1>
+                <a href="{{ url_for('admin_usuario_form') }}" class="btn-accent text-decoration-none">+ Nuevo usuario</a>
+            </div>
+
+            <!-- Barra de herramientas -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                <span class="badge-sugerencia mb-0">Listado de usuarios</span>
+                <button class="btn btn-outline-accent" onclick="cargarUsuarios()">&#8635; Recargar</button>
+            </div>
+
+            <!-- Tabla (DataTables) -->
+            <div class="table-wrapper">
+                <table id="tablaUsuarios" class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>RUN</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Dirección</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Fecha Nac.</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-usuarios">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Offcanvas para móvil -->
+{% include "_admin-offcanvas.html" %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
+{% endblock %}
