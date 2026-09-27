@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - Sanrucho{% endblock %}
+
+{% block meta_desc %}Novedades, anuncios y guías de Sanrucho, la tienda online creada para comodidad de nuestros clientes.{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container blog-container">
+        <!-- Cabecera del Blog -->
+        <header class="blog-header">
+            <div>
+                <span class="badge-sugerencia">
+                    <i class="bi bi-journal-text"></i> Novedades y Guías
+                </span>
+                <h1 class="blog-title">Blog Sanrucho</h1>
+                <p class="blog-subtitle">Consejos, anuncios y novedades pensadas para tu comodidad.</p>
+            </div>
+        </header>
+
+        <!-- Barra de herramientas (Búsqueda y Contador) -->
+        <div class="blog-toolbar">
+            <div class="blog-search-box">
+                <i class="bi bi-search search-icon"></i>
+                <input 
+                    type="text" 
+                    id="busqueda" 
+                    class="form-control-custom blog-input" 
+                    placeholder="Buscar artículos por título o contenido..." 
+                    oninput="filtrarArticulos()"
+                >
+            </div>
+            <span class="blog-badge-count" id="contador">2 artículos</span>
+        </div>
+
+        <!-- Listado de artículos en cuadrícula -->
+        <div class="blog-grid" id="lista-articulos">
+            <article class="post-card">
+                <div class="post-thumb-wrapper">
+                    <img class="post-thumb" src="{{ url_for('static', filename='img/logo-sanrucho.png') }}" alt="Sanrucho les da la bienvenida">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-date"><i class="bi bi-calendar3"></i> 01 de Septiembre, 2026</span>
+                    <h2 class="post-card-title">Sanrucho les da la bienvenida</h2>
+                    <p class="post-card-excerpt">Después de meses de trabajo, hoy nace Sanrucho, una nueva tienda online pensada para la comodidad de nuestros clientes.</p>
+                    <a class="btn-accent post-btn" href="{{ url_for('blog_detalle_1') }}">
+                        Leer más <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </article>
+
+            <article class="post-card">
+                <div class="post-thumb-wrapper">
+                    <img class="post-thumb" src="{{ url_for('static', filename='img/comprar.png') }}" alt="Cómo crear tu cuenta y hacer tu primer pedido en Sanrucho">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-date"><i class="bi bi-calendar3"></i> 04 de Septiembre, 2026</span>
+                    <h2 class="post-card-title">Cómo crear tu cuenta y hacer tu primer pedido en Sanrucho</h2>
+                    <p class="post-card-excerpt">Una guía paso a paso para crear tu cuenta, recorrer el catálogo y completar tu primer pedido sin complicaciones.</p>
+                    <a class="btn-accent post-btn" href="{{ url_for('blog_detalle_2') }}">
+                        Leer más <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Mensaje cuando el buscador no encuentra resultados -->
+        <div class="sin-resultados-box" id="sin-resultados" style="display: none;">
+            <i class="bi bi-search fs-1 text-muted mb-2"></i>
+            <p>No se encontraron artículos que coincidan con tu búsqueda.</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{{ url_for('static', filename='js/blog.js') }}"></script>
+{% endblock %}
