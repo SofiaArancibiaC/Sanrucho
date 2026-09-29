@@ -25,3 +25,10 @@ eureka:
     instance-id: "${spring.application.name}:${random.value}"
     lease-renewal-interval-in-seconds: 15
     lease-expiration-duration-in-seconds: 60
+
+jwt:
+  # Clave secreta firmada en Base64 (Mínimo 256 bits / 32 bytes)
+  #ClaveSuperSecretaParaPinkPink2026
+  secret: "Q2xhdmVTdXBlclNlY3JldGFQYXJhUGlua1BpbmsyMDI2"
+  # 3600000 ms = 1 hora de duración para el token
+  expiration-ms: 3600000
