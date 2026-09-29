@@ -160,22 +160,19 @@
 
     </dependencies>
 
-    <!-- Empaquetado ejecutable con Spring Boot -->
+    <!-- Empaquetado como JAR regular (libreria compartida, no ejecutable) -->
     <build>
         <plugins>
+            <!-- Desactivar el repackage de Spring Boot heredado del padre -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
+                        <id>default</id>
+                        <phase>none</phase>
                     </execution>
                 </executions>
-                <configuration>
-                    <mainClass>cl.sanrucho.common.TiendaCommonApplication</mainClass>
-                </configuration>
             </plugin>
 
             <!-- Plugin de compilacion para procesadores de anotaciones (MapStruct + Lombok) -->

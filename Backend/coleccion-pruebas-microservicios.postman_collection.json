@@ -1,0 +1,514 @@
+{
+  "info": {
+    "_postman_id": "sanrucho-microservicios-collection",
+    "name": "Sanrucho - Microservicios (Pagos, Pedidos, Carrito, Notificaciones)",
+    "description": "Colección de prueba para los microservicios de Sanrucho. Usa el API Gateway como punto de entrada.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:9012"
+    },
+    {
+      "key": "carritoId",
+      "value": "1"
+    },
+    {
+      "key": "pedidoId",
+      "value": "1"
+    },
+    {
+      "key": "pagoId",
+      "value": "1"
+    },
+    {
+      "key": "notificacionId",
+      "value": "1"
+    },
+    {
+      "key": "productoId",
+      "value": "1"
+    },
+    {
+      "key": "usuarioId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "🛒 Carrito",
+      "item": [
+        {
+          "name": "Obtener carrito por usuario",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/carritos/usuario/{{usuarioId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "carritos", "usuario", "{{usuarioId}}"]
+            },
+            "description": "Obtiene el carrito de compras de un usuario específico."
+          }
+        },
+        {
+          "name": "Obtener carrito por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/carritos/{{carritoId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "carritos", "{{carritoId}}"]
+            },
+            "description": "Obtiene un carrito por su ID."
+          }
+        },
+        {
+          "name": "Crear carrito",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"items\": []\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/carritos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "carritos"]
+            },
+            "description": "Crea un nuevo carrito de compras."
+          }
+        },
+        {
+          "name": "Agregar producto al carrito",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productoId\": 1,\n  \"cantidad\": 2,\n  \"precioUnitario\": 19990.00\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/carritos/{{carritoId}}/items",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "carritos", "{{carritoId}}", "items"]
+            },
+            "description": "Agrega un producto al carrito."
+          }
+        },
+        {
+          "name": "Actualizar cantidad de item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cantidad\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/carritos/{{carritoId}}/items/{{productoId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "carritos", "{{carritoId}}", "items", "{{productoId}}"]
+            },
+            "description": "Actualiza la cantidad de un producto en el carrito."
+          }
+        },
+        {
+          "name": "Eliminar producto del carrito",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/carritos/{{carritoId}}/items/{{productoId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "carritos", "{{carritoId}}", "items", "{{productoId}}"]
+            },
+            "description": "Elimina un producto del carrito."
+          }
+        },
+        {
+          "name": "Vaciar carrito",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/carritos/{{carritoId}}/vaciar",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "carritos", "{{carritoId}}", "vaciar"]
+            },
+            "description": "Elimina todos los items del carrito."
+          }
+        },
+        {
+          "name": "Eliminar carrito",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/carritos/{{carritoId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "carritos", "{{carritoId}}"]
+            },
+            "description": "Elimina un carrito por su ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "📦 Pedidos",
+      "item": [
+        {
+          "name": "Obtener todos los pedidos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pedidos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pedidos"]
+            },
+            "description": "Obtiene la lista de todos los pedidos."
+          }
+        },
+        {
+          "name": "Obtener pedido por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pedidos/{{pedidoId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pedidos", "{{pedidoId}}"]
+            },
+            "description": "Obtiene un pedido por su ID."
+          }
+        },
+        {
+          "name": "Obtener pedidos por usuario",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pedidos/usuario/{{usuarioId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pedidos", "usuario", "{{usuarioId}}"]
+            },
+            "description": "Obtiene los pedidos de un usuario específico."
+          }
+        },
+        {
+          "name": "Crear pedido",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"items\": [\n    {\n      \"productoId\": 1,\n      \"cantidad\": 2,\n      \"precioUnitario\": 19990.00\n    }\n  ],\n  \"direccionEnvio\": \"Av. Siempre Viva 123, Santiago\",\n  \"metodoPago\": \"TARJETA_CREDITO\",\n  \"estado\": \"PENDIENTE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pedidos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pedidos"]
+            },
+            "description": "Crea un nuevo pedido."
+          }
+        },
+        {
+          "name": "Actualizar estado del pedido",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"EN_PROCESO\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pedidos/{{pedidoId}}/estado",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pedidos", "{{pedidoId}}", "estado"]
+            },
+            "description": "Actualiza el estado de un pedido (PENDIENTE, EN_PROCESO, ENVIADO, ENTREGADO, CANCELADO)."
+          }
+        },
+        {
+          "name": "Cancelar pedido",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pedidos/{{pedidoId}}/cancelar",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pedidos", "{{pedidoId}}", "cancelar"]
+            },
+            "description": "Cancela un pedido por su ID."
+          }
+        },
+        {
+          "name": "Eliminar pedido",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pedidos/{{pedidoId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pedidos", "{{pedidoId}}"]
+            },
+            "description": "Elimina un pedido por su ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "💳 Pagos",
+      "item": [
+        {
+          "name": "Obtener todos los pagos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pagos",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pagos"]
+            },
+            "description": "Obtiene la lista de todos los pagos."
+          }
+        },
+        {
+          "name": "Obtener pago por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pagos/{{pagoId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pagos", "{{pagoId}}"]
+            },
+            "description": "Obtiene un pago por su ID."
+          }
+        },
+        {
+          "name": "Obtener pagos por pedido",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pagos/pedido/{{pedidoId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pagos", "pedido", "{{pedidoId}}"]
+            },
+            "description": "Obtiene los pagos asociados a un pedido."
+          }
+        },
+        {
+          "name": "Procesar pago",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pedidoId\": 1,\n  \"monto\": 39980.00,\n  \"metodoPago\": \"TARJETA_CREDITO\",\n  \"numeroTarjeta\": \"4111111111111111\",\n  \"fechaExpiracion\": \"12/28\",\n  \"cvv\": \"123\",\n  \"nombreTitular\": \"Juan Pérez\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pagos/procesar",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pagos", "procesar"]
+            },
+            "description": "Procesa un pago para un pedido."
+          }
+        },
+        {
+          "name": "Reembolsar pago",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Solicitud del cliente\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pagos/{{pagoId}}/reembolsar",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pagos", "{{pagoId}}", "reembolsar"]
+            },
+            "description": "Reembolsa un pago procesado."
+          }
+        },
+        {
+          "name": "Verificar estado del pago",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pagos/{{pagoId}}/estado",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "pagos", "{{pagoId}}", "estado"]
+            },
+            "description": "Verifica el estado actual de un pago."
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔔 Notificaciones",
+      "item": [
+        {
+          "name": "Obtener todas las notificaciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/notificaciones",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "notificaciones"]
+            },
+            "description": "Obtiene la lista de todas las notificaciones."
+          }
+        },
+        {
+          "name": "Obtener notificación por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/notificaciones/{{notificacionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "notificaciones", "{{notificacionId}}"]
+            },
+            "description": "Obtiene una notificación por su ID."
+          }
+        },
+        {
+          "name": "Obtener notificaciones por usuario",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/notificaciones/usuario/{{usuarioId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "notificaciones", "usuario", "{{usuarioId}}"]
+            },
+            "description": "Obtiene las notificaciones de un usuario específico."
+          }
+        },
+        {
+          "name": "Enviar notificación",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"tipo\": \"PEDIDO_CONFIRMADO\",\n  \"titulo\": \"Pedido Confirmado\",\n  \"mensaje\": \"Tu pedido #123 ha sido confirmado y está siendo preparado.\",\n  \"canal\": \"EMAIL\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/notificaciones/enviar",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "notificaciones", "enviar"]
+            },
+            "description": "Envía una notificación a un usuario."
+          }
+        },
+        {
+          "name": "Marcar como leída",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/notificaciones/{{notificacionId}}/leida",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "notificaciones", "{{notificacionId}}", "leida"]
+            },
+            "description": "Marca una notificación como leída."
+          }
+        },
+        {
+          "name": "Eliminar notificación",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/notificaciones/{{notificacionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "notificaciones", "{{notificacionId}}"]
+            },
+            "description": "Elimina una notificación por su ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏥 Health Checks",
+      "item": [
+        {
+          "name": "Health - API Gateway",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/actuator/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["actuator", "health"]
+            },
+            "description": "Verifica el estado del API Gateway."
+          }
+        },
+        {
+          "name": "Health - Eureka",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8761",
+              "host": ["localhost"],
+              "port": "8761"
+            },
+            "description": "Verifica el servidor Eureka."
+          }
+        }
+      ]
+    }
+  ]
+}
