@@ -40,7 +40,7 @@ public class Inventario {
     @Column(name = "stock_reservado", nullable = false)
     private Integer stockReservado;
 
-    @Column(name = "stock_disponible", insertable = false, updatable = false)
+    @Column(name = "stock_disponible", nullable = false)
     private Integer stockDisponible;
 
     @Column(name = "stock_minimo", nullable = false)
@@ -58,8 +58,10 @@ public class Inventario {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Version
     @Column(name = "version")
-    private Integer version;
+    @Builder.Default
+    private Integer version = 1;
 
     @OneToMany(mappedBy = "inventario", fetch = FetchType.LAZY)
     @Builder.Default

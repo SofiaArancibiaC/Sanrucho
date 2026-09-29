@@ -39,8 +39,34 @@
     <!-- Forma de empaquetado es .jar -->
     <packaging>jar</packaging>
 
+    <properties>
+        <!--
+            El pom padre fija springdoc-openapi 2.8.17, que pertenece a la linea
+            de Spring Boot 3. Spring Boot 4 necesita la linea 3.x de springdoc,
+            que recien se publico. Se sobreescribe la propiedad solo en este
+            modulo para no tocar el padre, que comparten los otros servicios.
+        -->
+        <springdoc-openapi.version>3.0.3</springdoc-openapi.version>
+
+        <!-- DataFaker no lo gestiona el pom padre, se declara aqui -->
+        <datafaker.version>2.2.2</datafaker.version>
+    </properties>
+
     <!-- Dependencias necesarias para este microservicio -->
     <dependencies>
+
+        <!-- [SWAGGER-INI] Springdoc OpenAPI: documentacion automatica en Swagger UI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+        <!-- [SWAGGER-FIN] -->
+
+        <!-- Spring Boot Actuator: endpoints de monitoreo y salud -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
         <!-- Spring Web: Controladores REST -->
         <dependency>
@@ -97,6 +123,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Generador de datos aleatorios para las pruebas unitarias -->
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${datafaker.version}</version>
             <scope>test</scope>
         </dependency>
 

@@ -16,4 +16,10 @@ public interface EventoInventarioRepository extends JpaRepository<EventoInventar
     boolean existsByEventId(String eventId);
 
     List<EventoInventario> findByPublicado(Boolean publicado);
+
+    List<EventoInventario> findByProductoId(Integer productoId);
+
+    List<EventoInventario> findByTipoEventoAndPublicado(
+            EventoInventario.TipoEvento tipoEvento,
+            Boolean publicado);
 }

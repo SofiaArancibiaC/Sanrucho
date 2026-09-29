@@ -36,7 +36,7 @@ public class EventoInventario {
     private TipoEvento tipoEvento;
 
     @Lob
-    @Column(name = "payload", nullable = false, columnDefinition = "jsonb")
+    @Column(name = "payload", nullable = false)
     private String payload;
 
     @Column(name = "publicado")
