@@ -1,57 +1,70 @@
 package cl.sanrucho.notificaciones.controller;
 
-import org.springframework.web.bind.annotation.*;
-import java.util.*;
+import java.util.List;
 
-@RestController
-@RequestMapping("/api/v1/notificaciones")
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import cl.sanrucho.notificaciones.dto.NotificacionRequest;
+import cl.sanrucho.notificaciones.dto.NotificacionResponse;
+import cl.sanrucho.notificaciones.service.NotificacionService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RestController 
+@RequestMapping ("/api/notificaciones")
+@RequiredArgsConstructor 
 public class NotificacionController {
-
-    private final Map<Long, Map<String, Object>> notificaciones = new HashMap<>();
-
-    @GetMapping
-    public List<Map<String, Object>> listar() {
-        return new ArrayList<>(notificaciones.values());
+ 
+    private final NotificacionService notificacionService;
+ 
+    @PostMapping 
+    public ResponseEntity<NotificacionResponse> crear(@Valid @RequestBody NotificacionRequest dto) {
+        NotificacionResponse creada = notificacionService.crear(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(creada);
     }
-
-    @GetMapping("/{id}")
-    public Map<String, Object> obtenerPorId(@PathVariable Long id) {
-        return notificaciones.get(id);
+ 
+    @GetMapping ("/{id}")
+    public ResponseEntity<NotificacionResponse> obtenerPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(notificacionService.obtenerPorId(id));
     }
-
+ 
     @GetMapping("/usuario/{usuarioId}")
-    public List<Map<String, Object>> obtenerPorUsuario(@PathVariable Long usuarioId) {
-        List<Map<String, Object>> resultado = new ArrayList<>();
-        for (Map<String, Object> notif : notificaciones.values()) {
-            if (usuarioId.equals(notif.get("usuarioId"))) {
-                resultado.add(notif);
-            }
-        }
-        return resultado;
+    public ResponseEntity<List<NotificacionResponse>> listarPorUsuario(@PathVariable Integer usuarioId) {
+        return ResponseEntity.ok(notificacionService.listarPorUsuario(usuarioId));
     }
-
-    @PostMapping("/enviar")
-    public Map<String, Object> enviar(@RequestBody Map<String, Object> notificacion) {
-        Long id = System.currentTimeMillis();
-        notificacion.put("id", id);
-        notificacion.put("fechaEnvio", new Date().toString());
-        notificacion.put("leida", false);
-        notificaciones.put(id, notificacion);
-        return notificacion;
+ 
+    @GetMapping("/estado/{estado}")
+    public ResponseEntity<List<NotificacionResponse>> listarPorEstado(@PathVariable String estado) {
+        return ResponseEntity.ok(notificacionService.listarPorEstado(estado));
     }
-
+ 
+    @PatchMapping ("/{id}/enviada")
+    public ResponseEntity<NotificacionResponse> marcarComoEnviada(@PathVariable Integer id) {
+        return ResponseEntity.ok(notificacionService.marcarComoEnviada(id));
+    }
+ 
     @PatchMapping("/{id}/leida")
-    public Map<String, Object> marcarLeida(@PathVariable Long id) {
-        Map<String, Object> notificacion = notificaciones.get(id);
-        if (notificacion != null) {
-            notificacion.put("leida", true);
-        }
-        return notificacion;
+    public ResponseEntity<NotificacionResponse> marcarComoLeida(@PathVariable Integer id) {
+        return ResponseEntity.ok(notificacionService.marcarComoLeida(id));
     }
-
-    @DeleteMapping("/{id}")
-    public Map<String, String> eliminar(@PathVariable Long id) {
-        notificaciones.remove(id);
-        return Map.of("mensaje", "Notificación eliminada");
+ 
+    @PatchMapping("/{id}/fallida")
+    public ResponseEntity<NotificacionResponse> marcarComoFallida(@PathVariable Integer id) {
+        return ResponseEntity.ok(notificacionService.marcarComoFallida(id));
+    }
+ 
+    @DeleteMapping ("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
+        notificacionService.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 }

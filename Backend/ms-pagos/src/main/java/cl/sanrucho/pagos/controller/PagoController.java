@@ -1,61 +1,71 @@
 package cl.sanrucho.pagos.controller;
 
-import org.springframework.web.bind.annotation.*;
-import java.util.*;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import cl.sanrucho.pagos.dto.ActualizarEstadoRequest;
+import cl.sanrucho.pagos.dto.ReembolsoRequest;
+import cl.sanrucho.pagos.dto.ReembolsoResponse;
+import cl.sanrucho.pagos.dto.TransaccionRequest;
+import cl.sanrucho.pagos.dto.TransaccionResponse;
+import cl.sanrucho.pagos.service.PagoService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/pagos")
+@RequiredArgsConstructor
 public class PagoController {
+    
+    private final PagoService pagoService;
 
-    private final Map<Long, Map<String, Object>> pagos = new HashMap<>();
+    // --- Transacciones 
 
-    @GetMapping
-    public List<Map<String, Object>> listar() {
-        return new ArrayList<>(pagos.values());
+    @PostMapping("/transacciones")
+    public ResponseEntity<TransaccionResponse> crearTransaccion(@Valid @RequestBody TransaccionRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(pagoService.crearTransaccion(request));
     }
 
-    @GetMapping("/{id}")
-    public Map<String, Object> obtenerPorId(@PathVariable Long id) {
-        return pagos.get(id);
+    @GetMapping("/transacciones/{id}")
+    public ResponseEntity<TransaccionResponse> obtenerTransaccionPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(pagoService.obtenerTransaccionPorId(id));
     }
 
-    @GetMapping("/pedido/{pedidoId}")
-    public List<Map<String, Object>> obtenerPorPedido(@PathVariable Long pedidoId) {
-        List<Map<String, Object>> resultado = new ArrayList<>();
-        for (Map<String, Object> pago : pagos.values()) {
-            if (pedidoId.equals(pago.get("pedidoId"))) {
-                resultado.add(pago);
-            }
-        }
-        return resultado;
+    @GetMapping("/transacciones/pedido/{pedidoId}")
+    public ResponseEntity<List<TransaccionResponse>> listarTransaccionesPorPedido(@PathVariable Integer pedidoId) {
+        return ResponseEntity.ok(pagoService.listarTransaccionesPorPedido(pedidoId));
     }
 
-    @PostMapping("/procesar")
-    public Map<String, Object> procesar(@RequestBody Map<String, Object> pago) {
-        Long id = System.currentTimeMillis();
-        pago.put("id", id);
-        pago.put("estado", "PROCESADO");
-        pago.put("fechaProcesamiento", new Date().toString());
-        pagos.put(id, pago);
-        return pago;
+    @PutMapping("/transacciones/{id}/estado")
+    public ResponseEntity<TransaccionResponse> actualizarEstado(
+            @PathVariable Integer id,
+            @Valid @RequestBody ActualizarEstadoRequest nuevoEstado) {
+        return ResponseEntity.ok(pagoService.actualizarEstado(id, nuevoEstado.getNuevoEstado()));
     }
 
-    @PostMapping("/{id}/reembolsar")
-    public Map<String, Object> reembolsar(@PathVariable Long id, @RequestBody Map<String, Object> body) {
-        Map<String, Object> pago = pagos.get(id);
-        if (pago != null) {
-            pago.put("estado", "REEMBOLSADO");
-            pago.put("motivoReembolso", body.get("motivo"));
-        }
-        return pago;
+    // --- Reembolsos 
+
+    @PostMapping("/reembolsos")
+    public ResponseEntity<ReembolsoResponse> crearReembolso(@Valid @RequestBody ReembolsoRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(pagoService.crearReembolso(request));
     }
 
-    @GetMapping("/{id}/estado")
-    public Map<String, Object> verificarEstado(@PathVariable Long id) {
-        Map<String, Object> pago = pagos.get(id);
-        if (pago == null) {
-            return Map.of("error", "Pago no encontrado");
-        }
-        return Map.of("id", id, "estado", pago.get("estado"));
+    @GetMapping("/reembolsos/{id}")
+    public ResponseEntity<ReembolsoResponse> obtenerReembolsoPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(pagoService.obtenerReembolsoPorId(id));
+    }
+
+    @GetMapping("/reembolsos/transaccion/{transaccionId}")
+    public ResponseEntity<List<ReembolsoResponse>> listarReembolsosPorTransaccion(@PathVariable Integer transaccionId) {
+        return ResponseEntity.ok(pagoService.listarReembolsosPorTransaccion(transaccionId));
     }
 }

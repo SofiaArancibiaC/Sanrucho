@@ -111,9 +111,9 @@
     },
     {
       "type": "java",
-      "name": "Debug ms-api-gateway",
+      "name": "Debug api-gateway",
       "request": "launch",
-      "cwd": "${workspaceFolder}/ms-api-gateway",
+      "cwd": "${workspaceFolder}/api-gateway",
       "mainClass": "cl.sanrucho.api-gateway.TiendaApi-gatewayApplication",
       "projectName": "cl-sanrucho-api-gateway",
       "envFile": "${workspaceFolder}/.env"
@@ -134,8 +134,7 @@
         "Debug ms-notificaciones",
         "Debug ms-reportes",
         "Debug ms-reviews",
-        "Debug ms-common",
-        "Debug ms-api-gateway"
+        "Debug api-gateway"
       ]
     }
   ]

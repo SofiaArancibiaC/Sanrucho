@@ -1,65 +1,63 @@
 package cl.sanrucho.pedidos.controller;
 
+import cl.sanrucho.pedidos.dto.PedidoRequest;
+import cl.sanrucho.pedidos.dto.EstadoUpdateRequest;
+import cl.sanrucho.pedidos.dto.PedidoResponse;
+import cl.sanrucho.pedidos.dto.ResumenPedidoResponse;
+import cl.sanrucho.pedidos.service.PedidoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
+
+import java.net.URI;
 
 @RestController
-@RequestMapping("/api/v1/pedidos")
+@RequestMapping("/api/pedidos")
+@RequiredArgsConstructor
+@Tag(name = "Pedidos", description = "Gestión de órdenes de compra")
 public class PedidoController {
 
-    private final Map<Long, Map<String, Object>> pedidos = new HashMap<>();
+    private final PedidoService pedidoService;
 
-    @GetMapping
-    public List<Map<String, Object>> listar() {
-        return new ArrayList<>(pedidos.values());
+    @PostMapping
+    @Operation(summary = "Crear un nuevo pedido (checkout)")
+    public ResponseEntity<PedidoResponse> crear(@Valid @RequestBody PedidoRequest request) {
+        PedidoResponse creado = pedidoService.crear(request);
+        URI location = URI.create("/api/pedidos/" + creado.getId());
+        return ResponseEntity.created(location).body(creado);
     }
 
     @GetMapping("/{id}")
-    public Map<String, Object> obtenerPorId(@PathVariable Long id) {
-        return pedidos.get(id);
+    @Operation(summary = "Obtener un pedido por id")
+    public ResponseEntity<PedidoResponse> obtenerPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(pedidoService.obtenerPorId(id));
     }
 
-    @GetMapping("/usuario/{usuarioId}")
-    public List<Map<String, Object>> obtenerPorUsuario(@PathVariable Long usuarioId) {
-        List<Map<String, Object>> resultado = new ArrayList<>();
-        for (Map<String, Object> pedido : pedidos.values()) {
-            if (usuarioId.equals(pedido.get("usuarioId"))) {
-                resultado.add(pedido);
-            }
-        }
-        return resultado;
+    @GetMapping("/numero/{numeroPedido}")
+    @Operation(summary = "Obtener un pedido por número de orden")
+    public ResponseEntity<PedidoResponse> obtenerPorNumero(@PathVariable String numeroPedido) {
+        return ResponseEntity.ok(pedidoService.obtenerPorNumero(numeroPedido));
     }
 
-    @PostMapping
-    public Map<String, Object> crear(@RequestBody Map<String, Object> pedido) {
-        Long id = System.currentTimeMillis();
-        pedido.put("id", id);
-        pedido.put("fechaCreacion", new Date().toString());
-        pedidos.put(id, pedido);
-        return pedido;
+    @GetMapping
+    @Operation(summary = "Listar pedidos de un usuario (paginado)")
+    public ResponseEntity<Page<ResumenPedidoResponse>> listarPorUsuario(
+            @RequestParam Integer usuarioId,
+            @PageableDefault(size = 20, sort = "fechaPedido") Pageable pageable) {
+        return ResponseEntity.ok(pedidoService.listarPorUsuario(usuarioId, pageable));
     }
 
     @PatchMapping("/{id}/estado")
-    public Map<String, Object> actualizarEstado(@PathVariable Long id, @RequestBody Map<String, Object> body) {
-        Map<String, Object> pedido = pedidos.get(id);
-        if (pedido != null) {
-            pedido.put("estado", body.get("estado"));
-        }
-        return pedido;
-    }
-
-    @PostMapping("/{id}/cancelar")
-    public Map<String, Object> cancelar(@PathVariable Long id) {
-        Map<String, Object> pedido = pedidos.get(id);
-        if (pedido != null) {
-            pedido.put("estado", "CANCELADO");
-        }
-        return pedido;
-    }
-
-    @DeleteMapping("/{id}")
-    public Map<String, String> eliminar(@PathVariable Long id) {
-        pedidos.remove(id);
-        return Map.of("mensaje", "Pedido eliminado");
+    @Operation(summary = "Actualizar el estado de un pedido")
+    public ResponseEntity<PedidoResponse> actualizarEstado(
+            @PathVariable Integer id,
+            @Valid @RequestBody EstadoUpdateRequest request) {
+        return ResponseEntity.ok(pedidoService.actualizarEstado(id, request));
     }
 }
