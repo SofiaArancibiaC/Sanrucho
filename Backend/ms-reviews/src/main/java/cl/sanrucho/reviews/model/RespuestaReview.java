@@ -6,7 +6,12 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "respuestas_reviews")
+@Table(
+    name = "respuestas_reviews",
+    indexes = {
+        @Index(name = "idx_respuestas_review", columnList = "review_id")
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,12 +21,10 @@ public class RespuestaReview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "review_id", nullable = false)
-    private Review review;
+    @Column(name = "review_id", nullable = false)
+    private Integer reviewId;
 
     @Column(name = "usuario_id")
     private Integer usuarioId;
@@ -32,13 +35,23 @@ public class RespuestaReview {
     @Column(name = "es_vendedor")
     private Boolean esVendedor;
 
-    @Lob
-    @Column(name = "comentario", nullable = false)
+    @Column(name = "comentario", nullable = false, columnDefinition = "TEXT")
     private String comentario;
 
-    @Column(name = "fecha_respuesta")
+    @Column(name = "fecha_respuesta", nullable = false, updatable = false)
     private LocalDateTime fechaRespuesta;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id", insertable = false, updatable = false)
+    private Review review;
+
+    @PrePersist
+    protected void onCreate() {
+        this.fechaRespuesta = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+        if (this.esVendedor == null) this.esVendedor = false;
+    }
 }

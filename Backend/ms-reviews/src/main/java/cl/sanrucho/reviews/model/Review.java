@@ -8,7 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "reviews")
+@Table(
+    name = "reviews",
+    indexes = {
+        @Index(name = "idx_reviews_producto", columnList = "producto_id"),
+        @Index(name = "idx_reviews_usuario", columnList = "usuario_id"),
+        @Index(name = "idx_reviews_pedido", columnList = "pedido_id"),
+        @Index(name = "idx_reviews_estado", columnList = "estado"),
+        @Index(name = "idx_reviews_calificacion", columnList = "calificacion"),
+        @Index(name = "idx_reviews_verificado", columnList = "verificado")
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,8 +28,7 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "producto_id", nullable = false)
     private Integer productoId;
@@ -52,7 +61,7 @@ public class Review {
     @Column(name = "comentario")
     private String comentario;
 
-    @Column(name = "fecha_creacion")
+    @Column(name = "fecha_creacion", nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;
 
     @Column(name = "verificado")
@@ -68,7 +77,7 @@ public class Review {
     @Column(name = "votos_no_utiles")
     private Integer votosNoUtiles;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "created_by", length = 100)
@@ -83,6 +92,17 @@ public class Review {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<RespuestaReview> respuestas = new ArrayList<>();
+
+    @PrePersist
+    protected void onCreate() {
+        this.fechaCreacion = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+        if (this.verificado == null) this.verificado = false;
+        if (this.estado == null) this.estado = EstadoReview.PUBLICADO;
+        if (this.votosUtiles == null) this.votosUtiles = 0;
+        if (this.votosNoUtiles == null) this.votosNoUtiles = 0;
+        if (this.version == null) this.version = 1;
+    }
 
     public enum EstadoReview {
         PUBLICADO,

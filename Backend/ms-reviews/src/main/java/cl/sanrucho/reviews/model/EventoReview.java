@@ -6,9 +6,14 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "eventos_review",
+@Table(
+    name = "eventos_review",
     uniqueConstraints = {
         @UniqueConstraint(name = "uk_eventos_review_event_id", columnNames = "event_id")
+    },
+    indexes = {
+        @Index(name = "idx_eventos_review_event_id", columnList = "event_id"),
+        @Index(name = "idx_eventos_review_publicado", columnList = "publicado")
     }
 )
 @Getter
@@ -20,8 +25,7 @@ public class EventoReview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "event_id", nullable = false, length = 100, unique = true)
     private String eventId;
@@ -43,11 +47,17 @@ public class EventoReview {
     @Column(name = "publicado")
     private Boolean publicado;
 
-    @Column(name = "fecha_evento")
+    @Column(name = "fecha_evento", nullable = false, updatable = false)
     private LocalDateTime fechaEvento;
 
     @Column(name = "fecha_publicacion")
     private LocalDateTime fechaPublicacion;
+
+    @PrePersist
+    protected void onCreate() {
+        this.fechaEvento = LocalDateTime.now();
+        if (this.publicado == null) this.publicado = false;
+    }
 
     public enum TipoEvento {
         REVIEW_CREADA,
