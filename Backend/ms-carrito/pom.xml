@@ -23,12 +23,12 @@
 
     <!-- Coordenadas GAV (GroupId, ArtifactId, Version) de este modulo -->
     <groupId>cl.sanrucho</groupId>
-    <artifactId>cl-sanrucho-carrito</artifactId>
+    <artifactId>cl-sanrucho-catalogo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <!-- Nombre y descripcion del modulo -->
     <name>Modulo de Carrito</name>
-    <description>Servicio de Carrito.</description>
+    <description>Servicio de carrito.</description>
 
     <!--
         *******************************************
@@ -41,6 +41,21 @@
 
     <!-- Dependencias necesarias para este microservicio -->
     <dependencies>
+
+        <!-- [SWAGGER-INI] -->
+        <!-- Springdoc OpenAPI: generacion automatica de documentacion Swagger UI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+        <!-- [SWAGGER-FIN] -->
+
+        <!--  [HATEOAS-INI]  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+        <!--  [HATEOAS-FIN]  -->
 
         <!-- Spring Web: Controladores REST -->
         <dependency>
@@ -119,6 +134,12 @@
             <optional>true</optional>
         </dependency>
 
+        <!--Libreria Common-->
+        <dependency>
+            <groupId>cl.sanrucho</groupId>
+            <artifactId>cl-sanrucho-common</artifactId>
+        </dependency>
+
     </dependencies>
 
     <!-- Empaquetado ejecutable con Spring Boot -->
@@ -135,7 +156,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>cl.sanrucho.carrito.TiendaCarritoApplication</mainClass>
+                    <mainClass>cl.sanrucho.catalogo.TiendaCarritoApplication</mainClass>
                 </configuration>
             </plugin>
 
