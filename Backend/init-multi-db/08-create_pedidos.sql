@@ -53,7 +53,6 @@ CREATE TABLE eventos_pedido (
     pedido_id INTEGER NOT NULL,
     numero_pedido VARCHAR(50) NOT NULL,
     tipo_evento VARCHAR(50) NOT NULL CHECK (tipo_evento IN ('pedido_creado', 'pedido_confirmado', 'pedido_procesando', 'pedido_enviado', 'pedido_entregado', 'pedido_cancelado', 'pedido_devuelto')),
-    payload JSONB NOT NULL,
     publicado BOOLEAN DEFAULT FALSE,
     fecha_evento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_publicacion TIMESTAMP
@@ -96,8 +95,8 @@ INSERT INTO items_pedido (pedido_id, producto_id, sku, nombre_producto, personaj
 (7, 2, 'KR-PLUSH-002', 'Peluche Kuromi con Capucha 25cm', 'Kuromi', 22990, 1, 22990, 1),
 (8, 1, 'HK-PLUSH-001', 'Peluche Hello Kitty Clásico 30cm', 'Hello Kitty', 24990, 1, 24990, 1);
 
-INSERT INTO eventos_pedido (event_id, pedido_id, numero_pedido, tipo_evento, payload, publicado, fecha_publicacion) VALUES
-('evt_ped_001', 1, 'ORD-2026-0001', 'pedido_creado', '{"usuario_id": 1, "total": 59960, "items": 3}', TRUE, '2026-08-20 14:25:05'),
-('evt_ped_002', 1, 'ORD-2026-0001', 'pedido_confirmado', '{"usuario_id": 1, "metodo_pago": "tarjeta_credito"}', TRUE, '2026-08-20 14:30:05'),
-('evt_ped_003', 1, 'ORD-2026-0001', 'pedido_entregado', '{"usuario_id": 1, "fecha_entrega": "2026-08-22 11:30:00"}', TRUE, '2026-08-22 11:30:30'),
-('evt_ped_004', 2, 'ORD-2026-0002', 'pedido_enviado', '{"usuario_id": 2, "tracking": "TRACK-2026-002"}', TRUE, '2026-08-22 08:30:15');
+INSERT INTO eventos_pedido (event_id, pedido_id, numero_pedido, tipo_evento, publicado, fecha_publicacion) VALUES
+('evt_ped_001', 1, 'ORD-2026-0001', 'pedido_creado', TRUE, '2026-08-20 14:25:05'),
+('evt_ped_002', 1, 'ORD-2026-0001', 'pedido_confirmado', TRUE, '2026-08-20 14:30:05'),
+('evt_ped_003', 1, 'ORD-2026-0001', 'pedido_entregado', TRUE, '2026-08-22 11:30:30'),
+('evt_ped_004', 2, 'ORD-2026-0002', 'pedido_enviado', TRUE, '2026-08-22 08:30:15');
