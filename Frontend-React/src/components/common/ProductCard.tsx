@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import type { Producto } from "../../types";
 import { useCart } from "../../context/CartContext";
 import { useTablasMaestras } from "../../hooks/useTablasMaestras";
-import { formatearPrecio, rutaImagenProducto } from "../../utils/formato";
+import { formatearPrecio, imagenPorDefecto, rutaImagenProducto } from "../../utils/formato";
 
 export default function ProductCard({ producto }: { producto: Producto }) {
   const { agregar } = useCart();
@@ -27,6 +27,7 @@ export default function ProductCard({ producto }: { producto: Producto }) {
           src={rutaImagenProducto(producto)}
           className="card-img-top producto-img"
           alt={producto.nombre}
+          onError={imagenPorDefecto}
         />
         <div className="card-body d-flex flex-column">
           <span className="badge bg-secondary mb-2">

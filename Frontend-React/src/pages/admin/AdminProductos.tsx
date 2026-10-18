@@ -9,7 +9,7 @@ import { useProductos } from "../../hooks/useProductos";
 import { useTablasMaestras } from "../../hooks/useTablasMaestras";
 import DataTable, { type Columna } from "../../components/common/DataTable";
 import type { Producto } from "../../types";
-import { formatearPrecio, rutaImagenProducto } from "../../utils/formato";
+import { formatearPrecio, imagenPorDefecto, rutaImagenProducto } from "../../utils/formato";
 import { toast } from "../../utils/alertas";
 
 export default function AdminProductos() {
@@ -59,6 +59,7 @@ export default function AdminProductos() {
           alt={p.nombre}
           height={40}
           style={{ objectFit: "contain", borderRadius: 6 }}
+          onError={imagenPorDefecto}
         />
       ),
     },

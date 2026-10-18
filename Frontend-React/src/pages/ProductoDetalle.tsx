@@ -12,7 +12,7 @@ import { useTablasMaestras } from "../hooks/useTablasMaestras";
 import { useResenas } from "../hooks/useResenas";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
-import { formatearPrecio, rutaImagenProducto } from "../utils/formato";
+import { formatearPrecio, imagenPorDefecto, rutaImagenProducto } from "../utils/formato";
 import { toast } from "../utils/alertas";
 
 export default function ProductoDetalle() {
@@ -81,6 +81,7 @@ export default function ProductoDetalle() {
               src={rutaImagenProducto(producto)}
               className="img-fluid rounded shadow-sm"
               alt={producto.nombre}
+              onError={imagenPorDefecto}
             />
           </div>
           <div className="col-md-6">

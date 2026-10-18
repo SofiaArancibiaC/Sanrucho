@@ -6,7 +6,7 @@
 
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { formatearPrecio, rutaImagenProducto } from "../utils/formato";
+import { formatearPrecio, imagenPorDefecto, rutaImagenProducto } from "../utils/formato";
 
 export default function Carrito() {
   const {
@@ -65,6 +65,7 @@ export default function Carrito() {
                             src={rutaImagenProducto(item)}
                             className="carrito-producto-img"
                             alt={item.nombre}
+                            onError={imagenPorDefecto}
                           />
                           <div className="carrito-producto-info">
                             <span className="item-name">{item.nombre}</span>
