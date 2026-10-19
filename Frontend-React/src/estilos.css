@@ -220,10 +220,36 @@ body.bg-fixed {
   background: var(--bg-card);
   border-bottom: 1px solid var(--border-pink-light);
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   padding: 14px 28px;
   box-shadow: var(--shadow-sm);
+}
+
+/* Botón hamburguesa: solo visible en pantallas pequeñas. */
+.topbar-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1.5px solid var(--border-pink);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  font-size: 1.35rem;
+  line-height: 1;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.topbar-toggle:hover {
+  background: var(--border-pink-light);
+}
+
+.topbar-auth {
+  display: flex;
+  align-items: center;
 }
 
 .topbar-brand a {
@@ -231,6 +257,13 @@ body.bg-fixed {
   text-decoration: none;
   font-weight: 700;
   font-size: 1.2rem;
+}
+
+.topbar-nav {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .topbar-nav a {
@@ -245,9 +278,68 @@ body.bg-fixed {
   color: var(--primary);
 }
 
-.topbar-user {
-  color: var(--text-muted);
-  font-weight: 600;
+/* En pantallas pequeñas el menú se colapsa en el botón hamburguesa. */
+@media (max-width: 991px) {
+  .topbar {
+    padding: 10px 16px;
+  }
+
+  .topbar-toggle {
+    display: inline-flex;
+    order: 3;
+  }
+
+  .topbar-brand {
+    order: 1;
+  }
+
+  .topbar-cart {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .topbar-nav {
+    order: 4;
+    display: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .topbar-auth {
+    order: 5;
+    display: none;
+  }
+
+  .topbar.menu-abierto .topbar-nav,
+  .topbar.menu-abierto .topbar-auth {
+    display: flex;
+    flex-basis: 100%;
+  }
+
+  .topbar.menu-abierto .topbar-nav {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-pink-light);
+  }
+
+  .topbar.menu-abierto .topbar-nav a {
+    margin-left: 0;
+    padding: 8px 6px;
+    border-radius: var(--radius-md);
+  }
+
+  .topbar.menu-abierto .topbar-nav a:hover {
+    background: var(--bg-input);
+  }
+
+  .topbar.menu-abierto .topbar-auth {
+    flex-wrap: wrap;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-pink-light);
+  }
 }
 
 .footer {

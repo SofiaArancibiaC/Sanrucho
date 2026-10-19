@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>nav test</title>
+  </head>
+  <body>
+    <iframe id="m" src="/" style="width: 375px; height: 700px; border: 0"></iframe>
+    <iframe id="d" src="/" style="width: 1200px; height: 700px; border: 0"></iframe>
+    <pre id="out">pending</pre>
+    <script>
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          var doc = document.getElementById("d").contentDocument;
+          var auth = doc.querySelector(".topbar-auth");
+          var reglas = [];
+          for (var i = 0; i < doc.styleSheets.length; i++) {
+            var ss = doc.styleSheets[i];
+            try {
+              var rules = ss.cssRules || ss.rules || [];
+              for (var j = 0; j < rules.length; j++) {
+                var t = rules[j].selectorText || "";
+                if (t.indexOf("topbar-auth") !== -1 || t.indexOf("topbar") !== -1) {
+                  reglas.push(t + " => " + rules[j].style.display);
+                }
+              }
+            } catch (e) {}
+          }
+          var res = {
+            authClass: auth ? auth.className : "MISSING",
+            authTag: auth ? auth.tagName : "MISSING",
+            authDisplay: auth ? getComputedStyle(auth).display : "MISSING",
+            authHTML: auth ? auth.outerHTML.slice(0, 200) : "MISSING",
+            reglas: reglas,
+          };
+          document.getElementById("out").textContent = JSON.stringify(res, null, 2);
+          document.title = "RESULT:" + JSON.stringify(res);
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>

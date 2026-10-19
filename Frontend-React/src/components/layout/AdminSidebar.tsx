@@ -4,7 +4,7 @@
 // muestra al Dueño (rolId === 1); el Admin (rolId === 2) no lo ve.
 // ============================================================
 
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const claseEnlace = ({ isActive }: { isActive: boolean }) =>
@@ -27,6 +27,12 @@ export default function AdminSidebar() {
           <i className="bi bi-people me-2"></i> Usuarios
         </NavLink>
       )}
+      <Link
+        to="/"
+        className="list-group-item list-group-item-action text-primary"
+      >
+        <i className="bi bi-box-arrow-left me-2"></i> Volver al sitio
+      </Link>
     </div>
   );
 }

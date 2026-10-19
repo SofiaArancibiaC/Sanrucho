@@ -59,6 +59,12 @@ export default function AdminOffcanvas() {
                 <i className="bi bi-people me-2"></i> Usuarios
               </Link>
             )}
+            <Link
+              to="/"
+              className="list-group-item list-group-item-action text-primary"
+            >
+              <i className="bi bi-box-arrow-left me-2"></i> Volver al sitio
+            </Link>
           </div>
           <button className="btn btn-outline-danger w-100" type="button" onClick={logout}>
             <i className="bi bi-box-arrow-right"></i> Cerrar sesion

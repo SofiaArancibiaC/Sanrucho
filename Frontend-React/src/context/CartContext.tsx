@@ -6,7 +6,7 @@
 // (badge del navbar, página del carrito) se actualiza sola.
 // ============================================================
 
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import type { ReactNode } from "react";
 import type { ItemCarrito, Producto } from "../types";
 import { SANRUCHO_KEYS } from "../storage/claves";
@@ -32,6 +32,12 @@ const CartContext = createContext<CartContextValue | null>(null);
 export function CartProvider({ children }: { children: ReactNode }) {
   const { datos: carrito, guardar } = useColeccion<ItemCarrito>(SANRUCHO_KEYS.carrito);
   const { sesion } = useAuth();
+
+  // El carrito pertenece a la sesión: si no hay usuario logueado
+  // (por ejemplo, al cerrar sesión), se vacía automáticamente.
+  useEffect(() => {
+    if (!sesion) guardar([]);
+  }, [sesion, guardar]);
 
   const exigirSesion = (): boolean => {
     if (!sesion) {
