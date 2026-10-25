@@ -24,6 +24,12 @@ import BlogDetalle1 from "./pages/BlogDetalle1";
 import BlogDetalle2 from "./pages/BlogDetalle2";
 import Contacto from "./pages/Contacto";
 
+import Ofertas from "./pages/Ofertas";
+import Checkout from "./pages/Checkout";
+import PagoExito from "./pages/PagoExito";
+import PagoError from "./pages/PagoError";
+import ResumenCompra from "./pages/ResumenCompra";
+
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProductos from "./pages/admin/AdminProductos";
 import AdminProductoForm from "./pages/admin/AdminProductoForm";
@@ -39,8 +45,13 @@ export default function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/productos" element={<Productos />} />
+            <Route path="/ofertas" element={<Ofertas />} />
             <Route path="/producto-detalle" element={<ProductoDetalle />} />
             <Route path="/carrito" element={<Carrito />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/pago/exito" element={<PagoExito />} />
+            <Route path="/pago/error" element={<PagoError />} />
+            <Route path="/resumen-compra" element={<ResumenCompra />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
             <Route path="/nosotros" element={<Nosotros />} />
