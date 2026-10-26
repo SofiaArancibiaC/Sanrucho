@@ -8,13 +8,16 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useProductos } from "../../hooks/useProductos";
 import { useUsuarios } from "../../hooks/useUsuarios";
+import { usePedidos } from "../../hooks/usePedidos";
 import { useTablasMaestras } from "../../hooks/useTablasMaestras";
 import DataTable, { type Columna } from "../../components/common/DataTable";
 import type { Usuario } from "../../types";
+import { formatearPrecio } from "../../utils/formato";
 
 export default function AdminDashboard() {
   const { datos: productos } = useProductos();
   const { datos: usuarios, obtenerNombreRol } = useUsuarios();
+  const { pedidos, aprobados, totalVendido } = usePedidos();
   const { categorias } = useTablasMaestras();
 
   const [busqueda, setBusqueda] = useState("");
@@ -73,8 +76,10 @@ export default function AdminDashboard() {
         </div>
         <div className="card kpi-card">
           <div className="card-title">Pedidos</div>
-          <div className="card-value">0</div>
-          <div className="card-desc">Pedidos registrados</div>
+          <div className="card-value">{pedidos.length}</div>
+          <div className="card-desc">
+            {aprobados.length} aprobados · {formatearPrecio(totalVendido)} vendidos
+          </div>
         </div>
         <div className="card kpi-card">
           <div className="card-title">Catálogo</div>

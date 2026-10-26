@@ -5,7 +5,7 @@
 // crea cada colección si todavía no existe en localStorage.
 // ============================================================
 
-import type { Producto } from "../types";
+import type { Pedido, Producto } from "../types";
 import { SANRUCHO_KEYS } from "../storage/claves";
 
 function sembrar<T>(clave: string, datos: T[]): void {
@@ -15,19 +15,19 @@ function sembrar<T>(clave: string, datos: T[]): void {
 }
 
 /** Versión del seed. Súbela cuando cambies los datos base. */
-const VERSION_SEMILLA = 1;
+const VERSION_SEMILLA = 2;
 const CLAVE_VERSION_SEMILLA = "sanrucho_semilla_version";
 
 /** Productos del catálogo base con sus imágenes de Sanrio. */
 const PRODUCTOS_BASE: Producto[] = [
-  { codigo: "HK-PLUSH-001", nombre: "Peluche Hello Kitty Clásico 30cm", descripcion: "Peluche suave de Hello Kitty con su icónico moño rojo.", precio: 24990, stock: 15, stockCritico: 3, categoriaId: 2, imagen: "/static/img/productos/hello-kitty1.webp", estado: "Activo" },
-  { codigo: "KR-PLUSH-002", nombre: "Peluche Kuromi con Capucha 25cm", descripcion: "Kuromi adorable con su capucha de conejito negra.", precio: 22990, stock: 20, stockCritico: 5, categoriaId: 2, imagen: "/static/img/productos/kuromi-peluche1.webp", estado: "Activo" },
-  { codigo: "MM-PLUSH-003", nombre: "Peluche My Melody Sleeping 35cm", descripcion: "My Melody en posición de dormir, súper suave.", precio: 27990, stock: 8, stockCritico: 2, categoriaId: 2, imagen: "/static/img/productos/melody-peluche1.webp", estado: "Activo" },
-  { codigo: "CN-PLUSH-004", nombre: "Peluche Cinnamoroll Nube 40cm", descripcion: "Cinnamoroll esponjoso con orejas largas.", precio: 29990, stock: 12, stockCritico: 4, categoriaId: 2, imagen: "/static/img/productos/peluche-cinna-verano.webp", estado: "Activo" },
-  { codigo: "HK-NOTE-101", nombre: "Cuaderno Hello Kitty A5 Rayas", descripcion: "Cuaderno con rayas, 80 hojas, diseño Hello Kitty.", precio: 5990, stock: 10, stockCritico: 3, categoriaId: 5, imagen: "/static/img/productos/cuaderno-hk1.jpg", estado: "Activo" },
-  { codigo: "PP-MUG-301", nombre: "Taza Cerámica Pompompurin 350ml", descripcion: "Taza de cerámica con diseño 3D de Pompompurin.", precio: 12990, stock: 25, stockCritico: 5, categoriaId: 7, imagen: "/static/img/productos/tazon-ppm1.jpg", estado: "Activo" },
-  { codigo: "BM-WALLET-402", nombre: "Cartera Badtz-Maru Negro", descripcion: "Cartera de material sintético con múltiples compartimientos.", precio: 13990, stock: 2, stockCritico: 3, categoriaId: 7, imagen: "/static/img/productos/monedero-bm1.webp", estado: "Activo" },
-  { codigo: "LTS-PLUSH-005", nombre: "Peluche Little Twin Stars Set", descripcion: "Set de Kiki y Lala 20cm cada uno.", precio: 34990, stock: 6, stockCritico: 2, categoriaId: 2, imagen: "/static/img/productos/lts-peluche1.jpg", estado: "Activo" },
+  { codigo: "HK-PLUSH-001", nombre: "Peluche Hello Kitty Clásico 30cm", descripcion: "Peluche suave de Hello Kitty con su icónico moño rojo.", precio: 24990, oferta: true, precioOferta: 19990, descuento: 20, stock: 15, stockCritico: 3, categoriaId: 2, imagen: "/static/img/productos/hello-kitty1.webp", estado: "Activo" },
+  { codigo: "KR-PLUSH-002", nombre: "Peluche Kuromi con Capucha 25cm", descripcion: "Kuromi adorable con su capucha de conejito negra.", precio: 22990, oferta: true, precioOferta: 17990, descuento: 22, stock: 20, stockCritico: 5, categoriaId: 2, imagen: "/static/img/productos/kuromi-peluche1.webp", estado: "Activo" },
+  { codigo: "MM-PLUSH-003", nombre: "Peluche My Melody Sleeping 35cm", descripcion: "My Melody en posición de dormir, súper suave.", precio: 27990, oferta: true, precioOferta: 21990, descuento: 21, stock: 8, stockCritico: 2, categoriaId: 2, imagen: "/static/img/productos/melody-peluche1.webp", estado: "Activo" },
+  { codigo: "CN-PLUSH-004", nombre: "Peluche Cinnamoroll Nube 40cm", descripcion: "Cinnamoroll esponjoso con orejas largas.", precio: 29990, oferta: false, stock: 12, stockCritico: 4, categoriaId: 2, imagen: "/static/img/productos/peluche-cinna-verano.webp", estado: "Activo" },
+  { codigo: "HK-NOTE-101", nombre: "Cuaderno Hello Kitty A5 Rayas", descripcion: "Cuaderno con rayas, 80 hojas, diseño Hello Kitty.", precio: 5990, oferta: false, stock: 10, stockCritico: 3, categoriaId: 5, imagen: "/static/img/productos/cuaderno-hk1.jpg", estado: "Activo" },
+  { codigo: "PP-MUG-301", nombre: "Taza Cerámica Pompompurin 350ml", descripcion: "Taza de cerámica con diseño 3D de Pompompurin.", precio: 12990, oferta: false, stock: 25, stockCritico: 5, categoriaId: 7, imagen: "/static/img/productos/tazon-ppm1.jpg", estado: "Activo" },
+  { codigo: "BM-WALLET-402", nombre: "Cartera Badtz-Maru Negro", descripcion: "Cartera de material sintético con múltiples compartimientos.", precio: 13990, oferta: false, stock: 2, stockCritico: 3, categoriaId: 7, imagen: "/static/img/productos/monedero-bm1.webp", estado: "Activo" },
+  { codigo: "LTS-PLUSH-005", nombre: "Peluche Little Twin Stars Set", descripcion: "Set de Kiki y Lala 20cm cada uno.", precio: 34990, oferta: false, stock: 6, stockCritico: 2, categoriaId: 2, imagen: "/static/img/productos/lts-peluche1.jpg", estado: "Activo" },
 ];
 
 /**
@@ -42,14 +42,45 @@ function aplicarMigraciones(): void {
   if (versionGuardada >= VERSION_SEMILLA) return;
 
   const imagenesBase = new Map(PRODUCTOS_BASE.map((p) => [p.codigo, p.imagen]));
+  const ofertasBase = new Map(
+    PRODUCTOS_BASE.filter((p) => p.oferta).map((p) => [
+      p.codigo,
+      {
+        oferta: p.oferta,
+        precioOferta: p.precioOferta,
+        descuento: p.descuento,
+      },
+    ])
+  );
   const actuales = JSON.parse(
     localStorage.getItem(SANRUCHO_KEYS.productos) ?? "[]"
   ) as Producto[];
 
   if (actuales.length > 0) {
-    const actualizados = actuales.map((p) =>
-      imagenesBase.has(p.codigo) ? { ...p, imagen: imagenesBase.get(p.codigo)! } : p
-    );
+    const actualizados = actuales.map((p) =>{
+      
+      const img = imagenesBase.get(p.codigo);
+      const ofertaData = ofertasBase.get(p.codigo);
+    
+
+    let actualizado = { ...p };
+
+      if (img) {
+        actualizado.imagen = img;
+      }
+
+      if (ofertaData) {
+        actualizado = {
+          ...actualizado,
+          oferta: true,
+          precioOferta: ofertaData.precioOferta,
+          descuento: ofertaData.descuento,
+        };
+      }
+
+      return actualizado;
+    });
+  
     localStorage.setItem(SANRUCHO_KEYS.productos, JSON.stringify(actualizados));
   }
 
@@ -199,6 +230,22 @@ export function inicializarDatos(): void {
       fecha: "2026-08-02",
     },
   ]);
+
+  // Historial de boletas para el panel de administración. Las versiones
+  // anteriores solo guardaban el último pedido: se migra para no perderlo.
+  if (!localStorage.getItem(SANRUCHO_KEYS.pedidos)) {
+    try {
+      const ultimo = JSON.parse(
+        localStorage.getItem(SANRUCHO_KEYS.ultimoPedido) ?? "null"
+      ) as Pedido | null;
+      localStorage.setItem(
+        SANRUCHO_KEYS.pedidos,
+        JSON.stringify(ultimo ? [ultimo] : [])
+      );
+    } catch {
+      localStorage.setItem(SANRUCHO_KEYS.pedidos, "[]");
+    }
+  }
 
   // Actualiza datos ya guardados cuando el seed cambia de versión.
   aplicarMigraciones();

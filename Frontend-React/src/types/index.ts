@@ -50,6 +50,9 @@ export interface Producto {
   nombre: string;
   descripcion: string;
   precio: number;
+  precioOferta?: number;
+  oferta?: boolean;
+  descuento?: number;
   stock: number;
   stockCritico: number | null;
   categoriaId: number;
@@ -90,4 +93,50 @@ export interface Resena {
   calificacion: number;
   comentario: string;
   fecha: string;
+}
+
+// ============================================================
+// src/types/index.ts (AGREGAR AL FINAL)
+// ============================================================
+
+export type MetodoPago = "tarjeta" | "transferencia" | "webpay";
+export type TipoTarjeta = "debito" | "credito";
+
+
+export interface DatosDespacho {
+  nombre: string;
+  apellidos: string;
+  correo: string;
+  telefono: string;
+  direccion: string;
+  regionId?: number | string;
+  comunaId?: number | string;
+  region?: string;
+  comuna?: string;
+  fechaDespacho: string; // YYYY-MM-DD
+  horaDespacho: string;  // HH:MM
+  observaciones?: string;
+}
+
+export interface DatosPago {
+  tipo: TipoTarjeta | "webpay";
+  numeroTarjeta?: string;
+  nombreTitular?: string;
+  vencimiento?: string;
+  cvv?: string;
+}
+
+export interface Pedido {
+  id: string;                // ID interno
+  codigoBoleta: string;      // Código que debe ir en la boleta (MISMO que se muestra en resumen)
+  fechaCreacion: string;     // Fecha y hora de la compra
+  cliente: DatosDespacho;
+  items: ItemCarrito[];
+  subtotal: number;
+  envio: number;
+  total: number;
+  metodoPago: MetodoPago;
+  tipoTarjeta?: TipoTarjeta;
+  estadoPago: "aprobado" | "rechazado";
+  codigoSeguimiento?: string;
 }

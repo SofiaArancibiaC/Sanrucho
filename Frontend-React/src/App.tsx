@@ -29,10 +29,19 @@ import Contacto from "./pages/Contacto";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminReportes from "./pages/admin/AdminReportes";
 import AdminCategorias from "./pages/admin/AdminCategorias";
+import Ofertas from "./pages/Ofertas";
+import Checkout from "./pages/Checkout";
+import PagoExito from "./pages/PagoExito";
+import PagoError from "./pages/PagoError";
+import ResumenCompra from "./pages/ResumenCompra";
+
 import AdminProductos from "./pages/admin/AdminProductos";
 import AdminProductoForm from "./pages/admin/AdminProductoForm";
 import AdminUsuarios from "./pages/admin/AdminUsuarios";
 import AdminUsuarioForm from "./pages/admin/AdminUsuarioForm";
+import AdminUsuarioHistorial from "./pages/admin/AdminUsuarioHistorial";
+import AdminBoletas from "./pages/admin/AdminBoletas";
+import AdminBoletaDetalle from "./pages/admin/AdminBoletaDetalle";
 
 export default function App() {
   return (
@@ -43,8 +52,13 @@ export default function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/productos" element={<Productos />} />
-            <Route path="/producto-detalle" element={<ProductoDetalle />} />
             <Route path="/carrito" element={<Carrito />} />
+            <Route path="/ofertas" element={<Ofertas />} />
+            <Route path="/producto-detalle" element={<ProductoDetalle />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/pago/exito" element={<PagoExito />} />
+            <Route path="/pago/error" element={<PagoError />} />
+            <Route path="/resumen-compra" element={<ResumenCompra />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
             <Route path="/nosotros" element={<Nosotros />} />
@@ -66,8 +80,17 @@ export default function App() {
               <Route path="/admin/productos/form" element={<AdminProductoForm />} />
               <Route path="/admin/usuarios" element={<AdminUsuarios />} />
               <Route path="/admin/usuarios/form" element={<AdminUsuarioForm />} />
-              <Route path="/admin/reportes" element={<AdminReportes />} />
               <Route path="/admin/perfil" element={<Perfil />} />
+              <Route path="/admin/productos" element={<AdminProductos />} />
+              <Route path="/admin/productos/form" element={<AdminProductoForm />} />
+              <Route path="/admin/boletas" element={<AdminBoletas />} />
+              <Route path="/admin/boletas/:id" element={<AdminBoletaDetalle />} />
+              <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+              <Route path="/admin/usuarios/form" element={<AdminUsuarioForm />} />
+              <Route
+                path="/admin/usuarios/:run/historial"
+                element={<AdminUsuarioHistorial />}
+              />
             </Route>
           </Route>
 

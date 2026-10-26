@@ -8,10 +8,11 @@
 
 import { createContext, useContext, useEffect } from "react";
 import type { ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import type { ItemCarrito, Producto } from "../types";
 import { SANRUCHO_KEYS } from "../storage/claves";
 import { useColeccion } from "../storage/useColeccion";
-import { alertaAviso, confirmar, toast } from "../utils/alertas";
+import { alertaAviso, toast } from "../utils/alertas";
 import { useAuth } from "./AuthContext";
 
 interface CartContextValue {
@@ -24,7 +25,7 @@ interface CartContextValue {
   cambiarCantidad: (codigo: string, delta: number) => void;
   eliminar: (codigo: string) => void;
   vaciar: () => void;
-  finalizarCompra: () => void;
+  irACheckout: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -35,6 +36,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // El carrito pertenece a la sesión: si no hay usuario logueado
   // (por ejemplo, al cerrar sesión), se vacía automáticamente.
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!sesion) guardar([]);
   }, [sesion, guardar]);
@@ -43,7 +46,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!sesion) {
       alertaAviso(
         "Inicia sesión",
-        "Debes iniciar sesión para agregar productos al carrito."
+        "Debes iniciar sesión para agregar productos al carrito o continuar con el proceso de pago."
       ).then(() => {
         window.location.href = "/login";
       });
@@ -85,7 +88,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         {
           codigo: producto.codigo,
           nombre: producto.nombre,
-          precio: producto.precio,
+          precio: producto.precioOferta && producto.oferta ? producto.precioOferta : producto.precio,
           imagen: producto.imagen,
           cantidad,
         },
@@ -128,24 +131,25 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const vaciar = () => {
     guardar([]);
-    toast("Carrito vaciado", "info");
   };
 
-  const finalizarCompra = async () => {
+  const irACheckout = () => {
+    if (!exigirSesion()) return;
     if (carrito.length === 0) {
       toast("Tu carrito está vacío", "error");
       return;
     }
-    const totalPedido = subtotal + envio;
-    const confirmado = await confirmar(
-      "¿Finalizar compra?",
-      `Total del pedido: $${totalPedido.toLocaleString("es-CL")}`,
-      "Confirmar pedido"
-    );
-    if (!confirmado) return;
 
-    toast(`¡Pedido enviado! Total: $${totalPedido.toLocaleString("es-CL")}`, "success");
-    guardar([]);
+    const snapshot = {
+      items: carrito,
+      subtotal,
+      envio,
+      total,
+      creadoEn: new Date().toISOString(),
+    };
+
+    localStorage.setItem(SANRUCHO_KEYS.checkoutSnapshot, JSON.stringify(snapshot));
+    navigate("/checkout");
   };
 
   const totalItems = carrito.reduce((acc, i) => acc + i.cantidad, 0);
@@ -165,7 +169,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         cambiarCantidad,
         eliminar,
         vaciar,
-        finalizarCompra,
+        irACheckout,
       }}
     >
       {children}

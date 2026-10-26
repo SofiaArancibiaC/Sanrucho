@@ -36,6 +36,9 @@ export default function AdminSidebar() {
           <i className="bi bi-people me-2"></i> Usuarios
         </NavLink>
       )}
+      <NavLink to="/admin/boletas" className={claseEnlace}>
+        <i className="bi bi-receipt me-2"></i> Boletas
+      </NavLink>
       <Link
         to="/"
         className="list-group-item list-group-item-action text-primary"

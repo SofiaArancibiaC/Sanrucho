@@ -28,7 +28,7 @@ export default function AdminUsuarioForm() {
   const [nombre, setNombre] = useState(existente?.nombre ?? "");
   const [apellidos, setApellidos] = useState(existente?.apellidos ?? "");
   const [correo, setCorreo] = useState(existente?.correo ?? "");
-  const [password, setPassword] = useState(enEdicion ? "" : "");
+  const [password, setPassword] = useState(existente?.password ?? "");
   const [fechaNacimiento, setFechaNacimiento] = useState(existente?.fechaNacimiento ?? "");
   const [rolId, setRolId] = useState(existente ? String(existente.rolId) : "");
   const [regionId, setRegionId] = useState(existente ? String(existente.regionId) : "");
