@@ -1,7 +1,5 @@
 // ============================================================
-// pages/Carrito.tsx
-// Reemplaza carrito.html + carrito.js. Todo sale de useCart(),
-// así que los totales y el badge del navbar quedan sincronizados.
+// src/pages/Carrito.tsx
 // ============================================================
 
 import { Link } from "react-router-dom";
@@ -17,7 +15,7 @@ export default function Carrito() {
     total,
     cambiarCantidad,
     eliminar,
-    finalizarCompra,
+    irACheckout,
   } = useCart();
 
   return (
@@ -26,7 +24,7 @@ export default function Carrito() {
         <div>
           <h1>Tu Carrito de Compras</h1>
           <div className="subtitle">
-            Revisa tus productos elegidos antes de finalizar el pedido
+            Revisa tus productos elegidos antes de continuar con el proceso de pago
           </div>
         </div>
         <span className="carrito-badge-count">
@@ -137,10 +135,10 @@ export default function Carrito() {
           <button
             type="button"
             className="btn-enviar btn-block"
-            onClick={finalizarCompra}
+            onClick={irACheckout}
             disabled={carrito.length === 0}
           >
-            Finalizar Compra
+            Ir a pagar
           </button>
           <Link className="seguir-comprando" to="/productos">
             &larr; Seguir comprando
@@ -150,3 +148,15 @@ export default function Carrito() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+

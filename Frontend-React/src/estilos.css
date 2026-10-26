@@ -1,5 +1,5 @@
 /* ============================================================
-   SISTEMA DE DISEÑO / DESIGN TOKENS
+  SISTEMA DE DISEÑO / DESIGN TOKENS
    ============================================================ */
 :root {
   /* Paleta Primaria (Rosas) */
@@ -43,7 +43,7 @@
 }
 
 /* ============================================================
-   ESTILOS GENERALES / BASE
+  ESTILOS GENERALES / BASE
    ============================================================ */
 body {
   font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -89,7 +89,7 @@ body.bg-fixed {
 }
 
 /* ============================================================
-   BOTONES E INPUTS GLOBALES
+  BOTONES E INPUTS GLOBALES
    ============================================================ */
 /* Botón Principal (Pill Pink) */
 .btn-enviar,
@@ -214,7 +214,7 @@ body.bg-fixed {
 }
 
 /* ============================================================
-   TOPBAR Y FOOTER
+  TOPBAR Y FOOTER
    ============================================================ */
 .topbar {
   background: var(--bg-card);
@@ -352,7 +352,7 @@ body.bg-fixed {
 }
 
 /* ============================================================
-   CONTACTO
+  CONTACTO
    ============================================================ */
 .problema-hero-contacto {
   background: var(--bg-card);
@@ -471,7 +471,7 @@ body.bg-fixed {
 }
 
 /* ============================================================
-   INDEX & HOME
+  INDEX & HOME
    ============================================================ */
 .bienvenidos {
   padding-top: 40px;
@@ -648,7 +648,7 @@ body.bg-fixed {
 }
 
 /* ============================================================
-   AUTENTICACIÓN (LOGIN & REGISTRO)
+  AUTENTICACIÓN (LOGIN & REGISTRO)
    ============================================================ */
 .body-login {
   display: flex;
@@ -740,7 +740,7 @@ body.bg-fixed {
 }
 
 /* ============================================================
-   CATÁLOGO Y PRODUCTOS
+  CATÁLOGO Y PRODUCTOS
    ============================================================ */
 .filter-card {
   background-color: var(--bg-card);
@@ -913,7 +913,7 @@ body.bg-fixed {
 }
 
 /* ============================================================
-   RESEÑAS
+  RESEÑAS
    ============================================================ */
 .seccion-resenas {
   background-color: transparent;
@@ -996,7 +996,7 @@ body.bg-fixed {
 }
 
 /* ============================================================
-   ADMINISTRACIÓN Y TABLAS
+  ADMINISTRACIÓN Y TABLAS
    ============================================================ */
 .modal-personalizado {
   display: none;
@@ -1108,7 +1108,7 @@ body.bg-fixed {
 .stock-critico { color: var(--color-error); font-weight: 700; }
 
 /* ============================================================
-   ADMINISTRACIÓN: LAYOUT & SIDEBAR
+  ADMINISTRACIÓN: LAYOUT & SIDEBAR
    ============================================================ */
 .admin-layout {
   display: grid;
@@ -1217,7 +1217,7 @@ body.bg-fixed {
 }
 
 /* ============================================================
-   CARRITO DE COMPRAS
+  CARRITO DE COMPRAS
    ============================================================ */
 .carrito-header {
   display: flex;
@@ -1508,7 +1508,7 @@ body.bg-fixed {
 }
 
 /* ============================================================
-   SECCIÓN BLOG
+  SECCIÓN BLOG
    ============================================================ */
 .blog-container {
   padding-top: 16px;
@@ -1663,7 +1663,7 @@ body.bg-fixed {
 }
 
 /* ============================================================
-   SECCIÓN SOBRE NOSOTROS & CONTACTO AUXILIAR
+  SECCIÓN SOBRE NOSOTROS & CONTACTO AUXILIAR
    ============================================================ */
 .sobre-nosotros {
   display: flex;
@@ -1834,4 +1834,324 @@ body.bg-fixed {
 
 .card-action {
   margin-top: 1rem;
+}
+
+/* ============================================================
+  OFERTAS - CHECKOUT - PAGO EXITOSO/ERRONEO - RESUMEN
+   ============================================================ */
+
+/* Checkout */
+.checkout-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-pink-light);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.checkout-title {
+  font-weight: 700;
+  color: var(--primary-hover);
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.active-step {
+  background: var(--primary) !important;
+  color: #ffffff !important;
+  border-color: var(--primary) !important;
+}
+
+/* Caja info pago */
+.info-pago-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--bg-input);
+  border: 1.5px dashed var(--border-pink);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  color: var(--text-muted);
+}
+
+.info-pago-box i {
+  color: var(--color-success);
+  font-size: 1.4rem;
+}
+
+/* Mini resumen checkout */
+.checkout-mini {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Items resumen lateral */
+.resumen-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.resumen-item {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.resumen-item img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-pink-light);
+  background: var(--bg-input);
+  padding: 3px;
+}
+
+.resumen-item-nombre {
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.resumen-item-det {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+
+.resumen-item-sub {
+  font-weight: 700;
+  color: var(--accent-blue);
+}
+
+/* Resultado pago */
+
+.resultado-pago {
+  max-width: 720px;
+  margin: 40px auto;
+  text-align: center;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 44px 30px;
+  box-shadow: var(--shadow-md);
+  border: 1.5px solid var(--border-pink-light);
+}
+
+.card-exito {
+  border-color: rgba(69, 177, 107, 0.45);
+}
+
+.card-error {
+  border-color: rgba(255, 71, 109, 0.45);
+}
+
+.resultado-icono {
+  font-size: 4.2rem;
+  margin-bottom: 14px;
+}
+
+.resultado-icono.exito {
+  color: var(--color-success);
+}
+
+.resultado-icono.error {
+  color: var(--color-error);
+}
+
+.resultado-pago h1 {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.resultado-pago p {
+  color: var(--text-muted);
+  font-size: 1.02rem;
+}
+
+.resultado-info {
+  margin-top: 20px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 9px;
+  background: var(--bg-input);
+  border: 1.5px dashed var(--border-pink);
+  border-radius: var(--radius-md);
+  padding: 18px 26px;
+  text-align: left;
+  max-width: 560px;
+}
+
+/* Resumen compra */
+.resumen-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 26px;
+  align-items: start;
+}
+
+@media (max-width: 991px) {
+  .resumen-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.resumen-seccion {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-pink-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+
+.resumen-seccion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.resumen-seccion h2 {
+  font-size: 1.16rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  color: var(--primary-hover);
+}
+
+.resumen-dato {
+  margin-bottom: 9px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.resumen-dato strong {
+  color: var(--text-main);
+}
+
+.badge-aprobado {
+  background: #d7f5e1 !important;
+  color: #1b8a4a !important;
+  border-color: rgba(69, 177, 107, 0.5) !important;
+}
+
+.badge-rechazado {
+  background: #ffe5ea !important;
+  color: #c81e3a !important;
+  border-color: rgba(255, 71, 109, 0.5) !important;
+}
+
+.resumen-lateral {
+  position: sticky;
+  top: 24px;
+}
+/* ============================================================
+   SELECCIÓN MÉTODO DE PAGO
+   ============================================================ */
+
+.metodo-pago-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.metodo-pago-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1.5px solid var(--border-pink-light);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.metodo-pago-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.metodo-pago-card.active {
+  border-color: var(--primary);
+  background: var(--primary-subtle);
+  box-shadow: 0 0 0 3px rgba(255, 101, 132, 0.12);
+}
+
+.metodo-pago-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-input);
+  color: var(--primary);
+  font-size: 1.4rem;
+}
+
+.metodo-pago-card.active .metodo-pago-icon {
+  background: var(--primary);
+  color: #fff;
+}
+
+.metodo-pago-info {
+  flex: 1;
+}
+
+.metodo-pago-titulo {
+  font-weight: 700;
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+.metodo-pago-sub {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.metodo-pago-radio input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+/* ============================================================
+  AJUSTES IMÁGENES CARRITO / CHECKOUT
+   ============================================================ */
+
+.resumen-item-img {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-pink-light);
+  background: var(--bg-input);
+  padding: 3px;
+  display: block;
+}
+
+.carrito-producto-img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.resumen-item {
+  align-items: center;
 }
