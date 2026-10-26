@@ -35,6 +35,9 @@ import AdminProductos from "./pages/admin/AdminProductos";
 import AdminProductoForm from "./pages/admin/AdminProductoForm";
 import AdminUsuarios from "./pages/admin/AdminUsuarios";
 import AdminUsuarioForm from "./pages/admin/AdminUsuarioForm";
+import AdminUsuarioHistorial from "./pages/admin/AdminUsuarioHistorial";
+import AdminBoletas from "./pages/admin/AdminBoletas";
+import AdminBoletaDetalle from "./pages/admin/AdminBoletaDetalle";
 
 export default function App() {
   return (
@@ -67,8 +70,14 @@ export default function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/productos" element={<AdminProductos />} />
               <Route path="/admin/productos/form" element={<AdminProductoForm />} />
+              <Route path="/admin/boletas" element={<AdminBoletas />} />
+              <Route path="/admin/boletas/:id" element={<AdminBoletaDetalle />} />
               <Route path="/admin/usuarios" element={<AdminUsuarios />} />
               <Route path="/admin/usuarios/form" element={<AdminUsuarioForm />} />
+              <Route
+                path="/admin/usuarios/:run/historial"
+                element={<AdminUsuarioHistorial />}
+              />
             </Route>
           </Route>
 

@@ -58,11 +58,12 @@ Los datos se cargan automáticamente en `localStorage` la primera vez (ver `src/
 | Rol     | Correo             | Contraseña | Puede entrar a `/admin` |
 | ------- | ------------------ | ---------- | ----------------------- |
 | Dueño   | `dueno@gmail.com`  | `dueno123` | Sí (ve todo)            |
-| Admin   | `admin@gmail.com`  | `admin123` | Sí (no ve "Usuarios")   |
+| Admin   | `admin@gmail.com`  | `admin123` | Sí (ve todo)            |
 | Cliente | `camila@gmail.com` | `camila123`| No                      |
 
 > Regla de roles: **1 = Dueño**, **2 = Admin**, **3 = Cliente**.
-> El enlace "Usuarios" del panel solo se muestra al Dueño.
+> Dueño y Admin ven los mismos módulos del panel, incluido Usuarios y el
+> historial de compras de cada usuario.
 
 ---
 
@@ -155,7 +156,8 @@ Públicas: `/`, `/productos`, `/producto-detalle?codigo=...`, `/carrito`, `/logi
 `/registro`, `/nosotros`, `/blog`, `/blog/detalle-1`, `/blog/detalle-2`, `/contacto`.
 
 Administración (requiere rol Dueño o Admin): `/admin`, `/admin/productos`,
-`/admin/productos/form`, `/admin/usuarios`, `/admin/usuarios/form`.
+`/admin/productos/form`, `/admin/boletas`, `/admin/boletas/:id`,
+`/admin/usuarios`, `/admin/usuarios/form`, `/admin/usuarios/:run/historial`.
 
 ---
 
@@ -173,7 +175,7 @@ Administración (requiere rol Dueño o Admin): `/admin`, `/admin/productos`,
 ## 8. Siguientes pasos sugeridos
 
 1. Subir las imágenes que faltan a `public/static/img/productos/`.
-2. Implementar el módulo de **Pedidos** (hoy muestra 0 en el panel).
+2. Ampliar el módulo de **Pedidos** (exportar boletas, anular pagos, etc.).
 3. Conectar el frontend con el **backend** (los microservicios) en vez de `localStorage`
    (manteniendo los tipos de `src/types`).
 4. Agregar más pruebas unitarias (contextos, componentes).
