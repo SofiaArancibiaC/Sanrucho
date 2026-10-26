@@ -5,7 +5,7 @@
 // crea cada colección si todavía no existe en localStorage.
 // ============================================================
 
-import type { Producto } from "../types";
+import type { Pedido, Producto } from "../types";
 import { SANRUCHO_KEYS } from "../storage/claves";
 
 function sembrar<T>(clave: string, datos: T[]): void {
@@ -231,6 +231,22 @@ export function inicializarDatos(): void {
       fecha: "2026-08-02",
     },
   ]);
+
+  // Historial de boletas para el panel de administración. Las versiones
+  // anteriores solo guardaban el último pedido: se migra para no perderlo.
+  if (!localStorage.getItem(SANRUCHO_KEYS.pedidos)) {
+    try {
+      const ultimo = JSON.parse(
+        localStorage.getItem(SANRUCHO_KEYS.ultimoPedido) ?? "null"
+      ) as Pedido | null;
+      localStorage.setItem(
+        SANRUCHO_KEYS.pedidos,
+        JSON.stringify(ultimo ? [ultimo] : [])
+      );
+    } catch {
+      localStorage.setItem(SANRUCHO_KEYS.pedidos, "[]");
+    }
+  }
 
   // Actualiza datos ya guardados cuando el seed cambia de versión.
   aplicarMigraciones();

@@ -8,8 +8,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export default function AdminOffcanvas() {
-  const { sesion, logout } = useAuth();
-  const puedeVerUsuarios = sesion?.rolId === 1;
+  const { logout } = useAuth();
 
   return (
     <>
@@ -51,14 +50,18 @@ export default function AdminOffcanvas() {
             >
               <i className="bi bi-box-seam me-2"></i> Productos
             </Link>
-            {puedeVerUsuarios && (
-              <Link
-                to="/admin/usuarios"
-                className="list-group-item list-group-item-action"
-              >
-                <i className="bi bi-people me-2"></i> Usuarios
-              </Link>
-            )}
+            <Link
+              to="/admin/boletas"
+              className="list-group-item list-group-item-action"
+            >
+              <i className="bi bi-receipt me-2"></i> Boletas
+            </Link>
+            <Link
+              to="/admin/usuarios"
+              className="list-group-item list-group-item-action"
+            >
+              <i className="bi bi-people me-2"></i> Usuarios
+            </Link>
             <Link
               to="/"
               className="list-group-item list-group-item-action text-primary"

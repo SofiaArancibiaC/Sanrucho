@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { SANRUCHO_KEYS } from "../storage/claves";
+import { escribirColeccion, leerColeccion } from "../storage/useColeccion";
 import { formatearPrecio, imagenPorDefecto, rutaImagenProducto } from "../utils/formato";
 import type { DatosDespacho, DatosPago, Pedido, ItemCarrito } from "../types";
 import { toast } from "../utils/alertas";
@@ -151,6 +152,16 @@ const confirmarPago = (e: React.FormEvent) => {
     };
 
     localStorage.setItem(SANRUCHO_KEYS.ultimoPedido, JSON.stringify(pedido));
+
+    // Historial de pedidos: alimenta la vista de boletas del administrador.
+    // Se guardan también los rechazados para poder auditarlos; el listado
+    // administrativo filtra por defecto solo los pagos aprobados.
+    const pedidosPrevios = leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos);
+    escribirColeccion<Pedido>(SANRUCHO_KEYS.pedidos, [
+    pedido,
+    ...pedidosPrevios.filter((p) => p.id !== pedido.id),
+    ]);
+
     vaciar();
     localStorage.removeItem(SANRUCHO_KEYS.checkoutSnapshot);
 

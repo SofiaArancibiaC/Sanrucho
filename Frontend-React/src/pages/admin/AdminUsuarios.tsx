@@ -67,6 +67,18 @@ export default function AdminUsuarios() {
         <div className="d-flex gap-1">
           <button
             type="button"
+            className="btn btn-sm btn-outline-secondary"
+            title="Ver historial de compras"
+            onClick={() =>
+              navigate(
+                `/admin/usuarios/${encodeURIComponent(u.run)}/historial`
+              )
+            }
+          >
+            Historial
+          </button>
+          <button
+            type="button"
             className="btn btn-sm btn-outline-primary"
             title="Editar"
             onClick={() =>
