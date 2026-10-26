@@ -6,9 +6,12 @@
 
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useTablasMaestras } from "../hooks/useTablasMaestras";
 
 export default function Home() {
   const { sesion } = useAuth();
+  const { categorias } = useTablasMaestras();
+  const categoriasDestacadas = categorias.slice(0, 4);
 
   return (
     <>
@@ -62,6 +65,30 @@ export default function Home() {
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Siguiente</span>
         </button>
+      </div>
+
+      <div className="container my-5">
+        <h3 className="text-center mb-3">Categorías destacadas</h3>
+        <div className="row g-3 justify-content-center">
+          {categoriasDestacadas.map((c) => (
+            <div key={c.id} className="col-6 col-md-3">
+              <Link
+                to={`/productos?cat=${c.id}`}
+                className="card text-decoration-none h-100 shadow-sm"
+              >
+                <div className="card-body text-center">
+                  <i className="bi bi-tags fs-3 d-block mb-2"></i>
+                  <span className="fw-semibold">{c.nombre}</span>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+        <div className="text-center mt-3">
+          <Link to="/categorias" className="shadow-effect btn-sm">
+            Ver todas las categorías
+          </Link>
+        </div>
       </div>
 
       <div className="algunos-productos text-center my-4">

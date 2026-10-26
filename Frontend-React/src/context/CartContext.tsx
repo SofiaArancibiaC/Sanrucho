@@ -1,6 +1,9 @@
-
 // ============================================================
-// src/context/CartContext.tsx
+// context/CartContext.tsx
+// Reemplaza a carrito.js. Expone el carrito, los totales y las
+// operaciones (agregar / cambiar cantidad / eliminar / vaciar /
+// finalizar). Al cambiar el estado, TODA la UI que use useCart()
+// (badge del navbar, página del carrito) se actualiza sola.
 // ============================================================
 
 import { createContext, useContext, useEffect } from "react";
@@ -30,6 +33,9 @@ const CartContext = createContext<CartContextValue | null>(null);
 export function CartProvider({ children }: { children: ReactNode }) {
   const { datos: carrito, guardar } = useColeccion<ItemCarrito>(SANRUCHO_KEYS.carrito);
   const { sesion } = useAuth();
+
+  // El carrito pertenece a la sesión: si no hay usuario logueado
+  // (por ejemplo, al cerrar sesión), se vacía automáticamente.
   const navigate = useNavigate();
 
   useEffect(() => {

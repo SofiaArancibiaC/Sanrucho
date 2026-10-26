@@ -5,6 +5,7 @@
 // ============================================================
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useProductos } from "../hooks/useProductos";
 import { useTablasMaestras } from "../hooks/useTablasMaestras";
 import ProductCard from "../components/common/ProductCard";
@@ -16,8 +17,9 @@ export default function Productos() {
   const { activos } = useProductos();
   const { categorias } = useTablasMaestras();
 
+  const [searchParams] = useSearchParams();
   const [busqueda, setBusqueda] = useState("");
-  const [categoriaId, setCategoriaId] = useState(0);
+  const [categoriaId, setCategoriaId] = useState(Number(searchParams.get("cat") || 0));
   const [precioMaximo, setPrecioMaximo] = useState(PRECIO_MAXIMO);
 
   const filtrados = useMemo(() => {

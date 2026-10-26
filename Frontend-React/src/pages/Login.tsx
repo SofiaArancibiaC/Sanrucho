@@ -16,6 +16,7 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [mostrarPassword, setMostrarPassword] = useState(false);
 
   const enviar = async (e: FormEvent) => {
     e.preventDefault();
@@ -70,15 +71,33 @@ export default function Login() {
             <label htmlFor="password" className="form-label">
               Contraseña
             </label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="********"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div style={{ display: "block" }}>
+              <input
+                type={mostrarPassword ? "text" : "password"}
+                className="form-control"
+                id="password"
+                placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setMostrarPassword((v) => !v)}
+                tabIndex={-1}
+                style={{
+                  background: "none",
+                  border: "1px solid #ced4da",
+                  borderRadius: "0.375rem",
+                  padding: "0.2rem 0.15rem",
+                  cursor: "pointer",
+                  color: "#6c757d",
+                  flexShrink: 0,
+                }}
+              >
+                <i className={"bi " + (mostrarPassword ? "bi-eye-slash" : "bi-eye")}></i>
+              </button>
+            </div>
           </div>
 
           <button type="submit" className="btn btn-primary w-100 mb-3">
@@ -90,9 +109,6 @@ export default function Login() {
           </div>
         </form>
 
-        <p className="text-muted small text-center mt-3 mb-0">
-          Demo: dueno@gmail.com / dueno123 · admin@gmail.com / admin123
-        </p>
       </div>
     </main>
   );

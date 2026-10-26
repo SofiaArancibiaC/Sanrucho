@@ -68,7 +68,7 @@ export default function AdminUsuarioForm() {
       await alertaError("Correo inválido", "Solo @duoc.cl, @profesor.duoc.cl o @gmail.com.");
       return;
     }
-    if (!validarPassword(password)) {
+    if (!enEdicion && !validarPassword(password)) {
       await alertaError("Contraseña inválida", "Entre 4 y 10 caracteres.");
       return;
     }
@@ -94,7 +94,7 @@ export default function AdminUsuarioForm() {
       nombre: nombre.trim(),
       apellidos: apellidos.trim(),
       correo: correo.trim(),
-      password,
+      password: enEdicion ? (existente?.password ?? "") : password,
       fechaNacimiento: fechaNacimiento || "",
       rolId: Number(rolId),
       regionId: Number(regionId),
@@ -170,19 +170,21 @@ export default function AdminUsuarioForm() {
               onChange={(e) => setCorreo(e.target.value)}
             />
           </div>
-          <div className="col-md-6">
-            <label htmlFor="passwordUsuario" className="form-label">
-              Contraseña
-            </label>
-            <input
-              type="text"
-              className="form-control form-control-custom"
-              id="passwordUsuario"
-              maxLength={10}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          {!enEdicion && (
+            <div className="col-md-6">
+              <label htmlFor="passwordUsuario" className="form-label">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                className="form-control form-control-custom"
+                id="passwordUsuario"
+                maxLength={10}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          )}
           <div className="col-md-4">
             <label htmlFor="fechaNacimientoUsuario" className="form-label">
               Fecha de nacimiento

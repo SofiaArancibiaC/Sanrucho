@@ -16,15 +16,22 @@ export default function Registro() {
   const navigate = useNavigate();
 
   const [nombre, setNombre] = useState("");
+  const [apellidos, setApellidos] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [mostrarPassword, setMostrarPassword] = useState(false);
+  const [mostrarConfirm, setMostrarConfirm] = useState(false);
 
   const enviar = async (e: FormEvent) => {
     e.preventDefault();
 
     if (!nombre.trim()) {
       await alertaError("Falta tu nombre", "Por favor ingresa tu nombre.");
+      return;
+    }
+    if (!apellidos.trim()) {
+      await alertaError("Falta tu apellido", "Por favor ingresa tu apellido.");
       return;
     }
     if (!validarCorreo(email)) {
@@ -43,7 +50,7 @@ export default function Registro() {
       return;
     }
 
-    const resultado = registrar({ nombre, correo: email, password });
+    const resultado = registrar({ nombre, apellidos, correo: email, password });
     if (!resultado.ok) {
       await alertaError("No se pudo registrar", resultado.mensaje);
       return;
@@ -63,13 +70,25 @@ export default function Registro() {
 
         <form onSubmit={enviar} className="row g-3" noValidate>
           <div>
-            <label htmlFor="nombre">Nombre completo</label>
+            <label htmlFor="nombre">Nombre</label>
             <input
               type="text"
               id="nombre"
               placeholder="Tu nombre"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="apellidos">Apellido</label>
+            <input
+              type="text"
+              id="apellidos"
+              placeholder="Tu apellido"
+              value={apellidos}
+              onChange={(e) => setApellidos(e.target.value)}
               required
             />
           </div>
@@ -88,26 +107,62 @@ export default function Registro() {
 
           <div>
             <label htmlFor="password">Contraseña</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Entre 4 y 10 caracteres"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div style={{ display: "block" }}>
+              <input
+                type={mostrarPassword ? "text" : "password"}
+                id="password"
+                placeholder="Entre 4 y 10 caracteres"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setMostrarPassword((v) => !v)}
+                tabIndex={-1}
+                style={{
+                  background: "none",
+                  border: "1px solid #ced4da",
+                  borderRadius: "0.375rem",
+                  padding: "0.2rem 0.15rem",
+                  cursor: "pointer",
+                  color: "#6c757d",
+                  flexShrink: 0,
+                }}
+              >
+                <i className={"bi " + (mostrarPassword ? "bi-eye-slash" : "bi-eye")}></i>
+              </button>
+            </div>
           </div>
 
           <div>
             <label htmlFor="confirm_password">Confirmar contraseña</label>
-            <input
-              type="password"
-              id="confirm_password"
-              placeholder="Repite tu contraseña"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
+            <div style={{ display: "block" }}>
+              <input
+                type={mostrarConfirm ? "text" : "password"}
+                id="confirm_password"
+                placeholder="Repite tu contraseña"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setMostrarConfirm((v) => !v)}
+                tabIndex={-1}
+                style={{
+                  background: "none",
+                  border: "1px solid #ced4da",
+                  borderRadius: "0.375rem",
+                  padding: "0.2rem 0.15rem",
+                  cursor: "pointer",
+                  color: "#6c757d",
+                  flexShrink: 0,
+                }}
+              >
+                <i className={"bi " + (mostrarConfirm ? "bi-eye-slash" : "bi-eye")}></i>
+              </button>
+            </div>
           </div>
 
           <button type="submit">Registrarse</button>

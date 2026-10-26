@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export default function AdminOffcanvas() {
-  const { logout } = useAuth();
+  const { sesion, logout } = useAuth();
+  const puedeVerUsuarios = sesion?.rolId === 1;
 
   return (
     <>

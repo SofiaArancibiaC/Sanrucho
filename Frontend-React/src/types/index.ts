@@ -38,6 +38,7 @@ export interface Usuario {
   regionId: number;
   comunaId: number;
   direccion: string;
+  telefono?: string;
   estado: Estado;
 }
 

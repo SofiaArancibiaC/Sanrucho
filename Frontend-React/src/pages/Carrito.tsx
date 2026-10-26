@@ -1,5 +1,7 @@
 // ============================================================
-// src/pages/Carrito.tsx
+// pages/Carrito.tsx
+// Reemplaza carrito.html + carrito.js. Todo sale de useCart(),
+// así que los totales y el badge del navbar quedan sincronizados.
 // ============================================================
 
 import { Link } from "react-router-dom";

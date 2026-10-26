@@ -18,6 +18,7 @@ interface ResultadoAuth {
 
 interface DatosRegistro {
   nombre: string;
+  apellidos: string;
   correo: string;
   password: string;
 }
@@ -77,7 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const nuevoUsuario: Usuario = {
       run: Date.now().toString().slice(-9),
       nombre: datos.nombre.trim(),
-      apellidos: "",
+      apellidos: datos.apellidos.trim(),
       correo,
       password: datos.password,
       fechaNacimiento: "",

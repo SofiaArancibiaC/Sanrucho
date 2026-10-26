@@ -61,6 +61,9 @@ export default function Navbar() {
         <NavLink to="/ofertas" onClick={cerrarMenu} style={{ color: "#ff476d", fontWeight: 700 }}>
           <i className="bi bi-tags-fill me-1"></i> Ofertas
         </NavLink>
+        <NavLink to="/categorias" onClick={cerrarMenu}>
+          Categorías
+        </NavLink>
         <NavLink to="/blog" onClick={cerrarMenu}>
           Blog
         </NavLink>
@@ -113,6 +116,11 @@ export default function Navbar() {
         </div>
       ) : (
         <div className="topbar-auth align-items-center gap-2">
+          {!esAdministrativo(sesion) && (
+            <Link to="/perfil" className="btn btn-sm btn-outline-accent me-2" onClick={cerrarMenu}>
+              Mi perfil
+            </Link>
+          )}
           <span className="me-2">
             Hola, <strong>{sesion.nombre}</strong>
           </span>
