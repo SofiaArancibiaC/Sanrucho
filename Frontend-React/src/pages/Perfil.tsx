@@ -1,13 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Card, Form, Button, Row, Col, Alert } from "react-bootstrap";
-import { useAuth } from "../context/AuthContext";
+import { useAuth, esAdministrativo } from "../context/AuthContext";
 import { useTablasMaestras } from "../hooks/useTablasMaestras";
 import { leerColeccion, escribirColeccion } from "../storage/useColeccion";
 import { SANRUCHO_KEYS } from "../storage/claves";
-import type { Usuario } from "../types";
+import type { Usuario, Pedido } from "../types";
 
 export default function Perfil() {
   const { sesion } = useAuth();
+  const navigate = useNavigate();
   const editable = true; // admins también pueden editar
   const { regiones, comunas } = useTablasMaestras();
 
@@ -23,6 +25,10 @@ export default function Perfil() {
   }
 
   const comunasFiltradas = comunas.filter((c) => c.regionId === form.regionId);
+
+  const misPedidos = leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos).filter(
+    (p) => p.cliente?.correo === sesion.correo
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -123,6 +129,42 @@ export default function Perfil() {
           </Form>
         </Card.Body>
       </Card>
+
+      {!esAdministrativo(sesion) && (
+      <Card className="mt-4">
+        <Card.Body>
+          <h3 className="mb-3">Mis pedidos</h3>
+          {misPedidos.length === 0 ? (
+            <p className="text-muted">Aún no tienes pedidos registrados.</p>
+          ) : (
+            <ul className="list-group">
+              {misPedidos.map((p) => (
+                <li key={p.id} className="list-group-item">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <strong>{p.codigoBoleta}</strong>
+                      <div className="small text-muted">{p.fechaCreacion} - {p.estadoPago}</div>
+                    </div>
+                    <div className="d-flex align-items-center gap-2">
+                      <span className="badge bg-primary rounded-pill">${p.total.toLocaleString("es-CL")}</span>
+                      <button
+                        className="btn btn-sm btn-outline-primary"
+                        onClick={() => {
+                          localStorage.setItem(SANRUCHO_KEYS.ultimoPedido, JSON.stringify(p));
+                          navigate("/resumen-compra");
+                        }}
+                      >
+                        Ver detalle
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card.Body>
+      </Card>
+      )}
     </Container>
   );
 }

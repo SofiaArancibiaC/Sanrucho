@@ -58,6 +58,9 @@ export default function Navbar() {
         <NavLink to="/productos" onClick={cerrarMenu}>
           Productos
         </NavLink>
+        <NavLink to="/ofertas" onClick={cerrarMenu} style={{ color: "#ff476d", fontWeight: 700 }}>
+          <i className="bi bi-tags-fill me-1"></i> Ofertas
+        </NavLink>
         <NavLink to="/categorias" onClick={cerrarMenu}>
           Categorías
         </NavLink>

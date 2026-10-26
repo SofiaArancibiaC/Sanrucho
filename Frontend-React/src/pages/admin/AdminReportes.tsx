@@ -1,10 +1,13 @@
 import { Container, Card, Row, Col, Button, Table } from "react-bootstrap";
 import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { useRef } from "react";
 import { leerColeccion } from "../../storage/useColeccion";
 import { SANRUCHO_KEYS } from "../../storage/claves";
-import type { Producto, Categoria, Usuario } from "../../types";
+import type { Producto, Categoria, Usuario, Pedido } from "../../types";
 
 export default function AdminReportes() {
+  const chartRef = useRef<HTMLDivElement>(null);
   const usuarios = leerColeccion<Usuario>(SANRUCHO_KEYS.usuarios);
   const productos = leerColeccion<Producto>(SANRUCHO_KEYS.productos);
   const categorias = leerColeccion<Categoria>(SANRUCHO_KEYS.categorias);
@@ -17,7 +20,32 @@ export default function AdminReportes() {
   const stockCritico = productos.filter((p) => p.stock <= (p.stockCritico ?? 0));
   const totalProductos = productos.length;
   const stockTotal = productos.reduce((a, p) => a + (p.stock ?? 0), 0);
-  const pedidos = 0; // no hay colección de pedidos aún
+  const pedidosLista = leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos);
+  const pedidos = pedidosLista.length;
+  const ganancias = pedidosLista
+    .filter((p) => p.estadoPago === "aprobado")
+    .reduce((a, p) => a + (p.total ?? 0), 0);
+
+  // Ganancias agrupadas por mes (YYYY-MM), incluyendo los últimos 6 meses aunque tengan 0
+  const gananciasPorMesMap = new Map<string, number>();
+  const hoy = new Date();
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(hoy.getFullYear(), hoy.getMonth() - i, 1);
+    const mes = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    gananciasPorMesMap.set(mes, 0);
+  }
+  pedidosLista
+    .filter((p) => p.estadoPago === "aprobado")
+    .forEach((p) => {
+      const mes = (p.fechaCreacion || "").slice(0, 7);
+      if (mes && gananciasPorMesMap.has(mes)) {
+        gananciasPorMesMap.set(mes, (gananciasPorMesMap.get(mes) ?? 0) + (p.total ?? 0));
+      } else if (mes) {
+        gananciasPorMesMap.set(mes, (gananciasPorMesMap.get(mes) ?? 0) + (p.total ?? 0));
+      }
+    });
+  const gananciasPorMes = Array.from(gananciasPorMesMap.entries()).sort();
+  const maxGananciaMes = Math.max(...gananciasPorMes.map(([, v]) => v), 1);
 
   const metricas = [
     { nombre: "Clientes registrados", valor: clientesRegistrados },
@@ -34,6 +62,7 @@ export default function AdminReportes() {
       ["Productos", totalProductos],
       ["Stock total", stockTotal],
       ["Pedidos", pedidos],
+    ["Ganancias", ganancias],
     ];
     const csv = filas.map((f) => f.join(";")).join("\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
@@ -45,17 +74,18 @@ export default function AdminReportes() {
     URL.revokeObjectURL(url);
   };
 
-  const exportarPDF = () => {
+  const exportarPDF = async () => {
     const doc = new jsPDF();
     let y = 10;
-    doc.setFontSize(16);
-    doc.text("Reporte Sanrucho", 10, y);
+    doc.setFontSize(18);
+    doc.text("Reporte Sanrucho", 105, y, { align: "center" });
     y += 10;
     doc.setFontSize(12);
     doc.text(`Clientes registrados: ${clientesRegistrados}`, 10, y); y += 8;
     doc.text(`Productos: ${totalProductos}`, 10, y); y += 8;
     doc.text(`Stock total: ${stockTotal}`, 10, y); y += 8;
-    doc.text(`Pedidos: ${pedidos}`, 10, y); y += 12;
+    doc.text(`Pedidos: ${pedidos}`, 10, y); y += 8;
+    doc.text(`Ganancias: ${ganancias}`, 10, y); y += 12;
     doc.text("Productos por categoría:", 10, y); y += 8;
     porCategoria.forEach((c) => {
       doc.text(`${c.nombre}: ${c.count}`, 10, y); y += 7;
@@ -69,7 +99,16 @@ export default function AdminReportes() {
         doc.text(`${p.nombre} - stock: ${p.stock} (crítico: ${p.stockCritico})`, 10, y); y += 7;
       });
     }
-    doc.save("reporte_sanrucho.pdf");
+    if (chartRef.current) {
+    const canvas = await html2canvas(chartRef.current);
+    const imgData = canvas.toDataURL("image/png");
+    const imgWidth = 180;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    doc.addPage();
+    doc.text("Ganancias por mes:", 10, 10);
+    doc.addImage(imgData, "PNG", 10, 20, imgWidth, imgHeight);
+  }
+  doc.save("reporte_sanrucho.pdf");
   };
 
   return (
@@ -80,6 +119,7 @@ export default function AdminReportes() {
         <Col md={3}><Card body><strong>Productos</strong><div className="fs-4">{totalProductos}</div></Card></Col>
         <Col md={3}><Card body><strong>Stock total</strong><div className="fs-4">{stockTotal}</div></Card></Col>
         <Col md={3}><Card body><strong>Pedidos</strong><div className="fs-4">{pedidos}</div></Card></Col>
+        <Col md={3}><Card body><strong>Ganancias</strong><div className="fs-4">${ganancias.toLocaleString("es-CL")}</div></Card></Col>
       </Row>
 
       <Card className="mb-4">
@@ -145,6 +185,33 @@ export default function AdminReportes() {
                 ))}
               </tbody>
             </Table>
+          )}
+        </Card.Body>
+      </Card>
+
+      <Card className="mb-4">
+        <Card.Body>
+          <h5>Ganancias por mes</h5>
+          {gananciasPorMes.length === 0 ? (
+            <p className="text-muted">No hay ganancias registradas.</p>
+          ) : (
+            <div ref={chartRef} style={{ display: "flex", alignItems: "flex-end", gap: 12, height: 220, padding: "10px 0" }}>
+              {gananciasPorMes.map(([mes, valor]) => (
+                <div key={mes} style={{ flex: 1, textAlign: "center" }}>
+                  <div
+                    title={`$${valor.toLocaleString("es-CL")}`}
+                    style={{
+                      height: `${(valor / maxGananciaMes) * 180}px`,
+                      background: "var(--primary)",
+                      borderRadius: "6px 6px 0 0",
+                      minHeight: 4,
+                    }}
+                  />
+                  <div style={{ fontSize: "0.75rem", marginTop: 6 }}>{mes}</div>
+                  <div style={{ fontSize: "0.7rem", color: "var(--text-soft)" }}>${valor.toLocaleString("es-CL")}</div>
+                </div>
+              ))}
+            </div>
           )}
         </Card.Body>
       </Card>
