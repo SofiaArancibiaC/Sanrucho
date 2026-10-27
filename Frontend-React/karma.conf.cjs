@@ -4,8 +4,13 @@ module.exports = function(config) {
 
     files: [
       { pattern: "src/**/*.ts", included: true },
-      { pattern: "src/**/*.tsx", included: true }
+      { pattern: "src/**/*.tsx", included: true },
+      { pattern: "public/**/*", included: false, served: true, watched: false }
     ],
+
+    proxies: {
+      "/static/": "/base/public/static/"
+    },
 
     exclude: ["src/main.tsx"],
 
