@@ -30,7 +30,12 @@ module.exports = function(config) {
       }
     },
 
-    reporters: ["progress"],
+    // Oculta todos los logs, WARN y ERROR que imprime el navegador durante los tests
+    client: {
+      captureConsole: false
+    },
+
+    reporters: ["spec"],
     browsers: ["ChromeHeadless"],
     singleRun: true
   });
