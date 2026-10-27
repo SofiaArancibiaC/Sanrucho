@@ -3,5 +3,6 @@ dist
 dist-ssr
 *.local
 .vscode/*
+coverage/
 !.vscode/extensions.json
 .DS_Store
