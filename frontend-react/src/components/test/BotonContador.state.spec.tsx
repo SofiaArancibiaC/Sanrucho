@@ -1,41 +1,52 @@
 
 // src/components/test/BotonContador.state.spec.tsx
-//verifica que el estado(state) del componente cambie correctamente
-// cuando el usuario interactúa con él (al hacer clic en el botón).
-import { createRoot } from "react-dom/client";
+// Prueba de STATE: verifica que el estado del componente cambie
+// correctamente cuando el usuario hace clic en el botón.
 import { act } from "react";
+import { createRoot, type Root } from "react-dom/client";
 import BotonContador from "./BotonContador";
+
+// React 18 lo usa para reconocer que estamos dentro de act().
+(globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT: boolean })
+.IS_REACT_ACT_ENVIRONMENT = true;
 
 describe("PRUEBA 4 - Prueba de State en BotonContador", () => {
 let container: HTMLDivElement;
+let root: Root;
 
 beforeEach(() => {
     container = document.createElement("div");
     document.body.appendChild(container);
+    root = createRoot(container);
 });
 
 afterEach(() => {
-    document.body.removeChild(container);
-    container.innerHTML = "";
+    act(() => {
+    root.unmount();
+    });
+    container.remove();
 });
 
-it("Debe iniciar con el contador en 0 (estado inicial)", () => {
-    const root = createRoot(container);
+  // Renderiza dentro de act() para esperar a que React termine el pintado.
+const renderizar = () => {
     act(() => {
     root.render(<BotonContador />);
     });
+};
+
+it("Debe iniciar con el contador en 0 (estado inicial)", () => {
+    renderizar();
 
     const valor = container.querySelector('[data-testid="contador-valor"]');
     expect(valor?.textContent).toBe("0");
 });
 
 it("Debe incrementar el contador al hacer click (cambio de state)", () => {
-    const root = createRoot(container);
-    act(() => {
-    root.render(<BotonContador />);
-    });
+    renderizar();
 
-    const boton = container.querySelector('[data-testid="btn-incrementar"]') as HTMLButtonElement;
+    const boton = container.querySelector(
+    '[data-testid="btn-incrementar"]'
+    ) as HTMLButtonElement;
     const valor = container.querySelector('[data-testid="contador-valor"]');
 
     expect(valor?.textContent).toBe("0");
@@ -51,3 +62,11 @@ it("Debe incrementar el contador al hacer click (cambio de state)", () => {
     expect(valor?.textContent).toBe("2");
 });
 });
+
+
+
+
+
+
+
+
