@@ -1,13 +1,10 @@
-// Karma configuration
-// Generated on Fri Oct 16 2026 20:48:03 GMT-0300 (hora de verano de Chile)
-
 module.exports = function(config) {
   config.set({
     frameworks: ["jasmine", "karma-typescript"],
 
     files: [
-      { pattern: "src/**/*.ts" },
-      { pattern: "src/**/*.tsx" }
+      { pattern: "src/**/*.ts", included: true },
+      { pattern: "src/**/*.tsx", included: true }
     ],
 
     exclude: ["src/main.tsx"],
@@ -22,14 +19,14 @@ module.exports = function(config) {
       compilerOptions: {
         jsx: "react-jsx"
       },
+      transpileOnly: true,
       bundlerOptions: {
-        // Solo los archivos .spec son "puntos de entrada" (lo que se ejecuta)
-        entrypoints: /\.spec\.(ts|tsx)$/
+        ignore: ["jspdf", "html2canvas", "sweetalert2", "bootstrap", "react-bootstrap"]
       }
     },
 
-    reporters: ["progress", "karma-typescript"],
+    reporters: ["progress"],
     browsers: ["ChromeHeadless"],
-    singleRun: false
+    singleRun: true
   });
-}
+};
