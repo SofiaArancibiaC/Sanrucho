@@ -19,16 +19,7 @@
         <module>eureka</module>      <!-- Servidor Eureka -->
         <module>ms-usuarios</module>      <!-- Microservicio usuarios -->
         <module>ms-catalogo</module>      <!-- Microservicio catalogo -->
-        <module>ms-inventario</module>      <!-- Microservicio inventario -->
-        <module>ms-carrito</module>      <!-- Microservicio carrito -->
         <module>ms-pedidos</module>      <!-- Microservicio pedidos -->
-        <module>ms-pagos</module>      <!-- Microservicio pagos -->
-        <module>ms-despacho</module>      <!-- Microservicio despacho -->
-        <module>ms-notificaciones</module>      <!-- Microservicio notificaciones -->
-        <module>ms-reportes</module>      <!-- Microservicio reportes -->
-        <module>ms-reviews</module>      <!-- Microservicio reviews -->
-        <module>common</module>      <!-- Microservicio common -->
-        <module>api-gateway</module>      <!-- Microservicio api-gateway -->
         <!-- CGV: Agrega aqui mas modulos segun sea necesario -->
     </modules>
 
@@ -54,8 +45,8 @@
         <java.version>21</java.version>                                            <!-- Version de Java a utilizar -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>4.0.8</spring-boot.version>                        <!-- Version de Spring Boot base para microservicios -->
-        <spring-cloud.version>2025.1.1</spring-cloud.version>                                 <!-- Version de Spring Cloud -->
+        <spring-boot.version>4.1.0</spring-boot.version>                        <!-- Version de Spring Boot base para microservicios -->
+        <spring-cloud.version>2025.0.0</spring-cloud.version>                                 <!-- Version de Spring Cloud -->
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok.version>1.18.44</lombok.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
@@ -68,13 +59,6 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-clean-plugin.version>3.3.1</maven-clean-plugin.version>
-        <cl-sanrucho-common.version>0.0.1-SNAPSHOT</cl-sanrucho-common.version>
-        <jjwt.version>0.12.6</jjwt.version> <!-- [JJWT] -->
-        <spring-kafka.version>3.3.5</spring-kafka.version>
-        <spring-boot-actuator.version>3.5.14</spring-boot-actuator.version>
-        <springdoc-openapi.version>2.8.17</springdoc-openapi.version> <!-- [SWAGGER] -->
-        <spring-boot-hateoas.version>3.5.14</spring-boot-hateoas.version> <!-- [HATEOAS] -->
-
     </properties>
 
     <dependencyManagement>
@@ -144,61 +128,6 @@
                 <version>${jakarta.el.version}</version>
             </dependency>
 
-            <!-- [JJWT-INI] Se agregan las siguientes dependencias -->
-            <!-- Spring Security: autenticación y autorización -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-security</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-
-            <!-- JJWT API: interfaz principal para trabajar con JSON Web Tokens -->
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-api</artifactId>
-                <version>${jjwt.version}</version>
-            </dependency>
-
-            <!-- JJWT Impl: implementación de la API de JJWT -->
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-impl</artifactId>
-                <version>${jjwt.version}</version>
-            </dependency>
-
-            <!-- JJWT Jackson: soporte para serialización y deserialización de JWT usando Jackson -->
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-jackson</artifactId>
-                <version>${jjwt.version}</version>
-            </dependency>
-            <!-- [JJWT-FIN] -->
-
-            <!-- [SWAGGER-INI] -->
-            <!-- Springdoc OpenAPI: generacion automatica de documentacion Swagger UI -->
-            <dependency>
-                        <groupId>org.springdoc</groupId>
-                        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-                        <version>${springdoc-openapi.version}</version>
-            </dependency>
-            <!-- [SWAGGER-FIN] -->
-
-            <!-- [HATEOAS-INI] -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-hateoas</artifactId>
-                        <version>${spring-boot-hateoas.version}</version>
-            </dependency>
-            <!-- [HATEOAS-FIN] -->
-
-            <!--Libreria Common-->
-            <dependency>
-                        <groupId>cl.sanrucho</groupId>
-                        <artifactId>cl-sanrucho-common</artifactId>
-                        <version>${cl-sanrucho-common.version}</version>
-            </dependency>
-
-            
         </dependencies>
     </dependencyManagement>
 
