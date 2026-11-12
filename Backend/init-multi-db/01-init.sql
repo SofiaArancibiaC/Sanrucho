@@ -17,3 +17,9 @@ WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'productos') \gexec
 
 SELECT 'CREATE DATABASE detalle_pedidos'
 WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'detalle_pedidos') \gexec
+
+SELECT 'CREATE DATABASE transacciones'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'transacciones') \gexec
+
+SELECT 'CREATE DATABASE reembolsos'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'reembolsos') \gexec
