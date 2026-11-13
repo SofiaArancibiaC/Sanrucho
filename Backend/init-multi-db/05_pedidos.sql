@@ -1,9 +1,9 @@
 -- 04_pedidos.sql
-CREATE TABLE Pedidos (
+CREATE TABLE pedidos (
     id_pedido SERIAL PRIMARY KEY,
     id_usuario INT NOT NULL,
     fecha_compra TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    total NUMERIC(10, 2) NOT NULL,
+    total NUMERIC(10) NOT NULL,
     estado VARCHAR(50) DEFAULT 'Pendiente',
     CONSTRAINT fk_usuario
         FOREIGN KEY(id_usuario) 
@@ -12,7 +12,7 @@ CREATE TABLE Pedidos (
 );
 
 -- Datos de prueba para Pedidos
-INSERT INTO Pedidos (id_usuario, fecha_compra, total, estado) VALUES
-(2, '2026-11-10 14:30:00', 38490.00, 'Pagado'),
-(3, '2026-11-11 09:15:00', 12000.00, 'Enviado'),
-(2, '2026-11-12 11:45:00', 15990.00, 'Pendiente');
+INSERT INTO pedidos (id_usuario, fecha_compra, total, estado) VALUES
+(2, '2026-11-10 14:30:00', 38490, 'Pagado'),
+(3, '2026-11-11 09:15:00', 12000, 'Enviado'),
+(2, '2026-11-12 11:45:00', 15990, 'Pendiente');
