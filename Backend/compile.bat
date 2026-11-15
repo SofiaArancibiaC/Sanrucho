@@ -1,13 +1,8 @@
 @echo off
 echo.
-echo === COMPILANDO MICROSERVICIOS ===
+echo === COMPILANDO MICROSERVICIOS (reactor Maven) ===
 echo.
-call cd C:\Sanrucho\ms-usuarios
-call mvn clean install -U
-call cd C:\Sanrucho\ms-catalogo
-call mvn clean install -U
-call cd C:\Sanrucho\ms-pedidos
-call mvn clean install -U
+call mvn -B clean install -DskipTests
 echo.
 echo === COMPILACION COMPLETADA ===
 pause

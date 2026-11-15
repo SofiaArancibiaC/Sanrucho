@@ -1,4 +1,9 @@
--- 02_categorias.sql
+-- ============================================================
+-- 03_categorias.sql
+-- Base de datos: categorias
+-- ============================================================
+DROP TABLE IF EXISTS categorias CASCADE;
+
 CREATE TABLE categorias (
     id_categoria SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -14,4 +19,3 @@ INSERT INTO categorias (nombre, descripcion) VALUES
 ('Papelería', 'Artículos de papelería de los personajes de Sanrio.'),
 ('Tecnología', 'Productos tecnológicos de los personajes más tiernos.'),
 ('Hogar', 'Artículos para decorar tu hogar.');
-

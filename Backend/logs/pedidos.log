@@ -1,0 +1,120 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-11-14T21:53:40.550-03:00  INFO 13916 --- [ms-pedidos] [           main] c.s.pedidos.TiendaPedidosApplication     : Starting TiendaPedidosApplication using Java 21.0.11 with PID 13916 (C:\Users\camil\Documents\GitHub\Sanrucho\Backend\ms-pedidos\target\cl-sanrucho-pedidos-0.0.1-SNAPSHOT.jar started by camil in C:\Users\camil\Documents\GitHub\Sanrucho\Backend)
+2026-11-14T21:53:40.571-03:00  INFO 13916 --- [ms-pedidos] [           main] c.s.pedidos.TiendaPedidosApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-11-14T21:53:46.627-03:00  INFO 13916 --- [ms-pedidos] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-14T21:53:47.477-03:00  INFO 13916 --- [ms-pedidos] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 710 ms. Found 1 JPA repository interface.
+2026-11-14T21:53:47.503-03:00  INFO 13916 --- [ms-pedidos] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-14T21:53:47.543-03:00  INFO 13916 --- [ms-pedidos] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 1 JPA repository interface.
+2026-11-14T21:53:52.048-03:00  INFO 13916 --- [ms-pedidos] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=c266463b-d9ac-368c-b7c3-fc2da84fef01
+2026-11-14T21:53:55.223-03:00  INFO 13916 --- [ms-pedidos] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9003 (http)
+2026-11-14T21:53:55.363-03:00  INFO 13916 --- [ms-pedidos] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-14T21:53:55.363-03:00  INFO 13916 --- [ms-pedidos] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-14T21:53:55.584-03:00  INFO 13916 --- [ms-pedidos] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-14T21:53:55.592-03:00  INFO 13916 --- [ms-pedidos] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 14724 ms
+2026-11-14T21:53:58.289-03:00  INFO 13916 --- [ms-pedidos] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-14T21:53:58.739-03:00  INFO 13916 --- [ms-pedidos] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-11-14T21:53:58.985-03:00  INFO 13916 --- [ms-pedidos] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-14T21:54:01.401-03:00  INFO 13916 --- [ms-pedidos] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-14T21:54:01.611-03:00  INFO 13916 --- [ms-pedidos] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-14T21:54:02.687-03:00  INFO 13916 --- [ms-pedidos] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3163e03b
+2026-11-14T21:54:02.696-03:00  INFO 13916 --- [ms-pedidos] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-14T21:54:02.947-03:00  WARN 13916 --- [ms-pedidos] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-11-14T21:54:03.033-03:00  INFO 13916 --- [ms-pedidos] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 18.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-14T21:54:08.171-03:00  INFO 13916 --- [ms-pedidos] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-14T21:54:08.663-03:00  INFO 13916 --- [ms-pedidos] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-14T21:54:08.700-03:00  INFO 13916 --- [ms-pedidos] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-14T21:54:08.712-03:00  INFO 13916 --- [ms-pedidos] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-14T21:54:08.802-03:00  INFO 13916 --- [ms-pedidos] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-14T21:54:08.806-03:00  INFO 13916 --- [ms-pedidos] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-11-14T21:54:08.858-03:00  INFO 13916 --- [ms-pedidos] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@61799152
+2026-11-14T21:54:08.859-03:00  INFO 13916 --- [ms-pedidos] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-11-14T21:54:08.868-03:00  WARN 13916 --- [ms-pedidos] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-11-14T21:54:08.880-03:00  INFO 13916 --- [ms-pedidos] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 18.3
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-14T21:54:09.056-03:00  INFO 13916 --- [ms-pedidos] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-14T21:54:09.097-03:00  INFO 13916 --- [ms-pedidos] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-14T21:54:11.461-03:00  INFO 13916 --- [ms-pedidos] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-14T21:54:14.829-03:00  INFO 13916 --- [ms-pedidos] [           main] o.s.c.openfeign.FeignClientFactoryBean   : For 'ms-catalogo' URL not provided. Will try picking an instance via load-balancing.
+2026-11-14T21:54:17.281-03:00  INFO 13916 --- [ms-pedidos] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-14T21:54:17.570-03:00  WARN 13916 --- [ms-pedidos] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: ddabc8f1-9014-4fa0-b765-8e5c5cafcd08
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-11-14T21:54:17.627-03:00  INFO 13916 --- [ms-pedidos] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-11-14T21:54:20.639-03:00  INFO 13916 --- [ms-pedidos] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-11-14T21:54:20.770-03:00  WARN 13916 --- [ms-pedidos] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-11-14T21:54:21.043-03:00  INFO 13916 --- [ms-pedidos] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-11-14T21:54:21.337-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-11-14T21:54:21.364-03:00  INFO 13916 --- [ms-pedidos] [           main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T21:54:21.434-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-11-14T21:54:21.435-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-11-14T21:54:21.436-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-11-14T21:54:21.437-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-11-14T21:54:21.437-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-11-14T21:54:21.438-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-11-14T21:54:21.439-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-11-14T21:54:23.273-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-11-14T21:54:23.291-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 15
+2026-11-14T21:54:23.306-03:00  INFO 13916 --- [ms-pedidos] [           main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-11-14T21:54:23.316-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1794704063311 with initial instances count: 3
+2026-11-14T21:54:23.334-03:00  INFO 13916 --- [ms-pedidos] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application MS-PEDIDOS with eureka with status UP
+2026-11-14T21:54:23.336-03:00  INFO 13916 --- [ms-pedidos] [           main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1794704063336, current=UP, previous=STARTING]
+2026-11-14T21:54:23.346-03:00  INFO 13916 --- [ms-pedidos] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MS-PEDIDOS/ms-pedidos:9003: registering service...
+2026-11-14T21:54:23.506-03:00  INFO 13916 --- [ms-pedidos] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9003 (http) with context path '/'
+2026-11-14T21:54:23.510-03:00  INFO 13916 --- [ms-pedidos] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9003
+2026-11-14T21:54:23.689-03:00  INFO 13916 --- [ms-pedidos] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_MS-PEDIDOS/ms-pedidos:9003 - registration status: 204
+2026-11-14T21:54:23.814-03:00  INFO 13916 --- [ms-pedidos] [           main] c.s.pedidos.TiendaPedidosApplication     : Started TiendaPedidosApplication in 46.883 seconds (process running for 48.955)
+2026-11-14T21:54:23.852-03:00  INFO 13916 --- [ms-pedidos] [nio-9003-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-14T21:54:23.852-03:00  INFO 13916 --- [ms-pedidos] [nio-9003-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-14T21:54:23.857-03:00  INFO 13916 --- [ms-pedidos] [nio-9003-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-11-14T21:54:24.176-03:00  WARN 13916 --- [ms-pedidos] [           main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-11-14T21:54:24.178-03:00  WARN 13916 --- [ms-pedidos] [           main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-11-14T21:54:43.943-03:00  INFO 13916 --- [ms-pedidos] [nio-9003-exec-1] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 1043 ms
+2026-11-14T21:59:21.453-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:04:21.459-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:09:21.463-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:14:21.466-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:19:21.469-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:24:21.471-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:29:21.472-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:34:21.475-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:39:21.478-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:44:21.480-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:49:21.483-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:54:21.484-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T22:59:21.487-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T23:04:21.490-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T23:09:21.496-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T23:14:21.528-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T23:19:21.547-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T23:24:21.582-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T23:29:21.617-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T23:34:21.643-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T23:39:21.676-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T23:44:21.695-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T23:49:21.719-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-11-14T23:54:21.736-03:00  INFO 13916 --- [ms-pedidos] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration

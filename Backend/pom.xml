@@ -6,21 +6,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--
-        *******************************************
-        CGV INICIO: PERSONALIZAR PARA CADA PROYECTO
-        *******************************************
-    -->
-
-    <!--
     Modulos hijos del proyecto.
     Cada uno es un subproyecto independiente (microservicio o libreria comun).
     -->
     <modules>
-        <module>eureka</module>      <!-- Servidor Eureka -->
-        <module>ms-usuarios</module>      <!-- Microservicio usuarios -->
-        <module>ms-catalogo</module>      <!-- Microservicio catalogo -->
-        <module>ms-pedidos</module>      <!-- Microservicio pedidos -->
-        <!-- CGV: Agrega aqui mas modulos segun sea necesario -->
+        <module>common</module>          <!-- Libreria compartida: seguridad JWT, excepciones, Swagger -->
+        <module>eureka</module>          <!-- Servidor Eureka (8761) -->
+        <module>ms-catalogo</module>     <!-- Microservicio catalogo (9002) -->
+        <module>ms-pedidos</module>      <!-- Microservicio pedidos (9003) -->
+        <module>api-gateway</module>     <!-- API Gateway (9000): punto de entrada unico -->
     </modules>
 
     <!-- Coordenadas GAV (GroupId, ArtifactId, Version) de mi proyecto padre -->
@@ -32,33 +26,36 @@
     <description>Proyecto padre para la gestion de versiones de todos los microservicios</description>
 
     <!--
-        *******************************************
-        CGV FIN: PERSONALIZAR PARA CADA PROYECTO
-        *******************************************
-    -->
-
-    <!--
     Propiedades comunes a todos los modulos.
     Se reutilizan en todo el proyecto para evitar duplicacion.
     -->
     <properties>
-        <java.version>21</java.version>                                            <!-- Version de Java a utilizar -->
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>4.1.0</spring-boot.version>                        <!-- Version de Spring Boot base para microservicios -->
-        <spring-cloud.version>2025.0.0</spring-cloud.version>                                 <!-- Version de Spring Cloud -->
+
+        <!-- Version de Spring Boot base para microservicios -->
+        <spring-boot.version>3.5.15</spring-boot.version>
+        <!-- Version de Spring Cloud compatible con Boot 3.5.x -->
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
+
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok.version>1.18.44</lombok.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
-        <jakarta.validation-api.version>3.0.2</jakarta.validation-api.version>
         <postgresql-connector-j.version>42.7.3</postgresql-connector-j.version>
         <com-h2database.version>2.3.232</com-h2database.version>
-        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
-        <jakarta.el.version>4.0.2</jakarta.el.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-clean-plugin.version>3.3.1</maven-clean-plugin.version>
+        <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
+
+        <!-- Libreria compartida -->
+        <cl-sanrucho-common.version>0.0.1-SNAPSHOT</cl-sanrucho-common.version>
+
+        <!-- JWT -->
+        <jjwt.version>0.12.6</jjwt.version>
+
+        <!-- Swagger / OpenAPI -->
+        <springdoc-openapi.version>2.8.17</springdoc-openapi.version>
     </properties>
 
     <dependencyManagement>
@@ -80,59 +77,68 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- Libreria compartida por todos los microservicios -->
+            <dependency>
+                <groupId>cl.sanrucho</groupId>
+                <artifactId>cl-sanrucho-common</artifactId>
+                <version>${cl-sanrucho-common.version}</version>
+            </dependency>
+
+            <!-- PostgreSQL JDBC -->
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql-connector-j.version}</version>
             </dependency>
 
+            <!-- H2 Database: solo para pruebas -->
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>${com-h2database.version}</version>
             </dependency>
 
+            <!-- MapStruct: mapeo entidad <-> DTO -->
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
 
+            <!-- Lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
 
+            <!-- Swagger / OpenAPI -->
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-validation</artifactId>
-                <version>${spring-boot.version}</version>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc-openapi.version}</version>
             </dependency>
 
+            <!-- JJWT: generacion y validacion de tokens -->
             <dependency>
-                <groupId>org.hibernate.validator</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate-validator.version}</version>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jjwt.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>org.glassfish</groupId>
-                <artifactId>jakarta.el</artifactId>
-                <version>${jakarta.el.version}</version>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jjwt.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-autoconfigure</artifactId>
-                <version>4.1.0</version>
-                <scope>compile</scope>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jjwt.version}</version>
             </dependency>
 
         </dependencies>
@@ -149,7 +155,6 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <release>${java.version}</release>
-                    <compilerId>javac</compilerId>
                     <compilerArgs>
                         <arg>-parameters</arg>
                     </compilerArgs>
@@ -178,16 +183,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>${maven-clean-plugin.version}</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>${project.build.directory}/generated-sources</directory>
-                            <includes>
-                                <include>**/*</include>
-                            </includes>
-                        </fileset>
-                    </filesets>
-                </configuration>
             </plugin>
 
             <plugin>
@@ -201,6 +196,12 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
             </plugin>
 
         </plugins>

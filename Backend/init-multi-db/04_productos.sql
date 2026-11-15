@@ -1,8 +1,18 @@
--- 03_productos.sql
+-- ============================================================
+-- 04_productos.sql
+-- Base de datos: productos
+--
+-- IMPORTANTE: id_categoria es una REFERENCIA LOGICA a la base de datos
+-- "categorias". NO se puede declarar FOREIGN KEY porque PostgreSQL no
+-- permite claves foraneas entre bases de datos distintas. La integridad
+-- se valida en la capa de servicio de ms-catalogo.
+-- ============================================================
+DROP TABLE IF EXISTS productos CASCADE;
+
 CREATE TABLE productos (
     id_producto SERIAL PRIMARY KEY,
     codigo VARCHAR(50) UNIQUE NOT NULL,
-    id_categoria INT NOT NULL,
+    id_categoria INT NOT NULL, -- referencia logica a categorias.id_categoria (otra BD, sin FK fisica)
     nombre VARCHAR(150) NOT NULL,
     descripcion TEXT,
     precio NUMERIC(10) NOT NULL,
@@ -12,17 +22,13 @@ CREATE TABLE productos (
     stock INT NOT NULL DEFAULT 0,
     stock_critico INT NOT NULL DEFAULT 1,
     imagen_url VARCHAR(255),
-    estado VARCHAR(30) DEFAULT 'Activo' CHECK (estado IN ('Activo', 'Inactivo')),
-    CONSTRAINT fk_categoria
-        FOREIGN KEY(id_categoria) 
-        REFERENCES Categorias(id_categoria)
-        ON DELETE RESTRICT
+    estado VARCHAR(30) DEFAULT 'Activo' CHECK (estado IN ('Activo', 'Inactivo'))
 );
 
--- Datos de prueba para Productos extraídos de PRODUCTOS_BASE
+-- Datos de prueba para Productos extraidos de PRODUCTOS_BASE
 INSERT INTO productos (
-    codigo, id_categoria, nombre, descripcion, precio, 
-    oferta, precio_oferta, descuento, stock, stock_critico, 
+    codigo, id_categoria, nombre, descripcion, precio,
+    oferta, precio_oferta, descuento, stock, stock_critico,
     imagen_url, estado
 ) VALUES
 ('HK-PLUSH-001', 2, 'Peluche Hello Kitty Clásico 30cm', 'Peluche suave de Hello Kitty con su icónico moño rojo.', 24990, TRUE, 19990, 20, 15, 3, '/static/img/productos/hello-kitty1.webp', 'Activo'),

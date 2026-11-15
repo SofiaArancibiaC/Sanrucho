@@ -3,20 +3,13 @@ echo.
 echo === REINSTALACION DE DEPENDENCIAS MAVEN ===
 echo.
 
-REM Paso 1: Eliminar carpeta local de dependencias
-echo Eliminando carpeta .m2 ...
-rmdir /s /q %USERPROFILE%\.m2
+echo Eliminando carpetas target de los modulos ...
+for %%M in (common eureka ms-catalogo ms-pedidos api-gateway) do (
+    if exist "%%M\target" rmdir /s /q "%%M\target"
+)
 
-REM Paso 2: Eliminar carpetas target de los proyectos
-echo Eliminando carpetas target ...
-rmdir /s /q C:\Sanrucho\eureka\target
-rmdir /s /q C:\Sanrucho\ms-usuarios\target
-rmdir /s /q C:\Sanrucho\ms-catalogo\target
-rmdir /s /q C:\Sanrucho\ms-pedidos\target
-
-REM Paso 3: Instalar todas las dependencias forzadamente
-echo Descargando dependencias nuevamente con Maven ...
-mvn clean install -U -DskipTests
+echo Descargando dependencias y compilando ...
+call mvn -B clean install -U -DskipTests
 
 echo.
 echo === PROCESO COMPLETADO ===

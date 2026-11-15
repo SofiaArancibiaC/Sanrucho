@@ -1,0 +1,92 @@
+# ============================================================
+# API GATEWAY - Punto de entrada unico (puerto 9000)
+# ============================================================
+# El frontend consume SOLO este puerto. El gateway resuelve el
+# microservicio destino mediante Eureka (lb://nombre-servicio).
+# ============================================================
+
+server:
+  port: 9000
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+
+        # Catálogo: categorías y productos
+        - id: ms-catalogo
+          uri: lb://ms-catalogo
+          predicates:
+            - Path=/api/v1/catalogo/**
+
+        # Pedidos: cabecera y detalle
+        - id: ms-pedidos
+          uri: lb://ms-pedidos
+          predicates:
+            - Path=/api/v1/pedidos/**
+
+        # Documentación OpenAPI de cada microservicio a través del gateway
+        - id: ms-catalogo-docs
+          uri: lb://ms-catalogo
+          predicates:
+            - Path=/catalogo/v3/api-docs,/catalogo/v3/api-docs/**
+          filters:
+            - RewritePath=/catalogo/(?<segment>.*), /${segment}
+
+        - id: ms-pedidos-docs
+          uri: lb://ms-pedidos
+          predicates:
+            - Path=/pedidos/v3/api-docs,/pedidos/v3/api-docs/**
+          filters:
+            - RewritePath=/pedidos/(?<segment>.*), /${segment}
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns:
+              - "http://localhost:*"
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowed-headers: "*"
+            exposed-headers:
+              - Authorization
+              - Location
+            allow-credentials: true
+            max-age: 3600
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: "${spring.application.name}:${server.port}"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO

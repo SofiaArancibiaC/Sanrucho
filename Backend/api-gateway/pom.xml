@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>cl.sanrucho</groupId>
+        <artifactId>tienda</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>cl.sanrucho</groupId>
+    <artifactId>cl-sanrucho-gateway</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <name>API Gateway</name>
+    <description>
+        API Gateway del proyecto Sanrucho: punto de entrada unico para el frontend.
+        Enruta /api/v1/catalogo/** y /api/v1/pedidos/** usando Eureka + LoadBalancer.
+    </description>
+
+    <packaging>jar</packaging>
+
+    <dependencies>
+
+        <!--
+        Spring Cloud Gateway (reactivo, WebFlux).
+        IMPORTANTE: no se debe agregar spring-boot-starter-web porque son
+        stacks incompatibles (servlet vs reactivo).
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway-server-webflux</artifactId>
+        </dependency>
+
+        <!-- Eureka Client: descubre ms-catalogo y ms-pedidos -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!-- Actuator: health y rutas del gateway -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>cl.sanrucho.gateway.TiendaGatewayApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

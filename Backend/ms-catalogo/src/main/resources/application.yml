@@ -1,22 +1,75 @@
+# ============================================================
+# MS-CATALOGO - Configuracion principal
+# ============================================================
+# bases de datos (una por tabla, segun diseno acordado):
+#   - productos   -> datasource PRIMARIO (productos)
+#   - categorias  -> datasource SECUNDARIO (categorias)
+# ============================================================
+
 server:
   port: 9002
   error:
     include-stacktrace: never
+    include-message: never
 
 spring:
   application:
     name: ms-catalogo
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/catalogo
-    username: postgres
-    password: 123
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+  # Desactivamos las auto-configuraciones de datasource/JPA: los dos
+  # datasources se declaran manualmente en la carpeta config.
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration
+
+  jpa:
+    open-in-view: false
+    show-sql: false
+
+  mvc:
+    problemdetails:
+      enabled: false
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+
+# ------------------------------------------------------------
+# Datasources del microservicio
+# ------------------------------------------------------------
+app:
+  datasource:
+    productos:
+      url: jdbc:postgresql://localhost:5433/productos
+      username: postgres
+      password: "123"
+      driver-class-name: org.postgresql.Driver
+    categorias:
+      url: jdbc:postgresql://localhost:5433/categorias
+      username: postgres
+      password: "123"
+      driver-class-name: org.postgresql.Driver
+  jpa:
+    ddl-auto: update
+    show-sql: false
+
+# ------------------------------------------------------------
+# JWT (solo validacion; el token lo emite el servicio de auth)
+# ------------------------------------------------------------
+jwt:
+  secret: c2FucnVjaG8tdGllbmRhLXNlY3JldC1rZXktMjAyNi1qd3Qtc2VjdXJpdHktaHMyNTY=
+  expiration-ms: 3600000
+
+# ------------------------------------------------------------
+# Eureka
+# ------------------------------------------------------------
 eureka:
   client:
     register-with-eureka: true
@@ -25,6 +78,22 @@ eureka:
       defaultZone: http://localhost:8761/eureka
   instance:
     prefer-ip-address: true
-    instance-id: "${spring.application.name}:${random.value}"
+    instance-id: "${spring.application.name}:${server.port}"
     lease-renewal-interval-in-seconds: 15
     lease-expiration-duration-in-seconds: 60
+
+# ------------------------------------------------------------
+# Actuator
+# ------------------------------------------------------------
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    cl.sanrucho: INFO
