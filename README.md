@@ -18,7 +18,7 @@ El repositorio tiene dos partes:
 5. [Backend](#backend)
 6. [Pruebas](#pruebas)
 7. [Próximos pasos](#próximos-pasos)
-8. [Autora](#autora)
+8. [Autoras](#autoras)
 
 ---
 
@@ -229,7 +229,7 @@ mvn test
 
 ---
 
-## Autora
+## Autoras
 
 **Sofía Arancibia, Camila Cerda y Nancy Millar**
 Estudiante de Analista Programador, Duoc UC
