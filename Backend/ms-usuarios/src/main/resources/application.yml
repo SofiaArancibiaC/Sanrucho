@@ -17,6 +17,10 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+jwt:
+  secret: sanrucho-super-secret-key-para-jwt-2026-cambiar-en-prod
+  expiration: 86400000
+
 eureka:
   client:
     register-with-eureka: true
