@@ -16,6 +16,7 @@
     Cada uno es un subproyecto independiente (microservicio o libreria comun).
     -->
     <modules>
+        <module>common</module>  <!--Libreria común-->
         <module>eureka</module>      <!-- Servidor Eureka -->
         <module>ms-usuarios</module>      <!-- Microservicio usuarios -->
         <module>ms-catalogo</module>      <!-- Microservicio catalogo -->
@@ -63,6 +64,12 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>cl.sanrucho</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -139,6 +146,22 @@
     </dependencyManagement>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
 
             <plugin>
@@ -189,20 +212,6 @@
                     </filesets>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
 

@@ -119,6 +119,11 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>cl.sanrucho</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+
     </dependencies>
 
     <!-- Empaquetado ejecutable con Spring Boot -->
