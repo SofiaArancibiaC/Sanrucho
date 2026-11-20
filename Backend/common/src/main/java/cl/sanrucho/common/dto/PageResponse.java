@@ -1,6 +1,7 @@
 package cl.sanrucho.common.dto;
 
 import java.util.List;
+import java.util.function.Function;
 
 import org.springframework.data.domain.Page;
 
@@ -40,7 +41,7 @@ public class PageResponse<T> {
     }
 
     /** Convierte una pagina de entidades en una pagina de DTOs. */
-    public static <E, D> PageResponse<D> from(Page<E> page, java.util.function.Function<E, D> mapper) {
+    public static <E, D> PageResponse<D> from(Page<E> page, Function<E, D> mapper) {
         return from(page.map(mapper));
     }
 }

@@ -12,9 +12,11 @@
     <modules>
         <module>common</module>          <!-- Libreria compartida: seguridad JWT, excepciones, Swagger -->
         <module>eureka</module>          <!-- Servidor Eureka (8761) -->
+        <module>ms-usuarios</module>     <!-- Microservicio usuarios (9001) -->
         <module>ms-catalogo</module>     <!-- Microservicio catalogo (9002) -->
         <module>ms-pedidos</module>      <!-- Microservicio pedidos (9003) -->
         <module>api-gateway</module>     <!-- API Gateway (9000): punto de entrada unico -->
+        <!-- CGV: Agrega aqui mas modulos segun sea necesario -->
     </modules>
 
     <!-- Coordenadas GAV (GroupId, ArtifactId, Version) de mi proyecto padre -->
@@ -48,9 +50,6 @@
         <maven-clean-plugin.version>3.3.1</maven-clean-plugin.version>
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
 
-        <!-- Libreria compartida -->
-        <cl-sanrucho-common.version>0.0.1-SNAPSHOT</cl-sanrucho-common.version>
-
         <!-- JWT -->
         <jjwt.version>0.12.6</jjwt.version>
 
@@ -60,6 +59,13 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- Libreria compartida por todos los microservicios -->
+            <dependency>
+                <groupId>cl.sanrucho</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -75,13 +81,6 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-
-            <!-- Libreria compartida por todos los microservicios -->
-            <dependency>
-                <groupId>cl.sanrucho</groupId>
-                <artifactId>cl-sanrucho-common</artifactId>
-                <version>${cl-sanrucho-common.version}</version>
             </dependency>
 
             <!-- PostgreSQL JDBC -->

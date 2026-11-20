@@ -1,5 +1,4 @@
 package cl.sanrucho.common.security;
-
 import java.util.Date;
 
 import javax.crypto.SecretKey;
@@ -19,12 +18,11 @@ import lombok.extern.slf4j.Slf4j;
  *
  * Responsabilidades:
  * 1. GENERAR tokens firmados con HMAC-SHA256 incluyendo email, rol y nombre.
- * 2. VALIDAR tokens verificando firma, expiracion y estructura.
- * 3. EXTRAER claims (email, rol, nombre) desde un token valido.
+ * 2. VALIDAR tokens verificando firma, expiración y estructura.
+ * 3. EXTRAER claims (atributos): email, rol y nombre desde un token válido.
  *
- * En este proyecto los microservicios de negocio solo VALIDAN tokens.
- * La generacion queda disponible para el servicio de autenticacion que
- * emita los tokens (o para la herramienta de pruebas incluida en /scripts).
+ * Esta clase vive en el módulo common para que TODOS los microservicios
+ * compartan la misma lógica de tokens sin duplicar código.
  */
 @Slf4j
 @Component
@@ -33,70 +31,79 @@ public class JwtTokenProvider {
 
     private final JwtProperties jwtProperties;
 
-    // ─── Generacion ──────────────────────────────────────────────────────────
+    // ─── Generación ──────────────────────────────────────────────────────────
 
     /**
      * Genera un token JWT firmado.
      *
-     * @param email          email del usuario (subject del token)
-     * @param rol            rol del usuario: Dueno, Admin o Cliente
-     * @param nombreCompleto nombre para incluir como claim adicional
+     * @param email          email del usuario (será el "subject" del token)
+     * @param rol            rol del usuario (Administrador, Bibliotecario, Cliente)
+     * @param nombreCompleto nombre completo para incluir como claim adicional
+     * @return token JWT como String
      */
     public String generarToken(String email, String rol, String nombreCompleto) {
         Date ahora = new Date();
         Date expiracion = new Date(ahora.getTime() + jwtProperties.getExpirationMs());
 
         return Jwts.builder()
-                .subject(email)
-                .claim("rol", rol)
-                .claim("nombre", nombreCompleto)
-                .issuedAt(ahora)
-                .expiration(expiracion)
-                .signWith(getSigningKey())
+                .subject(email)                        // Subject = email del usuario
+                .claim("rol", rol)                     // Claim personalizado: rol
+                .claim("nombre", nombreCompleto)       // Claim personalizado: nombre
+                .issuedAt(ahora)                       // Fecha de emisión
+                .expiration(expiracion)                // Fecha de expiración
+                .signWith(getSigningKey())              // Firma con HMAC-SHA256
                 .compact();
     }
 
-    // ─── Validacion ──────────────────────────────────────────────────────────
+    // ─── Validación ──────────────────────────────────────────────────────────
 
     /**
-     * Valida firma y expiracion del token.
+     * Valida un token JWT verificando firma y expiración.
      *
-     * @return true si el token es valido, false en caso contrario
+     * @param token el token JWT a validar
+     * @return true si el token es válido, false en caso contrario
      */
     public boolean validarToken(String token) {
         try {
             Jwts.parser()
-                    .verifyWith(getSigningKey())
-                    .build()
-                    .parseSignedClaims(token);
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            log.warn("Token JWT invalido: {}", e.getMessage());
+            log.warn("Token JWT inválido: {}", e.getMessage());
             return false;
         }
     }
 
-    // ─── Extraccion de claims ────────────────────────────────────────────────
+    // ─── Extracción de Claims ────────────────────────────────────────────────
 
+    /**
+     * Extrae el email (subject) del token.
+     */
     public String getEmailFromToken(String token) {
         return getClaims(token).getSubject();
     }
 
+    /**
+     * Extrae el rol del token.
+     */
     public String getRolFromToken(String token) {
         return getClaims(token).get("rol", String.class);
     }
 
+    /**
+     * Extrae el nombre completo del token.
+     */
     public String getNombreFromToken(String token) {
         return getClaims(token).get("nombre", String.class);
     }
 
-    /** Fecha de expiracion, usada por la blacklist para limpiar tokens viejos. */
-    public Date getExpirationFromToken(String token) {
-        return getClaims(token).getExpiration();
-    }
+    // ─── Métodos privados ────────────────────────────────────────────────────
 
-    // ─── Metodos privados ────────────────────────────────────────────────────
-
+    /**
+     * Parsea el token y retorna todos los claims.
+     */
     private Claims getClaims(String token) {
         return Jwts.parser()
                 .verifyWith(getSigningKey())
@@ -105,6 +112,10 @@ public class JwtTokenProvider {
                 .getPayload();
     }
 
+    /**
+     * Construye la clave de firma a partir del secreto en Base64.
+     * Usa HMAC-SHA256 (requiere clave de al menos 256 bits).
+     */
     private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.getSecret());
         return Keys.hmacShaKeyFor(keyBytes);

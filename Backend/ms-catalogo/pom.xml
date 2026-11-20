@@ -27,7 +27,7 @@
         <!-- Libreria comun: JWT, errores, Swagger -->
         <dependency>
             <groupId>cl.sanrucho</groupId>
-            <artifactId>cl-sanrucho-common</artifactId>
+            <artifactId>common</artifactId>
         </dependency>
 
         <!-- Spring Web: controladores REST -->

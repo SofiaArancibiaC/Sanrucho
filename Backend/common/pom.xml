@@ -1,58 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>cl.sanrucho</groupId>
         <artifactId>tienda</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>cl.sanrucho</groupId>
-    <artifactId>cl-sanrucho-common</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-
-    <name>Modulo Common</name>
-    <description>Libreria compartida: seguridad JWT, manejo de errores y configuracion OpenAPI.</description>
-
+    <artifactId>common</artifactId>
     <packaging>jar</packaging>
+    <name>common</name>
+    <description>Libreria comun: excepciones, DTOs, seguridad JWT y Swagger</description>
 
     <dependencies>
-
-        <!-- Spring Web (necesario para filtros servlet y @RestControllerAdvice) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <!-- OpenFeign: interceptor para propagar el token entre microservicios -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
-        <!-- PageResponse usa Page de Spring Data; DataIntegrityViolationException viene de spring-tx -->
+        <!-- PageResponse usa Page de Spring Data -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
         </dependency>
+        <!-- DataIntegrityViolationException (GlobalExceptionHandler) viene de spring-tx -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>
 
-        <!-- Spring Security: autenticacion y autorizacion -->
+        <!-- Swagger / OpenAPI: lo heredan los microservicios que usan common -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
 
-        <!-- JJWT: generacion y validacion de JWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -67,20 +64,11 @@
             <artifactId>jjwt-jackson</artifactId>
             <scope>runtime</scope>
         </dependency>
-
-        <!-- Springdoc OpenAPI: Swagger UI en cada microservicio -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-        </dependency>
-
-        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -95,5 +83,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

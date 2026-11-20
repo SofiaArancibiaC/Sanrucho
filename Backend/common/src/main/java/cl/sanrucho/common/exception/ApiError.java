@@ -6,11 +6,6 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 
-/**
- * Envelope unico de error para todas las APIs REST.
- * Todas las respuestas de error comparten esta estructura, lo que facilita
- * el consumo desde el frontend y desde otros microservicios.
- */
 @Data
 @Builder
 public class ApiError {
@@ -20,9 +15,12 @@ public class ApiError {
     private String error;
     private String message;
 
-    /** Errores de campo para respuestas de validacion (HTTP 400). */
+    /**
+     * Lista de errores de campo para respuestas de validación (HTTP 400).
+     * Vacía o ausente en errores no relacionados con validación de campos.
+     */
     private List<String> errors;
 
-    /** Ruta URI que origino la peticion con error. */
+    /** Ruta URI que originó la petición con error. */
     private String path;
 }
