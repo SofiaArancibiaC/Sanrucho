@@ -18,7 +18,8 @@
     <modules>
         <module>common</module>  <!--Libreria común-->
         <module>eureka</module>      <!-- Servidor Eureka -->
-        <module>ms-usuarios</module>      <!-- Microservicio usuarios -->
+        <module>ms-usuarios</module>
+        <module>ms-pagos</module>      <!-- Microservicio usuarios -->
         <module>ms-catalogo</module>      <!-- Microservicio catalogo -->
         <module>ms-pedidos</module>      <!-- Microservicio pedidos -->
         <module>api-gateway</module>    <!--Módulo de api-gateway-->
@@ -48,7 +49,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>4.1.0</spring-boot.version>                        <!-- Version de Spring Boot base para microservicios -->
-        <spring-cloud.version>2025.0.0</spring-cloud.version>                                 <!-- Version de Spring Cloud -->
+        <spring-cloud.version>2025.1.4</spring-cloud.version>                                 <!-- Version de Spring Cloud -->
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok.version>1.18.44</lombok.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>

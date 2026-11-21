@@ -1,6 +1,25 @@
--- 04_productos.sql
--- Microservicio de Productos (PostgreSQL)
--- Requiere ejecutar antes 03_categorias.sql
+\c catalogo;
+
+-- 02_categorias.sql
+CREATE TABLE categorias (
+    id_categoria SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT
+);
+
+-- Datos de prueba para Categorias
+INSERT INTO categorias (nombre, descripcion) VALUES
+('Maquillaje', 'Maquillaje de los distintos personajes de Sanrio.'),
+('Peluches', 'Los peluches más tiernos del universo.'),
+('Llaveros', 'Accesorios para decorar tus llaves.'),
+('Blind-box', 'Cajas misteriosas de los personajes de Sanrio.'),
+('Papelería', 'Artículos de papelería de los personajes de Sanrio.'),
+('Tecnología', 'Productos tecnológicos de los personajes más tiernos.'),
+('Hogar', 'Artículos para decorar tu hogar.');
+
+
+
+-- Requiere ejecutar antes categorias.sql
 
 CREATE TABLE productos (
     id_producto SERIAL PRIMARY KEY,
@@ -36,3 +55,4 @@ INSERT INTO productos (
 ('PP-MUG-301', 7, 'Taza Cerámica Pompompurin 350ml', 'Taza de cerámica con diseño 3D de Pompompurin.', 12990, FALSE, NULL, NULL, 25, 5, '/static/img/productos/tazon-ppm1.jpg', 'Activo'),
 ('BM-WALLET-402', 7, 'Cartera Badtz-Maru Negro', 'Cartera de material sintético con múltiples compartimientos.', 13990, FALSE, NULL, NULL, 2, 3, '/static/img/productos/monedero-bm1.webp', 'Activo'),
 ('LTS-PLUSH-005', 2, 'Peluche Little Twin Stars Set', 'Set de Kiki y Lala 20cm cada uno.', 34990, FALSE, NULL, NULL, 6, 2, '/static/img/productos/lts-peluche1.jpg', 'Activo');
+

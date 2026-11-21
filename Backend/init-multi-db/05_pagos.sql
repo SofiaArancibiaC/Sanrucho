@@ -1,3 +1,5 @@
+\c pagos;
+
 -- 07_transacciones.sql
 -- Microservicio de Pagos (PostgreSQL)
 

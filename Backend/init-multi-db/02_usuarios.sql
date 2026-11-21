@@ -1,3 +1,5 @@
+\c usuarios;
+
 -- 01_usuarios.sql
 CREATE TABLE usuarios (
     id_usuario SERIAL PRIMARY KEY,

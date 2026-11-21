@@ -1,3 +1,22 @@
+\c pedidos;
+
+
+CREATE TABLE pedidos (
+    id_pedido SERIAL PRIMARY KEY,
+    id_usuario INT NOT NULL, -- Referencia lógica a usuarios.id_usuario
+    fecha_compra TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total NUMERIC(10) NOT NULL,
+    estado VARCHAR(50) DEFAULT 'Pendiente'
+);
+
+-- Datos de prueba para Pedidos (totales coherentes con detalle_pedidos)
+INSERT INTO pedidos (id_usuario, fecha_compra, total, estado) VALUES
+(3, '2026-11-10 14:30:00', 25980, 'Pagado'),
+(4, '2026-11-11 09:15:00', 13990, 'Enviado'),
+(3, '2026-11-12 11:45:00', 17990, 'Pendiente');
+
+
+
 -- 06_detalle_pedidos.sql
 -- Microservicio de Pedidos (PostgreSQL)
 -- Requiere ejecutar antes 05_pedidos.sql
@@ -27,3 +46,10 @@ INSERT INTO detalle_pedidos (id_pedido, id_producto, cantidad, precio_unitario) 
 -- Pedido 3 (Total = 17990): Peluche Kuromi con Capucha (id=2, oferta 17990)
 INSERT INTO detalle_pedidos (id_pedido, id_producto, cantidad, precio_unitario) VALUES
 (3, 2, 1, 17990);
+
+
+
+-- 05_pedidos.sql
+-- Microservicio de Pedidos (PostgreSQL)
+-- id_usuario es una referencia lógica al microservicio de Usuarios (SIN FOREIGN KEY física)
+
