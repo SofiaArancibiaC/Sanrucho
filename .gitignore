@@ -1,0 +1,6 @@
+# Build de Maven / Java
+target/
+*.class
+
+# Logs y archivos temporales
+*.log
