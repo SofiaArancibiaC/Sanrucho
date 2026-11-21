@@ -1,21 +1,20 @@
--- 05_detalle_pedidos.sql
+-- 06_detalle_pedidos.sql
+-- Microservicio de Pedidos (PostgreSQL)
+-- Requiere ejecutar antes 05_pedidos.sql
+-- id_producto es una referencia lógica al microservicio de Productos (SIN FOREIGN KEY física)
+
 CREATE TABLE detalle_pedidos (
     id_detalle SERIAL PRIMARY KEY,
     id_pedido INT NOT NULL,
-    id_producto INT NOT NULL,
+    id_producto INT NOT NULL, -- Referencia lógica a productos.id_producto
     cantidad INT NOT NULL CHECK (cantidad > 0),
     precio_unitario NUMERIC(10) NOT NULL,
     CONSTRAINT fk_pedido
-        FOREIGN KEY(id_pedido) 
-        REFERENCES Pedidos(id_pedido)
-        ON DELETE CASCADE,
-    CONSTRAINT fk_producto
-        FOREIGN KEY(id_producto) 
-        REFERENCES Productos(id_producto)
-        ON DELETE RESTRICT
+        FOREIGN KEY (id_pedido)
+        REFERENCES pedidos (id_pedido)
+        ON DELETE CASCADE
 );
 
--- Datos de prueba para Detalle_Pedidos (Coherentes con los nuevos productos)
 -- Pedido 1 (Total = 25980): Peluche Hello Kitty (id=1, oferta 19990) + Cuaderno Hello Kitty (id=5, normal 5990)
 INSERT INTO detalle_pedidos (id_pedido, id_producto, cantidad, precio_unitario) VALUES
 (1, 1, 1, 19990),

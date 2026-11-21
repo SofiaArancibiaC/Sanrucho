@@ -1,0 +1,134 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # 1. ms-catalogo
+        - id: ms-catalogo
+          uri: lb://ms-catalogo
+          predicates:
+            - Path=/api/v1/productos/**
+        - id: ms-catalogo-swagger
+          uri: lb://ms-catalogo
+          predicates:
+            - Path=/ms-catalogo/v3/api-docs
+          filters:
+            - RewritePath=/ms-catalogo/v3/api-docs, /v3/api-docs
+            
+        # 2. ms-pedidos
+        - id: ms-pedidos
+          uri: lb://ms-pedidos
+          predicates:
+            - Path=/api/v1/pedidos/**
+            
+        # 3. ms-inventario
+        - id: ms-inventario
+          uri: lb://ms-inventario
+          predicates:
+            - Path=/api/v1/stock/**
+            
+        # 4. ms-usuarios
+        - id: ms-usuarios
+          uri: lb://ms-usuarios
+          predicates:
+            - Path=/api/v1/usuarios/**, /api/v1/auth/**
+            
+        # 5. ms-carrito
+        - id: ms-carrito
+          uri: lb://ms-carrito
+          predicates:
+            - Path=/api/v1/carritos/**
+        - id: ms-carrito-swagger
+          uri: lb://ms-carrito
+          predicates:
+            - Path=/ms-carrito/v3/api-docs
+          filters:
+            - RewritePath=/ms-carrito/v3/api-docs, /v3/api-docs
+            
+        # 6. ms-pagos
+        - id: ms-pagos
+          uri: lb://ms-pagos
+          predicates:
+            - Path=/api/v1/pagos/**, /api/v1/metodos-pago/**
+            
+        # 7. ms-clientes
+        - id: ms-clientes
+          uri: lb://ms-clientes
+          predicates:
+            - Path=/api/v1/clientes/**
+            
+        # 8. ms-reportes
+        - id: ms-reportes
+          uri: lb://ms-reportes
+          predicates:
+            - Path=/api/v1/reportes/**
+        - id: ms-reportes-swagger
+          uri: lb://ms-reportes
+          predicates:
+            - Path=/ms-reportes/v3/api-docs
+          filters:
+            - RewritePath=/ms-reportes/v3/api-docs, /v3/api-docs
+            
+        # 9. ms-categorias
+        - id: ms-categorias
+          uri: lb://ms-categorias
+          predicates:
+            - Path=/api/v1/categorias/**, /api/v1/colecciones/**
+            
+        # 10. ms-proveedores
+        - id: ms-proveedores
+          uri: lb://ms-proveedores
+          predicates:
+            - Path=/api/v1/proveedores/**
+        - id: ms-proveedores-swagger
+          uri: lb://ms-proveedores
+          predicates:
+            - Path=/ms-proveedores/v3/api-docs
+          filters:
+            - RewritePath=/ms-proveedores/v3/api-docs, /v3/api-docs
+
+        # 11. ms-notificaciones (Rutas específicas, definidas ANTES de ms-despacho)
+        - id: ms-notificaciones
+          uri: lb://ms-notificaciones
+          predicates:
+            - Path=/api/v1/despacho/notificaciones/**, /api/v1/despacho/plantillas/**, /api/v1/despacho/eventos-kafka/**
+
+        # 12. ms-despacho (Ruta genérica)
+        - id: ms-despacho
+          uri: lb://ms-despacho
+          predicates:
+            - Path=/api/v1/despacho/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: ms-catalogo
+        url: /ms-catalogo/v3/api-docs
+      - name: ms-carrito
+        url: /ms-carrito/v3/api-docs
+      - name: ms-reportes
+        url: /ms-reportes/v3/api-docs
+      - name: ms-proveedores
+        url: /ms-proveedores/v3/api-docs
+

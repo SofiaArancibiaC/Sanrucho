@@ -21,6 +21,7 @@
         <module>ms-usuarios</module>      <!-- Microservicio usuarios -->
         <module>ms-catalogo</module>      <!-- Microservicio catalogo -->
         <module>ms-pedidos</module>      <!-- Microservicio pedidos -->
+        <module>api-gateway</module>    <!--Módulo de api-gateway-->
         <!-- CGV: Agrega aqui mas modulos segun sea necesario -->
     </modules>
 

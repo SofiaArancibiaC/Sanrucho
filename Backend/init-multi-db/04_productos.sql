@@ -1,4 +1,7 @@
--- 03_productos.sql
+-- 04_productos.sql
+-- Microservicio de Productos (PostgreSQL)
+-- Requiere ejecutar antes 03_categorias.sql
+
 CREATE TABLE productos (
     id_producto SERIAL PRIMARY KEY,
     codigo VARCHAR(50) UNIQUE NOT NULL,
@@ -14,15 +17,15 @@ CREATE TABLE productos (
     imagen_url VARCHAR(255),
     estado VARCHAR(30) DEFAULT 'Activo' CHECK (estado IN ('Activo', 'Inactivo')),
     CONSTRAINT fk_categoria
-        FOREIGN KEY(id_categoria) 
-        REFERENCES Categorias(id_categoria)
+        FOREIGN KEY (id_categoria)
+        REFERENCES categorias (id_categoria)
         ON DELETE RESTRICT
 );
 
--- Datos de prueba para Productos extraídos de PRODUCTOS_BASE
+-- Datos de prueba para Productos
 INSERT INTO productos (
-    codigo, id_categoria, nombre, descripcion, precio, 
-    oferta, precio_oferta, descuento, stock, stock_critico, 
+    codigo, id_categoria, nombre, descripcion, precio,
+    oferta, precio_oferta, descuento, stock, stock_critico,
     imagen_url, estado
 ) VALUES
 ('HK-PLUSH-001', 2, 'Peluche Hello Kitty Clásico 30cm', 'Peluche suave de Hello Kitty con su icónico moño rojo.', 24990, TRUE, 19990, 20, 15, 3, '/static/img/productos/hello-kitty1.webp', 'Activo'),

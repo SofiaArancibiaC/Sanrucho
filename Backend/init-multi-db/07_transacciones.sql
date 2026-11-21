@@ -1,5 +1,5 @@
--- 06_transacciones.sql
--- Esquema para Microservicio de Pagos (PostgreSQL)
+-- 07_transacciones.sql
+-- Microservicio de Pagos (PostgreSQL)
 
 CREATE TABLE transacciones (
     id_transaccion SERIAL PRIMARY KEY,
@@ -12,7 +12,7 @@ CREATE TABLE transacciones (
 );
 
 -- Datos de prueba para Transacciones
--- Corresponden a los pedidos generados en el archivo 04_pedidos.sql
+-- Corresponden a los pedidos generados en 05_pedidos.sql
 INSERT INTO transacciones (id_pedido, monto, pasarela, estado, codigo_autorizacion) VALUES
 (1, 25980, 'Webpay Plus', 'Aprobado', 'AUTH-998877'),
 (2, 13990, 'MercadoPago', 'Aprobado', 'MP-554433'),
