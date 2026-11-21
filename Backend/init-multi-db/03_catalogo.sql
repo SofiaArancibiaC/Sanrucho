@@ -1,4 +1,26 @@
--- 03_productos.sql
+\c catalogo;
+
+-- 02_categorias.sql
+CREATE TABLE categorias (
+    id_categoria SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT
+);
+
+-- Datos de prueba para Categorias
+INSERT INTO categorias (nombre, descripcion) VALUES
+('Maquillaje', 'Maquillaje de los distintos personajes de Sanrio.'),
+('Peluches', 'Los peluches más tiernos del universo.'),
+('Llaveros', 'Accesorios para decorar tus llaves.'),
+('Blind-box', 'Cajas misteriosas de los personajes de Sanrio.'),
+('Papelería', 'Artículos de papelería de los personajes de Sanrio.'),
+('Tecnología', 'Productos tecnológicos de los personajes más tiernos.'),
+('Hogar', 'Artículos para decorar tu hogar.');
+
+
+
+-- Requiere ejecutar antes categorias.sql
+
 CREATE TABLE productos (
     id_producto SERIAL PRIMARY KEY,
     codigo VARCHAR(50) UNIQUE NOT NULL,
@@ -14,15 +36,15 @@ CREATE TABLE productos (
     imagen_url VARCHAR(255),
     estado VARCHAR(30) DEFAULT 'Activo' CHECK (estado IN ('Activo', 'Inactivo')),
     CONSTRAINT fk_categoria
-        FOREIGN KEY(id_categoria) 
-        REFERENCES Categorias(id_categoria)
+        FOREIGN KEY (id_categoria)
+        REFERENCES categorias (id_categoria)
         ON DELETE RESTRICT
 );
 
--- Datos de prueba para Productos extraídos de PRODUCTOS_BASE
+-- Datos de prueba para Productos
 INSERT INTO productos (
-    codigo, id_categoria, nombre, descripcion, precio, 
-    oferta, precio_oferta, descuento, stock, stock_critico, 
+    codigo, id_categoria, nombre, descripcion, precio,
+    oferta, precio_oferta, descuento, stock, stock_critico,
     imagen_url, estado
 ) VALUES
 ('HK-PLUSH-001', 2, 'Peluche Hello Kitty Clásico 30cm', 'Peluche suave de Hello Kitty con su icónico moño rojo.', 24990, TRUE, 19990, 20, 15, 3, '/static/img/productos/hello-kitty1.webp', 'Activo'),
@@ -33,3 +55,4 @@ INSERT INTO productos (
 ('PP-MUG-301', 7, 'Taza Cerámica Pompompurin 350ml', 'Taza de cerámica con diseño 3D de Pompompurin.', 12990, FALSE, NULL, NULL, 25, 5, '/static/img/productos/tazon-ppm1.jpg', 'Activo'),
 ('BM-WALLET-402', 7, 'Cartera Badtz-Maru Negro', 'Cartera de material sintético con múltiples compartimientos.', 13990, FALSE, NULL, NULL, 2, 3, '/static/img/productos/monedero-bm1.webp', 'Activo'),
 ('LTS-PLUSH-005', 2, 'Peluche Little Twin Stars Set', 'Set de Kiki y Lala 20cm cada uno.', 34990, FALSE, NULL, NULL, 6, 2, '/static/img/productos/lts-peluche1.jpg', 'Activo');
+

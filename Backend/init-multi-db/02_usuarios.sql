@@ -1,4 +1,6 @@
--- 02_usuarios.sql
+\c usuarios;
+
+-- 01_usuarios.sql
 CREATE TABLE usuarios (
     id_usuario SERIAL PRIMARY KEY,
     run VARCHAR(20),
