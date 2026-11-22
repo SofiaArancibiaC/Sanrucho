@@ -14,26 +14,39 @@ spring:
             uri: lb://ms-catalogo
             predicates:
               - Path=/api/v1/productos/**
-          #- id: ms-catalogo-swagger
-          #  uri: lb://ms-catalogo
-          #  predicates:
-          #    - Path=/ms-catalogo/v3/api-docs
-          #  filters:
-          #    - RewritePath=/ms-catalogo/v3/api-docs, /v3/api-docs
-              
+          # Documentacion de ms-catalogo (consumida por el Swagger del gateway)
+          - id: ms-catalogo-swagger
+            uri: lb://ms-catalogo
+            predicates:
+              - Path=/ms-catalogo/v3/api-docs/**
+            filters:
+              - RewritePath=/ms-catalogo/(?<segment>.*), /${segment}
+
           # 2. ms-pagos
           - id: ms-pagos
             uri: lb://ms-pagos
             predicates:
               - Path=/api/v1/pagos/**
-              
+          - id: ms-pagos-swagger
+            uri: lb://ms-pagos
+            predicates:
+              - Path=/ms-pagos/v3/api-docs/**
+            filters:
+              - RewritePath=/ms-pagos/(?<segment>.*), /${segment}
+
           # 3. ms-pedidos
           - id: ms-pedidos
             uri: lb://ms-pedidos
             predicates:
               - Path=/api/v1/pedidos/**
-              
-          # 4. ms-usuarios
+          - id: ms-pedidos-swagger
+            uri: lb://ms-pedidos
+            predicates:
+              - Path=/ms-pedidos/v3/api-docs/**
+            filters:
+              - RewritePath=/ms-pedidos/(?<segment>.*), /${segment}
+
+          # 4. ms-usuarios (no gestionado en este repo)
           - id: ms-usuarios
             uri: lb://ms-usuarios
             predicates:
@@ -55,16 +68,16 @@ management:
     health:
       show-details: always
 
-#springdoc:
-#  swagger-ui:
-#    path: /swagger-ui.html
-#    urls:
-#      - name: ms-catalogo
-#        url: /ms-catalogo/v3/api-docs
-#      - name: ms-carrito
-#        url: /ms-carrito/v3/api-docs
-#      - name: ms-reportes
-#        url: /ms-reportes/v3/api-docs
-#      - name: ms-proveedores
-#        url: /ms-proveedores/v3/api-docs
+# Swagger unificado en http://localhost:9000/swagger-ui.html
+# El desplegable permite elegir entre los 3 microservicios.
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: ms-catalogo
+        url: /ms-catalogo/v3/api-docs
+      - name: ms-pedidos
+        url: /ms-pedidos/v3/api-docs
+      - name: ms-pagos
+        url: /ms-pagos/v3/api-docs
 

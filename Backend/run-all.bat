@@ -8,6 +8,7 @@ echo ===== Iniciando Microservicios =====
 start "ms-usuarios" mvn -f ms-usuarios spring-boot:run
 start "ms-catalogo" mvn -f ms-catalogo spring-boot:run
 start "ms-pedidos" mvn -f ms-pedidos spring-boot:run
+start "ms-pagos" mvn -f ms-pagos spring-boot:run
 rem Agrega aqui los demas microservicios si necesitas
 
 echo Todos los servicios han sido lanzados.

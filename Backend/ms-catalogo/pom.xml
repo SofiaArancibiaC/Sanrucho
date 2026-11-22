@@ -100,6 +100,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Spring Boot 4: @AutoConfigureMockMvc vive en este modulo -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Cliente Eureka: registro y descubrimiento de este microservicio -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -117,6 +124,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <!-- Swagger / OpenAPI 3: documentacion e interfaz interactiva de la API -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
 
         <dependency>
