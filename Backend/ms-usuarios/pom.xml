@@ -148,7 +148,14 @@
             <groupId>cl.sanrucho</groupId>
             <artifactId>common</artifactId>
         </dependency>
-        
+
+        <!-- SpringDoc OpenAPI: Swagger UI para documentacion de la API -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
     </dependencies>
 
     <!-- Empaquetado ejecutable con Spring Boot -->

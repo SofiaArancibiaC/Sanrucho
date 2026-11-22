@@ -152,6 +152,8 @@ services:
     build: ./ms-pagos
     image: sanrucho-ms-pagos
     container_name: ms-pagos
+    ports:
+      - "9004:9004"
     depends_on:
       eureka-server:
         condition: service_healthy
@@ -178,6 +180,8 @@ services:
     build: ./ms-pedidos
     image: sanrucho-ms-pedidos
     container_name: ms-pedidos
+    ports:
+      - "9003:9003"
     depends_on:
       eureka-server:
         condition: service_healthy
@@ -204,6 +208,8 @@ services:
     build: ./ms-usuarios
     image: sanrucho-ms-usuarios
     container_name: ms-usuarios
+    ports:
+      - "9001:9001"
     depends_on:
       eureka-server:
         condition: service_healthy

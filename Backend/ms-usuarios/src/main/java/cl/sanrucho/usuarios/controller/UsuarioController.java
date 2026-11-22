@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import cl.sanrucho.usuarios.dto.UsuarioRequest;
 import cl.sanrucho.usuarios.dto.UsuarioResponse;
 import cl.sanrucho.usuarios.service.UsuarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/usuarios")
+@Tag(name = "Usuarios", description = "Gestión de usuarios")
 public class UsuarioController {
 
     private final UsuarioService service;

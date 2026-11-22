@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import cl.sanrucho.usuarios.dto.AuthResponse;
 import cl.sanrucho.usuarios.dto.LoginRequest;
 import cl.sanrucho.usuarios.dto.UsuarioRequest;
@@ -15,6 +17,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Autenticación", description = "Endpoints de login y registro de usuarios")
 public class AuthController {
 
     private final AuthService authService;
