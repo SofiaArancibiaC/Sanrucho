@@ -112,6 +112,12 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
+        <!-- Cliente Apache HttpClient 5: habilita PATCH en las llamadas Feign -->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-hc5</artifactId>
+        </dependency>
+
         <!-- Spring Boot DevTools: recarga automatica en desarrollo -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

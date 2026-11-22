@@ -198,6 +198,29 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
+    // ─── 400 BAD REQUEST (Reglas de negocio) ──────────────────────────────────
+
+    /**
+     * Captura violaciones de reglas de negocio (stock insuficiente, transiciones
+     * de estado invalidas, montos inconsistentes, etc.). Devuelve 400 BAD REQUEST
+     * con el mensaje de dominio.
+     */
+    @ExceptionHandler(BusinessRuleException.class)
+    public ResponseEntity<ApiError> handleBusinessRule(
+            BusinessRuleException ex,
+            HttpServletRequest request) {
+
+        ApiError error = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
     // ─── 400 BAD REQUEST (Validación de campos) ───────────────────────────────
 
     /**
