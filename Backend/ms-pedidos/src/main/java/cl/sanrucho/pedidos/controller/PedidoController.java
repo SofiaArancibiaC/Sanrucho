@@ -24,11 +24,13 @@ import cl.sanrucho.pedidos.dto.PedidoResumenResponse;
 import cl.sanrucho.pedidos.dto.PedidoResponse;
 import cl.sanrucho.pedidos.model.enums.EstadoPedido;
 import cl.sanrucho.pedidos.service.PedidoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/pedidos")
+@Tag(name = "Pedidos", description = "Creacion, consulta y cambio de estado de pedidos")
 @RequiredArgsConstructor
 public class PedidoController {
 

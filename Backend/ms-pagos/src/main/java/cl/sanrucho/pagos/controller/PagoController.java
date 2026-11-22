@@ -24,11 +24,13 @@ import cl.sanrucho.pagos.dto.PagoRequest;
 import cl.sanrucho.pagos.dto.PagoResponse;
 import cl.sanrucho.pagos.model.enums.EstadoTransaccion;
 import cl.sanrucho.pagos.service.PagoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/pagos")
+@Tag(name = "Pagos", description = "Transacciones y sincronizacion del estado del pedido")
 @RequiredArgsConstructor
 public class PagoController {
 

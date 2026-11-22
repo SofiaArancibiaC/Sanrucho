@@ -23,11 +23,13 @@ import cl.sanrucho.catalogo.dto.ProductoResponse;
 import cl.sanrucho.catalogo.dto.StockUpdateRequest;
 import cl.sanrucho.catalogo.service.ProductoService;
 import cl.sanrucho.common.dto.PageResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/productos")
+@Tag(name = "Productos", description = "Gestion de productos y ajuste de stock")
 @RequiredArgsConstructor
 public class ProductoController {
 

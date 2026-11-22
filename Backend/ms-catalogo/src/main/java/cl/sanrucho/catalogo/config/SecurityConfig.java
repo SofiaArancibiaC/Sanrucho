@@ -53,6 +53,15 @@ public class SecurityConfig {
 
                         .requestMatchers("/actuator/**", "/error").permitAll()
 
+                        // Documentacion OpenAPI / Swagger UI (publica, solo lectura)
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/webjars/**").permitAll()
+
                         // Lectura: cualquier rol autenticado
                         .requestMatchers(HttpMethod.GET, "/api/v1/productos/**", "/api/v1/categorias/**")
                             .hasAnyRole("Dueño", "Admin", "Cliente")

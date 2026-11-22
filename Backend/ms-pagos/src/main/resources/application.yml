@@ -61,3 +61,16 @@ management:
 logging:
   level:
     cl.sanrucho: INFO
+
+# ------------------------------------------------------------
+# Swagger / OpenAPI
+# UI: http://localhost:9004/swagger-ui.html
+# JSON: http://localhost:9004/v3/api-docs
+# ------------------------------------------------------------
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  api-docs:
+    path: /v3/api-docs

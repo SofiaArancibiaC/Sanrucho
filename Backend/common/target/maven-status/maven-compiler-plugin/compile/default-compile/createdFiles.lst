@@ -1,4 +1,3 @@
-cl\sanrucho\common\security\JwtProperties.class
 cl\sanrucho\common\exception\GlobalExceptionHandler.class
 cl\sanrucho\common\exception\EntityNotFoundException.class
 cl\sanrucho\common\security\FeignClientInterceptor.class
@@ -6,6 +5,7 @@ cl\sanrucho\common\exception\DuplicateResourceException.class
 cl\sanrucho\common\exception\ApiError$ApiErrorBuilder.class
 cl\sanrucho\common\CommonAutoConfiguration.class
 cl\sanrucho\common\exception\ReferentialIntegrityException.class
-cl\sanrucho\common\security\JwtAuthenticationFilter.class
 cl\sanrucho\common\exception\ApiError.class
+cl\sanrucho\common\security\JwtProperties.class
+cl\sanrucho\common\security\JwtAuthenticationFilter.class
 cl\sanrucho\common\security\JwtTokenProvider.class

@@ -21,11 +21,13 @@ import cl.sanrucho.catalogo.dto.CategoriaRequest;
 import cl.sanrucho.catalogo.dto.CategoriaResponse;
 import cl.sanrucho.catalogo.service.CategoriaService;
 import cl.sanrucho.common.dto.PageResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/categorias")
+@Tag(name = "Categorías", description = "Gestion de categorias de productos")
 @RequiredArgsConstructor
 public class CategoriaController {
 
