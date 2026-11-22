@@ -144,6 +144,8 @@ Para reiniciar los datos de prueba, borra las claves `sanrucho_*` en DevTools �
 
 Cada microservicio es un módulo Maven independiente, con su propia base de datos PostgreSQL, y se registra en el servidor Eureka.
 
+> 📘 **Guía completa de esta rama:** [Backend/README.md](Backend/README.md) — mapa de archivos, flujos Feign, endpoints, datos de prueba, JWT, Swagger y Postman paso a paso.
+
 | Servicio | Puerto | Base de datos |
 | --- | --- | --- |
 | `eureka` | 8761 | — |
