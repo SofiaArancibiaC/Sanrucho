@@ -1,10 +1,23 @@
 // ============================================================
-// hooks/useProductos.ts  (versión Axios)
+// hooks/useProductos.ts  (versión Axios + adaptador del backend)
 // ============================================================
 
 import { useCallback, useEffect, useState } from "react";
 import type { Producto } from "../types";
 import { productosApi } from "../api/productos";
+
+/** Convierte el ProductoResponse del backend al Producto que usa la UI. */
+function adaptarProducto(p: Producto): Producto {
+  return {
+    ...p,
+    // El backend usa idCategoria/imagenUrl; la UI usa categoriaId/imagen.
+    categoriaId: (p as Producto & { idCategoria?: number }).idCategoria ?? p.categoriaId,
+    imagen: p.imagen ?? (p as Producto & { imagenUrl?: string }).imagenUrl ?? "",
+    precio: Number(p.precio ?? 0),
+    stock: Number(p.stock ?? 0),
+    estado: p.estado ?? "Activo",
+  };
+}
 
 export function useProductos() {
   const [datos, setDatos] = useState<Producto[]>([]);
@@ -16,9 +29,10 @@ export function useProductos() {
     setError(null);
     try {
       const res = await productosApi.listar({ size: 1000 });
-      const raw = res.data?.content ?? res.data ?? [];
-      setDatos(raw.map((p: any) => ({ ...p, imagen: p.imagen ?? p.imagenUrl })));
+      const raw = res.data?.content ?? [];
+      setDatos(raw.map(adaptarProducto));
     } catch (e) {
+      setDatos([]);
       setError((e as Error).message);
     } finally {
       setLoading(false);
@@ -33,10 +47,23 @@ export function useProductos() {
     datos.find((p) => p.codigo === codigo);
 
   const guardarProducto = async (producto: Producto): Promise<void> => {
+    // El backend espera idCategoria / imagenUrl y stockCritico obligatorio.
+    const payload = {
+      codigo: producto.codigo,
+      idCategoria: producto.categoriaId,
+      nombre: producto.nombre,
+      descripcion: producto.descripcion ?? "",
+      precio: Number(producto.precio),
+      stock: Number(producto.stock),
+      stockCritico: Number(producto.stockCritico ?? 0),
+      imagenUrl: producto.imagen ?? "",
+      estado: producto.estado,
+    };
+
     if (producto.id) {
-      await productosApi.actualizar(Number(producto.id), producto);
+      await productosApi.actualizar(Number(producto.id), payload);
     } else {
-      await productosApi.crear(producto);
+      await productosApi.crear(payload);
     }
     await recargar();
   };

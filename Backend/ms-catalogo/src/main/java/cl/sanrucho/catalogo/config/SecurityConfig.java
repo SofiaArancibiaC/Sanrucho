@@ -71,11 +71,11 @@ public class SecurityConfig {
 
                         // Escritura: solo Dueno y Admin
                         .requestMatchers(HttpMethod.POST, "/api/v1/productos/**", "/api/v1/categorias/**")
-                            .hasAnyRole("Dueño", "Admin")
+                            .hasAnyRole("DUENO", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/productos/**", "/api/v1/categorias/**")
-                            .hasAnyRole("Dueño", "Admin")
+                            .hasAnyRole("DUENO", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/productos/**", "/api/v1/categorias/**")
-                            .hasAnyRole("Dueño", "Admin")
+                            .hasAnyRole("DUENO", "ADMIN")
 
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

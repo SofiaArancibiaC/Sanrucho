@@ -25,17 +25,31 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(String subject) {
+    /**
+     * Genera el token con el claim "rol" para que los demas microservicios
+     * puedan autorizar por rol (antes solo viajaba el email).
+     */
+    public String generateToken(String subject, String rol) {
         return Jwts.builder()
                 .subject(subject)
+                .claim("rol", rol)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(key())
                 .compact();
     }
 
+    /** Sobrecarga retrocompatible: por defecto rol de cliente. */
+    public String generateToken(String subject) {
+        return generateToken(subject, "CLIENTE");
+    }
+
     public String extractUsername(String token) {
         return parse(token).getSubject();
+    }
+
+    public String extractRol(String token) {
+        return parse(token).get("rol", String.class);
     }
 
     public boolean isTokenValid(String token) {

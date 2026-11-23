@@ -64,15 +64,15 @@ public class SecurityConfig {
 
                         // Crear pedido: clientes y administracion
                         .requestMatchers(HttpMethod.POST, "/api/v1/pedidos/**")
-                            .hasAnyRole("Cliente", "Admin", "Dueño")
+                            .hasAnyRole("CLIENTE", "ADMIN", "DUENO")
 
                         // Cambio de estado: administracion (tambien lo usa ms-pagos)
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/pedidos/*/estado")
-                            .hasAnyRole("Admin", "Dueño")
+                            .hasAnyRole("ADMIN", "DUENO")
 
                         // Eliminacion: administracion
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/pedidos/**")
-                            .hasAnyRole("Admin", "Dueño")
+                            .hasAnyRole("ADMIN", "DUENO")
 
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

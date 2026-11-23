@@ -36,7 +36,11 @@ export function useUsuarios() {
     setLoading(true);
     try {
       const res = await usuariosApi.listar({ size: 1000 });
-      setDatos((res.data?.content ?? []).map(adaptarUsuario));
+      // El backend devuelve un array plano (no { content: [...] }).
+      const lista = Array.isArray(res.data)
+        ? res.data
+        : (res.data?.content ?? []);
+      setDatos(lista.map(adaptarUsuario));
     } finally {
       setLoading(false);
     }
@@ -52,18 +56,35 @@ export function useUsuarios() {
     datos.find((u) => u.run === run);
 
   const guardarUsuario = async (usuario: Usuario): Promise<void> => {
-    // Backend usuario CRUD no expone update por run en esta rama; recarga local.
-    setDatos((prev) => {
-      const i = prev.findIndex((u) => u.run === usuario.run);
-      if (i === -1) return [...prev, usuario];
-      const c = [...prev];
-      c[i] = usuario;
-      return c;
-    });
+    const rol = usuario.rolId === 1 ? "DUENO" : usuario.rolId === 2 ? "ADMIN" : "CLIENTE";
+    // El backend espera email/rol y una contraseña vacía significa "no cambiarla".
+    const payload = {
+      run: usuario.run,
+      nombre: usuario.nombre,
+      apellidos: usuario.apellidos,
+      email: usuario.correo,
+      password: usuario.password ?? "",
+      fechaNacimiento: usuario.fechaNacimiento || null,
+      regionId: usuario.regionId,
+      comunaId: usuario.comunaId,
+      direccion: usuario.direccion,
+      telefono: usuario.telefono ?? "",
+      estado: usuario.estado,
+      rol,
+    };
+
+    if (usuario.idUsuario) {
+      await usuariosApi.actualizar(usuario.idUsuario, payload);
+    } else {
+      await usuariosApi.crear(payload);
+    }
+    await recargar();
   };
 
   const eliminarUsuario = async (run: string): Promise<void> => {
-    setDatos((prev) => prev.filter((u) => u.run !== run));
+    const u = datos.find((x) => x.run === run);
+    if (u?.idUsuario) await usuariosApi.eliminar(u.idUsuario);
+    await recargar();
   };
 
   const obtenerNombreRol = (rolId: number): string =>

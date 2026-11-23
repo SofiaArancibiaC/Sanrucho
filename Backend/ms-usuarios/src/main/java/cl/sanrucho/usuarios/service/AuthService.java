@@ -35,7 +35,9 @@ public class AuthService {
         if (!passwordEncoder.matches(request.getPassword(), usuario.getPasswordHash())) {
             throw new RuntimeException("Credenciales inválidas");
         }
-        String token = jwtService.generateToken(usuario.getEmail());
+        String token = jwtService.generateToken(
+                usuario.getEmail(),
+                usuario.getRol() != null ? usuario.getRol().name() : "CLIENTE");
         return AuthResponse.builder().token(token).usuario(mapper.toResponse(usuario)).build();
     }
 
@@ -49,7 +51,9 @@ public class AuthService {
             usuario.setEstado("Activo");
         }
         Usuario saved = repository.save(usuario);
-        String token = jwtService.generateToken(saved.getEmail());
+        String token = jwtService.generateToken(
+                saved.getEmail(),
+                saved.getRol() != null ? saved.getRol().name() : "CLIENTE");
         return AuthResponse.builder().token(token).usuario(mapper.toResponse(saved)).build();
     }
 }

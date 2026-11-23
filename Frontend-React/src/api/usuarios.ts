@@ -36,11 +36,15 @@ export const authApi = {
 
 export const usuariosApi = {
   listar: (params?: { page?: number; size?: number }) =>
-    client.get<PageResponse<UsuarioBackend>>("/api/v1/usuarios", { params }),
+    client.get<PageResponse<UsuarioBackend> | UsuarioBackend[]>("/api/v1/usuarios", { params }),
   obtener: (id: number) =>
     client.get<UsuarioBackend>(`/api/v1/usuarios/${id}`),
   porRun: (run: string) =>
     client.get<UsuarioBackend>(`/api/v1/usuarios/run/${run}`),
+  crear: (data: object) => client.post<UsuarioBackend>("/api/v1/usuarios", data),
+  actualizar: (id: number, data: object) =>
+    client.put<UsuarioBackend>(`/api/v1/usuarios/${id}`, data),
+  eliminar: (id: number) => client.delete(`/api/v1/usuarios/${id}`),
 };
 
 export { setToken };

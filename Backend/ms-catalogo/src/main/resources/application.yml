@@ -28,7 +28,7 @@ spring:
 # JWT (solo validacion; el token lo emite el servicio de auth)
 # ------------------------------------------------------------
 jwt:
-  secret: c2FucnVjaG8tdGllbmRhLXNlY3JldC1rZXktMjAyNi1qd3Qtc2VjdXJpdHktaHMyNTY=
+  secret: c2FucnVjaG8tc3VwZXItc2VjcmV0LWtleS1wYXJhLWp3dC0yMDI2LWNhbWJpYXItZW4tcHJvZA==
   expiration-ms: 3600000
 
 # ------------------------------------------------------------

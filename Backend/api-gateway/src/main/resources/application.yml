@@ -21,6 +21,11 @@ spring:
             uri: lb://ms-catalogo
             predicates:
               - Path=/api/v1/productos/**
+          # 1b. Categorias (mismo microservicio de catalogo)
+          - id: ms-catalogo-categorias
+            uri: lb://ms-catalogo
+            predicates:
+              - Path=/api/v1/categorias/**
           # Documentacion de ms-catalogo (consumida por el Swagger del gateway)
           - id: ms-catalogo-swagger
             uri: lb://ms-catalogo

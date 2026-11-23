@@ -105,7 +105,8 @@ async function cargarClientes(): Promise<Map<number, UsuarioBackend>> {
   const mapa = new Map<number, UsuarioBackend>();
   try {
     const res = await usuariosApi.listar({ size: 1000 });
-    (res.data?.content ?? []).forEach((u) => mapa.set(u.idUsuario, u));
+    const lista = Array.isArray(res.data) ? res.data : (res.data?.content ?? []);
+    lista.forEach((u: UsuarioBackend) => mapa.set(u.idUsuario, u));
   } catch {
     // Sin permisos para usuarios: se continúa con datos genéricos.
   }

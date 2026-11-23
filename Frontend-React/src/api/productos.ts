@@ -20,8 +20,8 @@ export const productosApi = {
     client.get<PageResponse<Producto>>("/api/v1/productos", { params }),
   obtener: (id: number) => client.get<Producto>(`/api/v1/productos/${id}`),
   porCodigo: (codigo: string) => client.get<Producto>(`/api/v1/productos/codigo/${codigo}`),
-  crear: (data: Partial<Producto>) => client.post<Producto>("/api/v1/productos", data),
-  actualizar: (id: number, data: Partial<Producto>) =>
+  crear: (data: object) => client.post<Producto>("/api/v1/productos", data),
+  actualizar: (id: number, data: object) =>
     client.put<Producto>(`/api/v1/productos/${id}`, data),
   ajustarStock: (id: number, cantidad: number) =>
     client.patch(`/api/v1/productos/${id}/stock`, { cantidad }),
