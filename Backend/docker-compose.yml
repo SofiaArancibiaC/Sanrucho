@@ -1,14 +1,15 @@
 # ============================================================
-# Docker Compose - Sistema Biblioteca Triskeledu (completo)
+# Docker Compose - Sistema Sanrucho (completo)
 # ============================================================
 # Levanta toda la infraestructura + microservicios Java.
+# Cada imagen se compila dentro de Docker (Dockerfile multi-stage).
 #
 # Orden de arranque garantizado por healthchecks:
 #   1. postgres                  -> arranca en paralelo
 #   2. eureka-server             -> arranca en paralelo con infra
 #   3. api-gateway               -> espera a eureka (healthy)
-#   4. ms-catalogo, ms-pedidos,  -> esperan a eureka + postgres
-#      ms-pagos                     + api-gateway
+#   4. ms-usuarios, ms-catalogo, -> esperan a eureka + postgres
+#      ms-pedidos, ms-pagos         + api-gateway
 # ============================================================
 
 services:
@@ -26,6 +27,7 @@ services:
       POSTGRES_DB: main_postgres_db
     volumes:
       - ./init-multi-db:/docker-entrypoint-initdb.d
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - sanrucho-network
     healthcheck:
@@ -38,7 +40,9 @@ services:
 
   # -- Descubrimiento: Eureka Server ---------------------------
   eureka-server:
-    build: ./eureka
+    build:
+      context: .
+      dockerfile: eureka/Dockerfile
     image: sanrucho-eureka-server
     container_name: eureka-server
     ports:
@@ -56,7 +60,9 @@ services:
 
   # -- Enrutamiento: API Gateway -------------------------------
   api-gateway:
-    build: ./api-gateway
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
     image: sanrucho-api-gateway
     container_name: api-gateway
     ports:
@@ -71,7 +77,7 @@ services:
     networks:
       - sanrucho-network
     healthcheck:
-      test: ["CMD-SHELL", "nc -z localhost 9000 || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9000/actuator/health | grep -q '\"status\":\"UP\"' || exit 1"]
       interval: 15s
       timeout: 10s
       retries: 30
@@ -79,7 +85,9 @@ services:
 
   # -- Microservicio: Catalogo -----------------------
   ms-catalogo:
-    build: ./ms-catalogo
+    build:
+      context: .
+      dockerfile: ms-catalogo/Dockerfile
     image: sanrucho-ms-catalogo
     container_name: ms-catalogo
     ports:
@@ -101,10 +109,18 @@ services:
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
     networks:
       - sanrucho-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9002/actuator/health | grep -q '\"status\":\"UP\"' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 30
+      start_period: 90s
 
   # -- Microservicio: pagos -------------------------
   ms-pagos:
-    build: ./ms-pagos
+    build:
+      context: .
+      dockerfile: ms-pagos/Dockerfile
     image: sanrucho-ms-pagos
     container_name: ms-pagos
     ports:
@@ -126,10 +142,18 @@ services:
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
     networks:
       - sanrucho-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9004/actuator/health | grep -q '\"status\":\"UP\"' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 30
+      start_period: 90s
 
   # -- Microservicio: pedidos -------------------------
   ms-pedidos:
-    build: ./ms-pedidos
+    build:
+      context: .
+      dockerfile: ms-pedidos/Dockerfile
     image: sanrucho-ms-pedidos
     container_name: ms-pedidos
     ports:
@@ -151,10 +175,18 @@ services:
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
     networks:
       - sanrucho-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9003/actuator/health | grep -q '\"status\":\"UP\"' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 30
+      start_period: 90s
 
   # -- Microservicio: usuarios -------------------------
   ms-usuarios:
-    build: ./ms-usuarios
+    build:
+      context: .
+      dockerfile: ms-usuarios/Dockerfile
     image: sanrucho-ms-usuarios
     container_name: ms-usuarios
     ports:
@@ -176,6 +208,12 @@ services:
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
     networks:
       - sanrucho-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9001/actuator/health | grep -q '\"status\":\"UP\"' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 30
+      start_period: 90s
 
 # ============================================================
 # Red compartida con nombre fijo (independiente del nombre
@@ -191,3 +229,7 @@ networks:
 # Docker Desktop (Windows/WSL2/Hyper-V) es muchísimo más lento
 # para fsync y provocaba que el healthcheck marcara "unhealthy"
 # ============================================================
+volumes:
+  postgres-data:
+    name: sanrucho-postgres-data
+
