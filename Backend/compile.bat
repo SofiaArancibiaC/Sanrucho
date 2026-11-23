@@ -2,12 +2,11 @@
 echo.
 echo === COMPILANDO MICROSERVICIOS ===
 echo.
-call cd C:\Sanrucho\ms-usuarios
-call mvn clean install -U
-call cd C:\Sanrucho\ms-catalogo
-call mvn clean install -U
-call cd C:\Sanrucho\ms-pedidos
+
+REM %~dp0 = carpeta donde esta este script (no depende de C:\Sanrucho)
+call cd /d "%~dp0"
 call mvn clean install -U
+
 echo.
 echo === COMPILACION COMPLETADA ===
 pause

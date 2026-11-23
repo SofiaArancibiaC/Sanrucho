@@ -144,6 +144,8 @@ Para reiniciar los datos de prueba, borra las claves `sanrucho_*` en DevTools �
 
 Cada microservicio es un módulo Maven independiente, con su propia base de datos PostgreSQL, y se registra en el servidor Eureka.
 
+> 📘 **Guía completa de esta rama:** [Backend/README.md](Backend/README.md) — mapa de archivos, flujos Feign, endpoints, datos de prueba, JWT y Swagger
+
 | Servicio | Puerto | Base de datos |
 | --- | --- | --- |
 | `eureka` | 8761 | — |
@@ -210,28 +212,15 @@ cd Frontend-React
 npm test
 ```
 
-**Backend:**
-
-```bash
-cd Backend
-mvn test
-```
-
 ---
 
 ## Próximos pasos
 
-- Completar la lógica de negocio de los microservicios (endpoints REST, DTOs y validaciones)
-- Agregar un API Gateway
 - Conectar el frontend con los microservicios en vez de `localStorage`
-- Incorporar autenticación con tokens
-- Ampliar la cobertura de pruebas
-
+  
 ---
 
 ## Autoras
 
-**Sofía Arancibia, Camila Cerda y Nancy Millar**
+**Sofía Arancibia y Camila Cerda**
 Estudiante de Analista Programador, Duoc UC
-
-[LinkedIn](https://www.linkedin.com/in/sofía-arancibia-cortez-963933319) · [GitHub](https://github.com/SofiaArancibiaC)

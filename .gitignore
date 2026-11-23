@@ -1,6 +1,14 @@
-# Build de Maven / Java
+# Maven build output
 target/
 *.class
+*.jar
+*.war
 
-# Logs y archivos temporales
-*.log
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+Thumbs.db
+.DS_Store

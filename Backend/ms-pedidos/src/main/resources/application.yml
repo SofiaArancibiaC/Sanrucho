@@ -1,5 +1,12 @@
+# ============================================================
+# MS-PEDIDOS - Configuracion principal
+# ============================================================
+
 server:
   port: 9003
+  error:
+    include-stacktrace: never
+    include-message: never
 
 spring:
   application:
@@ -8,16 +15,25 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5433/pedidos
     username: postgres
-    password: 123
+    password: "123"
   jpa:
     hibernate:
       ddl-auto: update
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-  web:
-    error:
-      include-stacktrace: never
-      
+    open-in-view: false
+    show-sql: false
+
+# ------------------------------------------------------------
+# JWT (solo validacion; el token lo emite ms-usuarios)
+# ------------------------------------------------------------
+jwt:
+  secret: c2FucnVjaG8tdGllbmRhLXNlY3JldC1rZXktMjAyNi1qd3Qtc2VjdXJpdHktaHMyNTY=
+  expiration-ms: 3600000
+
+# ------------------------------------------------------------
+# Eureka
+# ------------------------------------------------------------
 eureka:
   client:
     register-with-eureka: true
@@ -29,3 +45,32 @@ eureka:
     instance-id: "${spring.application.name}:${random.value}"
     lease-renewal-interval-in-seconds: 15
     lease-expiration-duration-in-seconds: 60
+
+# ------------------------------------------------------------
+# Actuator
+# ------------------------------------------------------------
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    cl.sanrucho: INFO
+
+# ------------------------------------------------------------
+# Swagger / OpenAPI
+# UI: http://localhost:9003/swagger-ui.html
+# JSON: http://localhost:9003/v3/api-docs
+# ------------------------------------------------------------
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
