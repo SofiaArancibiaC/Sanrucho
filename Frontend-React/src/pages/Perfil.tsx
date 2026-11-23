@@ -16,18 +16,34 @@ export default function Perfil() {
 
   const [form, setForm] = useState<Usuario | null>(sesion);
   const [guardado, setGuardado] = useState(false);
-  const [misPedidos, setMisPedidos] = useState<any[]>([]);
+  const [misPedidos, setMisPedidos] = useState<Pedido[]>([]);
+  const [errorPedidos, setErrorPedidos] = useState(false);
 
   useEffect(() => {
-    if (sesion?.idUsuario) {
-      pedidosApi.listar({ idUsuario: sesion.idUsuario })
-        .then((res) => setMisPedidos(res.data?.content ?? res.data ?? []))
-        .catch(() => setMisPedidos([]));
-    } else {
-      setMisPedidos(leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos).filter(
-        (p) => p.cliente?.correo === sesion?.correo
-      ));
-    }
+    let activo = true;
+    const cargar = async () => {
+      if (sesion?.idUsuario) {
+        try {
+          // El backend devuelve otro formato: el adaptador lo convierte a Pedido.
+          const pedidos = await pedidosApi.listarAdaptados({ idUsuario: sesion.idUsuario });
+          if (activo) {
+            setMisPedidos(pedidos);
+            setErrorPedidos(false);
+          }
+        } catch {
+          if (activo) {
+            setMisPedidos([]);
+            setErrorPedidos(true);
+          }
+        }
+      } else {
+        setMisPedidos(leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos).filter(
+          (p) => p.cliente?.correo === sesion?.correo
+        ));
+      }
+    };
+    cargar();
+    return () => { activo = false; };
   }, [sesion]);
 
   if (!sesion || !form) {
@@ -144,6 +160,12 @@ export default function Perfil() {
       <Card className="mt-4">
         <Card.Body>
           <h3 className="mb-3">Mis pedidos</h3>
+          {errorPedidos && (
+            <Alert variant="warning">
+              No se pudieron cargar tus pedidos. Verifica que el backend esté
+              encendido en <code>http://localhost:9000</code>.
+            </Alert>
+          )}
           {misPedidos.length === 0 ? (
             <p className="text-muted">Aún no tienes pedidos registrados.</p>
           ) : (
@@ -153,10 +175,14 @@ export default function Perfil() {
                   <div className="d-flex justify-content-between align-items-center">
                     <div>
                       <strong>{p.codigoBoleta}</strong>
-                      <div className="small text-muted">{p.fechaCreacion} - {p.estadoPago}</div>
+                      <div className="small text-muted">
+                        {p.fechaCreacion ? new Date(p.fechaCreacion).toLocaleString("es-CL") : "—"} - {p.estadoPago}
+                      </div>
                     </div>
                     <div className="d-flex align-items-center gap-2">
-                      <span className="badge bg-primary rounded-pill">${p.total.toLocaleString("es-CL")}</span>
+                      <span className="badge bg-primary rounded-pill">
+                        ${Number(p.total ?? 0).toLocaleString("es-CL")}
+                      </span>
                       <button
                         className="btn btn-sm btn-outline-primary"
                         onClick={() => {

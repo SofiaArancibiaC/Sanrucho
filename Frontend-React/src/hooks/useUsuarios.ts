@@ -4,9 +4,29 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { Usuario } from "../types";
-import { usuariosApi } from "../api/usuarios";
+import { usuariosApi, type UsuarioBackend } from "../api/usuarios";
 import { SANRUCHO_KEYS } from "../storage/claves";
 import { useColeccion } from "../storage/useColeccion";
+
+/** Traduce el UsuarioResponse del backend al Usuario que usa la UI. */
+function adaptarUsuario(u: UsuarioBackend): Usuario {
+  const rol = String(u.rol ?? "CLIENTE").toUpperCase();
+  return {
+    idUsuario: u.idUsuario,
+    run: u.run ?? "",
+    nombre: u.nombre ?? "",
+    apellidos: u.apellidos ?? "",
+    correo: u.email ?? "",
+    password: "",
+    fechaNacimiento: u.fechaNacimiento ?? "",
+    rolId: rol === "DUENO" ? 1 : rol === "ADMIN" ? 2 : 3,
+    regionId: u.regionId ?? 1,
+    comunaId: u.comunaId ?? 1,
+    direccion: u.direccion ?? "",
+    telefono: u.telefono ?? "",
+    estado: (u.estado as Usuario["estado"]) ?? "Activo",
+  };
+}
 
 export function useUsuarios() {
   const [datos, setDatos] = useState<Usuario[]>([]);
@@ -16,7 +36,7 @@ export function useUsuarios() {
     setLoading(true);
     try {
       const res = await usuariosApi.listar({ size: 1000 });
-      setDatos(res.data?.content ?? res.data ?? []);
+      setDatos((res.data?.content ?? []).map(adaptarUsuario));
     } finally {
       setLoading(false);
     }

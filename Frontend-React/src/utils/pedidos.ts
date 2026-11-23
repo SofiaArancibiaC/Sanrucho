@@ -52,7 +52,7 @@ export function formatearFechaHora(fechaISO: string): string {
 
 /** Cantidad total de unidades compradas en un pedido. */
 export function unidadesPedido(pedido: Pedido): number {
-  return pedido.items.reduce((total, item) => total + item.cantidad, 0);
+  return (pedido.items ?? []).reduce((total, item) => total + (item.cantidad ?? 0), 0);
 }
 
 /**
@@ -63,7 +63,7 @@ export function pedidosDeUsuario(pedidos: Pedido[], correo: string): Pedido[] {
   const buscado = correo.trim().toLowerCase();
   if (!buscado) return [];
   return pedidos.filter(
-    (pedido) => pedido.cliente.correo.trim().toLowerCase() === buscado
+    (pedido) => (pedido.cliente?.correo ?? "").trim().toLowerCase() === buscado
   );
 }
 
@@ -91,18 +91,21 @@ export function filtrarPedidos(
 
       if (!texto) return true;
 
+      const cliente = pedido.cliente;
       const campos = [
         pedido.codigoBoleta,
         pedido.id,
-        pedido.cliente.nombre,
-        pedido.cliente.apellidos,
-        `${pedido.cliente.nombre} ${pedido.cliente.apellidos}`,
-        pedido.cliente.correo,
-        pedido.cliente.telefono,
+        cliente?.nombre,
+        cliente?.apellidos,
+        `${cliente?.nombre ?? ""} ${cliente?.apellidos ?? ""}`,
+        cliente?.correo,
+        cliente?.telefono,
       ];
       return campos.some((campo) =>
-        (campo ?? "").toLowerCase().includes(texto)
+        String(campo ?? "").toLowerCase().includes(texto)
       );
     })
-    .sort((a, b) => b.fechaCreacion.localeCompare(a.fechaCreacion));
+    .sort((a, b) =>
+      String(b.fechaCreacion ?? "").localeCompare(String(a.fechaCreacion ?? ""))
+    );
 }

@@ -1,5 +1,5 @@
 // ============================================================
-// hooks/usePedidos.ts (versión Axios)
+// hooks/usePedidos.ts (versión Axios + adaptadores del backend)
 // ============================================================
 
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -9,12 +9,16 @@ import { pedidosApi } from "../api/pedidos";
 export function usePedidos() {
   const [datos, setDatos] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const recargar = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
-      const res = await pedidosApi.listar({ size: 1000 });
-      setDatos(res.data?.content ?? res.data ?? []);
+      setDatos(await pedidosApi.listarAdaptados({ size: 1000 }));
+    } catch (e) {
+      setDatos([]);
+      setError((e as Error).message || "No se pudieron cargar los pedidos.");
     } finally {
       setLoading(false);
     }
@@ -25,15 +29,18 @@ export function usePedidos() {
   }, [recargar]);
 
   const pedidos = useMemo(
-    () => [...datos].sort((a, b) => String(b.fechaCreacion ?? "").localeCompare(String(a.fechaCreacion ?? ""))),
+    () => [...datos].sort((a, b) =>
+      String(b.fechaCreacion ?? "").localeCompare(String(a.fechaCreacion ?? ""))
+    ),
     [datos]
   );
 
   const obtenerPorId = (id: string): Pedido | undefined =>
-    pedidos.find((p) => String(p.id) === id) ?? pedidos.find((p) => (p as { codigoBoleta?: string }).codigoBoleta === id);
+    pedidos.find((p) => String(p.id) === id) ??
+    pedidos.find((p) => p.codigoBoleta === id);
 
   const aprobados = useMemo(
-    () => pedidos.filter((p) => (p as { estadoPago?: string }).estadoPago === "aprobado"),
+    () => pedidos.filter((p) => p.estadoPago === "aprobado"),
     [pedidos]
   );
   const totalVendido = useMemo(
@@ -41,5 +48,5 @@ export function usePedidos() {
     [aprobados]
   );
 
-  return { pedidos, aprobados, totalVendido, loading, recargar, obtenerPorId, guardar: recargar };
+  return { pedidos, aprobados, totalVendido, loading, error, recargar, obtenerPorId, guardar: recargar };
 }

@@ -176,8 +176,11 @@ En Windows también puedes ejecutar `compile.bat`. El reactor compila los 8 mód
 
 ```bash
 cd Backend
-docker compose up -d
+mvn -B -DskipTests install      # compila los .jar con el código actual
+docker compose up -d --build    #copia los .jar nuevos a las imágenes y levanta todo
 ```
+
+> ⚠️ Los `Dockerfile` solo hacen `COPY target/*.jar`, **no compilan el código**. Si cambias un `.java`, un `application.yml` o es la primera vez que levantas el proyecto, usa `--build`. Si haces solo `docker compose up -d`, Docker reutiliza imágenes antiguas y los cambios (por ejemplo la configuración CORS del gateway) no se aplican.
 
 Esto levanta PostgreSQL (puerto **5433**), Eureka (8761), Gateway (9000) y los 3 microservicios. Los scripts de `init-multi-db/` crean las 4 bases y cargan los datos de prueba la primera vez.
 

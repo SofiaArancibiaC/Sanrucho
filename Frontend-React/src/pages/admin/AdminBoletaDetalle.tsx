@@ -33,7 +33,7 @@ export default function AdminBoletaDetalle() {
         <BoletaDetalle
           pedido={pedido}
           titulo={`Boleta ${pedido.codigoBoleta}`}
-          subtitulo={`Compra de ${pedido.cliente.nombre} ${pedido.cliente.apellidos}`}
+          subtitulo={`Compra de ${pedido.cliente?.nombre ?? ""} ${pedido.cliente?.apellidos ?? ""}`}
         />
       ) : (
         <div className="alert alert-warning mb-0">

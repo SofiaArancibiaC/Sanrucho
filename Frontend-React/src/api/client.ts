@@ -7,6 +7,16 @@
 
 import axios, { AxiosError, type AxiosInstance } from "axios";
 
+/** Forma estándar de una respuesta paginada del backend (PageResponse<T>). */
+export interface PageResponse<T> {
+  content: T[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+}
+
 /** Clave donde se guarda el JWT en localStorage. */
 export const TOKEN_KEY = "sanrucho.token";
 

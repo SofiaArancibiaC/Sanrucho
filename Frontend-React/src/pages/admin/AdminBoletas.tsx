@@ -21,7 +21,7 @@ import {
 } from "../../utils/pedidos";
 
 export default function AdminBoletas() {
-  const { pedidos, aprobados, totalVendido } = usePedidos();
+  const { pedidos, aprobados, totalVendido, error } = usePedidos();
 
   const [texto, setTexto] = useState(FILTROS_PEDIDOS_VACIOS.texto);
   const [estado, setEstado] = useState<FiltroEstadoPago>(
@@ -56,9 +56,9 @@ export default function AdminBoletas() {
       celda: (p) => (
         <div>
           <strong>
-            {p.cliente.nombre} {p.cliente.apellidos}
+            {p.cliente?.nombre} {p.cliente?.apellidos}
           </strong>
-          <div className="small text-muted">{p.cliente.correo}</div>
+          <div className="small text-muted">{p.cliente?.correo}</div>
         </div>
       ),
     },
@@ -102,6 +102,13 @@ export default function AdminBoletas() {
 
   return (
     <>
+      {error && (
+        <div className="alert alert-warning mb-3">
+          No se pudieron cargar las boletas del backend ({error}). Revisa que el
+          gateway esté encendido en <code>http://localhost:9000</code>.
+        </div>
+      )}
+
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 pb-2 border-bottom">
         <div>
           <h1 className="fw-bold m-0" style={{ color: "var(--primary)" }}>

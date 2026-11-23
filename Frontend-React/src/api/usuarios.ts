@@ -1,16 +1,46 @@
-import client from "./client";
-import { setToken } from "./client";
+// ============================================================
+// api/usuarios.ts
+// Llamadas a ms-usuarios. Los tipos reflejan los DTOs reales del
+// backend (UsuarioResponse / AuthResponse), que usan nombres en
+// inglés (email, idUsuario, ...).
+// ============================================================
+
+import client, { setToken, type PageResponse } from "./client";
+
+export interface UsuarioBackend {
+  idUsuario: number;
+  run?: string;
+  nombre?: string;
+  apellidos?: string;
+  email?: string;
+  fechaNacimiento?: string;
+  regionId?: number;
+  comunaId?: number;
+  direccion?: string;
+  telefono?: string;
+  estado?: string;
+  rol?: string;
+}
+
+export interface AuthResponseBackend {
+  token: string;
+  usuario: UsuarioBackend;
+}
 
 export const authApi = {
   login: (email: string, password: string) =>
-    client.post<{ token: string }>("/api/v1/auth/login", { email, password }),
-  register: (data: unknown) => client.post("/api/v1/auth/register", data),
+    client.post<AuthResponseBackend>("/api/v1/auth/login", { email, password }),
+  register: (data: unknown) =>
+    client.post<AuthResponseBackend>("/api/v1/auth/register", data),
 };
 
 export const usuariosApi = {
-  listar: (params?: { page?: number; size?: number }) => client.get("/api/v1/usuarios", { params }),
-  obtener: (id: number) => client.get(`/api/v1/usuarios/${id}`),
-  porRun: (run: string) => client.get(`/api/v1/usuarios/run/${run}`),
+  listar: (params?: { page?: number; size?: number }) =>
+    client.get<PageResponse<UsuarioBackend>>("/api/v1/usuarios", { params }),
+  obtener: (id: number) =>
+    client.get<UsuarioBackend>(`/api/v1/usuarios/${id}`),
+  porRun: (run: string) =>
+    client.get<UsuarioBackend>(`/api/v1/usuarios/run/${run}`),
 };
 
 export { setToken };
