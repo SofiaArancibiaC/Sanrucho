@@ -1,36 +1,53 @@
 // ============================================================
-// hooks/useUsuarios.ts
-// Reemplaza el mantenedor administrativo de usuarios de usuarios.js.
+// hooks/useUsuarios.ts (versión Axios)
 // ============================================================
 
+import { useCallback, useEffect, useState } from "react";
 import type { Usuario } from "../types";
+import { usuariosApi } from "../api/usuarios";
 import { SANRUCHO_KEYS } from "../storage/claves";
 import { useColeccion } from "../storage/useColeccion";
 
 export function useUsuarios() {
-  const { datos, guardar } = useColeccion<Usuario>(SANRUCHO_KEYS.usuarios);
+  const [datos, setDatos] = useState<Usuario[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const recargar = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await usuariosApi.listar({ size: 1000 });
+      setDatos(res.data?.content ?? res.data ?? []);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    recargar();
+  }, [recargar]);
+
+  const roles = useColeccion<{ id: number; nombre: string }>(SANRUCHO_KEYS.roles);
 
   const obtenerPorRun = (run: string): Usuario | undefined =>
     datos.find((u) => u.run === run);
 
-  const guardarUsuario = (usuario: Usuario): void => {
-    const indice = datos.findIndex((u) => u.run === usuario.run);
-    if (indice === -1) {
-      guardar([...datos, usuario]);
-    } else {
-      const copia = [...datos];
-      copia[indice] = usuario;
-      guardar(copia);
-    }
+  const guardarUsuario = async (usuario: Usuario): Promise<void> => {
+    // Backend usuario CRUD no expone update por run en esta rama; recarga local.
+    setDatos((prev) => {
+      const i = prev.findIndex((u) => u.run === usuario.run);
+      if (i === -1) return [...prev, usuario];
+      const c = [...prev];
+      c[i] = usuario;
+      return c;
+    });
   };
 
-  const eliminarUsuario = (run: string): void => {
-    guardar(datos.filter((u) => u.run !== run));
+  const eliminarUsuario = async (run: string): Promise<void> => {
+    setDatos((prev) => prev.filter((u) => u.run !== run));
   };
 
-  const roles = useColeccion<{ id: number; nombre: string }>(SANRUCHO_KEYS.roles);
   const obtenerNombreRol = (rolId: number): string =>
     roles.datos.find((r) => r.id === rolId)?.nombre ?? "";
 
-  return { datos, guardarUsuario, eliminarUsuario, obtenerPorRun, obtenerNombreRol };
+  return { datos, loading, recargar, guardarUsuario, eliminarUsuario, obtenerPorRun, obtenerNombreRol };
 }

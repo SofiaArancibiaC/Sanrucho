@@ -20,9 +20,16 @@ export default function ProductCard({ producto }: { producto: Producto }) {
     producto.stockCritico != null &&
     producto.stock <= producto.stockCritico;
 
+  const precioMostrar = producto.oferta && producto.precioOferta ? producto.precioOferta : producto.precio;
+
   return (
     <div className="col-12 col-sm-6 col-lg-4 mb-4">
-      <div className="card h-100 shadow-sm producto-card">
+      <div className="card h-100 shadow-sm producto-card position-relative">
+        {producto.oferta && (
+          <span className="badge bg-danger position-absolute top-0 end-0 m-2">
+            Oferta
+          </span>
+        )}
         <img
           src={rutaImagenProducto(producto)}
           className="card-img-top producto-img"
@@ -39,9 +46,16 @@ export default function ProductCard({ producto }: { producto: Producto }) {
           </p>
 
           <div className="d-flex justify-content-between align-items-center mb-2">
-            <span className="fs-5 fw-bold text-accent">
-              {formatearPrecio(producto.precio)}
-            </span>
+            <div>
+              {producto.oferta && producto.precioOferta && (
+                <span className="text-muted text-decoration-line-through small me-2">
+                  {formatearPrecio(producto.precio)}
+                </span>
+              )}
+              <span className="fs-5 fw-bold text-accent">
+                {formatearPrecio(precioMostrar)}
+              </span>
+            </div>
             {agotado ? (
               <span className="badge text-bg-danger">Agotado</span>
             ) : stockBajo ? (

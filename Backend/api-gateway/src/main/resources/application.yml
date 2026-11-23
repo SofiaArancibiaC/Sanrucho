@@ -8,22 +8,6 @@ spring:
     gateway:
       server:
         webflux:
-          globalcors:
-            cors-configurations:
-              '[/**]':
-                allowedOriginPatterns: "*"
-                allowedMethods:
-                  - GET
-                  - POST
-                  - PUT
-                  - PATCH
-                  - DELETE
-                  - OPTIONS
-                allowedHeaders: "*"
-                exposedHeaders:
-                  - Authorization
-                  - Location
-                allowCredentials: true
           routes:
           # 1. ms-catalogo
           - id: ms-catalogo
@@ -73,7 +57,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://eureka-server:8761/eureka
+      defaultZone: http://localhost:8761/eureka
 
 management:
   endpoints:

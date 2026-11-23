@@ -62,9 +62,9 @@ public class SecurityConfig {
                                 "/v3/api-docs.yaml",
                                 "/webjars/**").permitAll()
 
-                        // Lectura: cualquier rol autenticado
+                        // Lectura pública: catálogo y categorías visibles sin login
                         .requestMatchers(HttpMethod.GET, "/api/v1/productos/**", "/api/v1/categorias/**")
-                            .hasAnyRole("Dueño", "Admin", "Cliente")
+                            .permitAll()
 
                         // Ajuste de stock: usado por ms-pedidos durante el checkout
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/productos/*/stock")

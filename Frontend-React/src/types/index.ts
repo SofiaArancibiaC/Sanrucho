@@ -46,6 +46,7 @@ export interface Usuario {
 export type Sesion = Usuario;
 
 export interface Producto {
+  id?: number;
   codigo: string;
   nombre: string;
   descripcion: string;
