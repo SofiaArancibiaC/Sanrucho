@@ -26,10 +26,10 @@ export function validarPassword(password: string): boolean {
   );
 }
 
-/** Valida un RUN chileno sin puntos ni guion (ej: 123456785) con el algoritmo módulo 11. */
+/** Valida un RUN chileno con o sin puntos/guión (ej: 123456785 o 12.345.678-5) con módulo 11. */
 export function validarRun(run: string): boolean {
   if (!run) return false;
-  run = run.toUpperCase().trim();
+  run = run.toUpperCase().replace(/[.\-\s]/g, "").trim();
   if (run.length < 7 || run.length > 9) return false;
 
   const cuerpo = run.slice(0, -1);

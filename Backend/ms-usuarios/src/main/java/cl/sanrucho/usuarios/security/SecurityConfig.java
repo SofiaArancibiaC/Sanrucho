@@ -37,6 +37,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/v1/productos/**", "/api/v1/categorias/**")
                     .hasAnyRole("DUENO", "ADMIN", "CLIENTE")
 
+                // Usuarios: admin puede ver el listado (para reportes), solo dueño edita
+                .requestMatchers(HttpMethod.GET, "/api/v1/usuarios", "/api/v1/usuarios/**")
+                    .hasAnyRole("DUENO", "ADMIN")
+
                 // Órdenes: el admin solo lectura
                 .requestMatchers(HttpMethod.GET, "/api/v1/boletas/**")
                     .hasAnyRole("DUENO", "ADMIN")

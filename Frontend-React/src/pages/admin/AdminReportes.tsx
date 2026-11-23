@@ -2,29 +2,29 @@ import { Container, Card, Row, Col, Button, Table } from "react-bootstrap";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useRef } from "react";
-import { leerColeccion } from "../../storage/useColeccion";
-import { SANRUCHO_KEYS } from "../../storage/claves";
-import type { Producto, Categoria, Usuario, Pedido } from "../../types";
+import { usePedidos } from "../../hooks/usePedidos";
+import { useProductos } from "../../hooks/useProductos";
+import { useUsuarios } from "../../hooks/useUsuarios";
+import { useTablasMaestras } from "../../hooks/useTablasMaestras";
 
 export default function AdminReportes() {
   const chartRef = useRef<HTMLDivElement>(null);
-  const usuarios = leerColeccion<Usuario>(SANRUCHO_KEYS.usuarios);
-  const productos = leerColeccion<Producto>(SANRUCHO_KEYS.productos);
-  const categorias = leerColeccion<Categoria>(SANRUCHO_KEYS.categorias);
+  // Los datos viven en el backend, no en localStorage.
+  const { datos: usuarios } = useUsuarios();
+  const { datos: productos } = useProductos();
+  const { categorias } = useTablasMaestras();
+  const { pedidos: pedidosLista, aprobados } = usePedidos();
 
   const clientesRegistrados = usuarios.filter((u) => u.rolId === 3).length;
   const porCategoria = categorias.map((c) => ({
     nombre: c.nombre,
-    count: productos.filter((p) => p.categoriaId === c.id).length,
+    count: productos.filter((p) => Number(p.categoriaId) === Number(c.id)).length,
   }));
   const stockCritico = productos.filter((p) => p.stock <= (p.stockCritico ?? 0));
   const totalProductos = productos.length;
   const stockTotal = productos.reduce((a, p) => a + (p.stock ?? 0), 0);
-  const pedidosLista = leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos);
   const pedidos = pedidosLista.length;
-  const ganancias = pedidosLista
-    .filter((p) => p.estadoPago === "aprobado")
-    .reduce((a, p) => a + (p.total ?? 0), 0);
+  const ganancias = aprobados.reduce((a, p) => a + (p.total ?? 0), 0);
 
   // Ganancias agrupadas por mes (YYYY-MM), incluyendo los últimos 6 meses aunque tengan 0
   const gananciasPorMesMap = new Map<string, number>();
@@ -34,9 +34,7 @@ export default function AdminReportes() {
     const mes = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
     gananciasPorMesMap.set(mes, 0);
   }
-  pedidosLista
-    .filter((p) => p.estadoPago === "aprobado")
-    .forEach((p) => {
+  aprobados.forEach((p) => {
       const mes = (p.fechaCreacion || "").slice(0, 7);
       if (mes && gananciasPorMesMap.has(mes)) {
         gananciasPorMesMap.set(mes, (gananciasPorMesMap.get(mes) ?? 0) + (p.total ?? 0));

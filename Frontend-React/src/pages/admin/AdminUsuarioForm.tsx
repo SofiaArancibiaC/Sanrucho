@@ -62,12 +62,17 @@ export default function AdminUsuarioForm() {
   const guardar = async (e: FormEvent) => {
     e.preventDefault();
 
-    const runLimpio = run.toUpperCase().trim();
+    // El backend guarda RUN con guion (ej: 11111111-1), así que se valida
+    // quitando puntos y guion, pero al editar se conserva el formato original.
+    const runLimpio = run.toUpperCase().replace(/[.\-\s]/g, "").trim();
     if (!validarRun(runLimpio)) {
-      await alertaError("RUN inválido", "Revisa el RUN (sin puntos ni guion).");
+      await alertaError("RUN inválido", "Revisa el RUN (por ejemplo: 11111111-1).");
       return;
     }
-    const duplicado = datos.some((u) => u.run === runLimpio && u.run !== runOriginal);
+    const normalizado = (valor: string) => valor.toUpperCase().replace(/[.\-\s]/g, "");
+    const duplicado = datos.some(
+      (u) => normalizado(u.run) === runLimpio && u.run !== runOriginal
+    );
     if (duplicado) {
       await alertaError("RUN duplicado", "Ya existe un usuario con ese RUN.");
       return;
@@ -107,7 +112,7 @@ export default function AdminUsuarioForm() {
 
     const usuario: Usuario = {
       idUsuario: existente?.idUsuario,
-      run: runLimpio,
+      run: enEdicion ? (existente?.run ?? runLimpio) : runLimpio,
       nombre: nombre.trim(),
       apellidos: apellidos.trim(),
       correo: correo.trim(),
@@ -143,7 +148,7 @@ export default function AdminUsuarioForm() {
         <div className="row g-3">
           <div className="col-md-4">
             <label htmlFor="runUsuario" className="form-label">
-              RUN (sin puntos ni guion)
+              RUN (con o sin guion)
             </label>
             <input
               type="text"
