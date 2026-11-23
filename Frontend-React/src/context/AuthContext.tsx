@@ -76,10 +76,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const res = await authApi.login(correo, password);
       const token = res.data?.token;
+      const u = res.data?.usuario;
       if (!token) return { ok: false, mensaje: "Respuesta sin token." };
       setToken(token);
-      const s = decodificarToken(token);
-      if (!s) return { ok: false, mensaje: "Token inválido." };
+      if (!u) return { ok: false, mensaje: "Respuesta sin usuario." };
+      const rolBackend = (u.rol as string) ?? "CLIENTE";
+      const rolFrontend = rolBackend === "DUENO" ? "Dueño" : rolBackend === "ADMIN" ? "Admin" : "Cliente";
+      const rolId = rolBackend === "DUENO" ? 1 : rolBackend === "ADMIN" ? 2 : 3;
+      const s = {
+        idUsuario: u.idUsuario,
+        run: u.run ?? "",
+        nombre: u.nombre ?? "",
+        apellidos: u.apellidos ?? "",
+        correo: u.email ?? "",
+        password: "",
+        fechaNacimiento: u.fechaNacimiento ?? "",
+        rolId,
+        regionId: u.regionId ?? 1,
+        comunaId: u.comunaId ?? 1,
+        direccion: u.direccion ?? "",
+        estado: (u.estado as string) ?? "Activo",
+        rol: rolFrontend,
+      } as Sesion & { rol?: string };
       localStorage.setItem(SANRUCHO_KEYS.sesion, JSON.stringify(s));
       setSesion(s);
       return { ok: true, mensaje: `¡Hola de nuevo, ${s.nombre}!`, usuario: s };
@@ -90,10 +108,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const registrar = useCallback(async (datos: DatosRegistro): Promise<ResultadoAuth> => {
     try {
-      await authApi.register(datos);
+      const res = await authApi.register({ run: datos.correo, nombre: datos.nombre, apellidos: datos.apellidos, email: datos.correo, password: datos.password });
+      const token = res.data?.token;
+      const u = res.data?.usuario;
+      if (token) setToken(token);
+      if (u) {
+        const rolBackend = (u.rol as string) ?? "CLIENTE";
+        const rolFrontend = rolBackend === "DUENO" ? "Dueño" : rolBackend === "ADMIN" ? "Admin" : "Cliente";
+        const rolId = rolBackend === "DUENO" ? 1 : rolBackend === "ADMIN" ? 2 : 3;
+        const s = {
+          idUsuario: u.idUsuario,
+        run: u.run ?? "",
+          nombre: u.nombre ?? "",
+          apellidos: u.apellidos ?? "",
+          correo: u.email ?? "",
+          password: "",
+          fechaNacimiento: u.fechaNacimiento ?? "",
+          rolId,
+          regionId: u.regionId ?? 1,
+          comunaId: u.comunaId ?? 1,
+          direccion: u.direccion ?? "",
+          estado: (u.estado as string) ?? "Activo",
+          rol: rolFrontend,
+        } as Sesion & { rol?: string };
+        localStorage.setItem(SANRUCHO_KEYS.sesion, JSON.stringify(s));
+        setSesion(s);
+      }
       return { ok: true, mensaje: "Registro exitoso." };
     } catch (e) {
-      return { ok: false, mensaje: (e as Error).message || "Error al registrar." };
+      const err = e as { response?: { data?: { message?: string } }; message?: string };
+      return { ok: false, mensaje: err.response?.data?.message || err.message || "Error al registrar." };
     }
   }, []);
 

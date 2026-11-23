@@ -86,6 +86,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       nuevoCarrito = [
         ...carrito,
         {
+          id: producto.id,
           codigo: producto.codigo,
           nombre: producto.nombre,
           precio: producto.precioOferta && producto.oferta ? producto.precioOferta : producto.precio,

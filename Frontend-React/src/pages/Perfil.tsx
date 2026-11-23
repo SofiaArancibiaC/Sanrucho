@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Card, Form, Button, Row, Col, Alert } from "react-bootstrap";
 import { useAuth, esAdministrativo } from "../context/AuthContext";
 import { useTablasMaestras } from "../hooks/useTablasMaestras";
 import { leerColeccion, escribirColeccion } from "../storage/useColeccion";
+import { pedidosApi } from "../api/pedidos";
 import { SANRUCHO_KEYS } from "../storage/claves";
 import type { Usuario, Pedido } from "../types";
 
@@ -15,6 +16,19 @@ export default function Perfil() {
 
   const [form, setForm] = useState<Usuario | null>(sesion);
   const [guardado, setGuardado] = useState(false);
+  const [misPedidos, setMisPedidos] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (sesion?.idUsuario) {
+      pedidosApi.listar({ idUsuario: sesion.idUsuario })
+        .then((res) => setMisPedidos(res.data?.content ?? res.data ?? []))
+        .catch(() => setMisPedidos([]));
+    } else {
+      setMisPedidos(leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos).filter(
+        (p) => p.cliente?.correo === sesion?.correo
+      ));
+    }
+  }, [sesion]);
 
   if (!sesion || !form) {
     return (
@@ -25,10 +39,6 @@ export default function Perfil() {
   }
 
   const comunasFiltradas = comunas.filter((c) => c.regionId === form.regionId);
-
-  const misPedidos = leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos).filter(
-    (p) => p.cliente?.correo === sesion.correo
-  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -55,25 +65,25 @@ export default function Perfil() {
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>RUT / RUN</Form.Label>
-                  <Form.Control value={form.run} disabled />
+                  <Form.Control name="run" value={form.run} onChange={handleChange} />
                 </Form.Group>
               </Col>
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Nombre</Form.Label>
-                  <Form.Control value={form.nombre} disabled />
+                  <Form.Control name="nombre" value={form.nombre} onChange={handleChange} />
                 </Form.Group>
               </Col>
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Apellidos</Form.Label>
-                  <Form.Control name="apellidos" value={form.apellidos} disabled />
+                  <Form.Control name="apellidos" value={form.apellidos} onChange={handleChange} />
                 </Form.Group>
               </Col>
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Correo</Form.Label>
-                  <Form.Control value={form.correo} disabled />
+                  <Form.Control name="correo" value={form.correo} onChange={handleChange} />
                 </Form.Group>
               </Col>
               <Col md={6}>

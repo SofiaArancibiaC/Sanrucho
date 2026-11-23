@@ -85,7 +85,7 @@ export function filtrarPedidos(
 
       // Las fechas se guardan como ISO (YYYY-MM-DD...), por lo que los
       // primeros 10 caracteres permiten comparar solo el día.
-      const fecha = pedido.fechaCreacion.slice(0, 10);
+      const fecha = (pedido.fechaCreacion ?? "").slice(0, 10);
       if (filtros.desde && fecha < filtros.desde) return false;
       if (filtros.hasta && fecha > filtros.hasta) return false;
 
