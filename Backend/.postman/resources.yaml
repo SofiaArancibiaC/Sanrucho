@@ -2,6 +2,10 @@
 workspace:
   id: 15e5b035-159a-4c70-8d7b-d5539102bf44
 
+cloudResources:
+  collections:
+    ../postman/collections/Sanrucho Backend: 32080058-93bb-4cf4-a84b-2b9727109f47
+
 # All resources in the `postman/` folder are automatically registered in Local View.
 # Point to additional files outside the `postman/` folder to register them individually. Example:
 #localResources:

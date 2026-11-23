@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/productos/1"
+method: PUT
+headers:
+  Content-Type: application/json
+  Authorization: "{{bearer_token_09xd}}"
+body:
+  type: text
+  content: |-
+    {
+      "codigo": "PROD-001",
+      "idCategoria": 1,
+      "nombre": "Laptop",
+      "descripcion": "Laptop gaming",
+      "precio": 1000,
+      "stock": 10,
+      "stockCritico": 2
+    }
+order: 5000

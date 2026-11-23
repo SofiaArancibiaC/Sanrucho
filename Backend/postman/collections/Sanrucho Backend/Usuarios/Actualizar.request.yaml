@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/usuarios/1"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "nombre": "Juan",
+      "apellidos": "Perez",
+      "email": "juan@sanrucho.cl",
+      "password": "123456"
+    }
+order: 5000
