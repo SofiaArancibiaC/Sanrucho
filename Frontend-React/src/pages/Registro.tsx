@@ -50,7 +50,7 @@ export default function Registro() {
       return;
     }
 
-    const resultado = registrar({ nombre, apellidos, correo: email, password });
+    const resultado = await registrar({ nombre, apellidos, correo: email, password });
     if (!resultado.ok) {
       await alertaError("No se pudo registrar", resultado.mensaje);
       return;

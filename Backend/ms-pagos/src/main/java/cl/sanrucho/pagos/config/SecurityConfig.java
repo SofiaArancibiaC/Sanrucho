@@ -65,15 +65,15 @@ public class SecurityConfig {
 
                         // Iniciar pago: clientes y administracion
                         .requestMatchers(HttpMethod.POST, "/api/v1/pagos/**")
-                            .hasAnyRole("Cliente", "Admin", "Dueño")
+                            .hasAnyRole("CLIENTE", "ADMIN", "DUENO")
 
                         // Aprobar/rechazar/anular: administracion
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/pagos/*/estado")
-                            .hasAnyRole("Admin", "Dueño")
+                            .hasAnyRole("ADMIN", "DUENO")
 
                         // Eliminacion: administracion
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/pagos/**")
-                            .hasAnyRole("Admin", "Dueño")
+                            .hasAnyRole("ADMIN", "DUENO")
 
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

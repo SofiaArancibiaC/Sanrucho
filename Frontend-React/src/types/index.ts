@@ -28,6 +28,7 @@ export interface Comuna {
 }
 
 export interface Usuario {
+  idUsuario?: number;
   run: string;
   nombre: string;
   apellidos: string;
@@ -46,6 +47,7 @@ export interface Usuario {
 export type Sesion = Usuario;
 
 export interface Producto {
+  id?: number;
   codigo: string;
   nombre: string;
   descripcion: string;
@@ -62,6 +64,7 @@ export interface Producto {
 
 // El carrito guarda una copia reducida del producto + la cantidad.
 export interface ItemCarrito {
+  id?: number;
   codigo: string;
   nombre: string;
   precio: number;

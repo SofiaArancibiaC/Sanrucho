@@ -9,6 +9,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -27,12 +31,16 @@ public class SecurityConfig {
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                // Necesario para el healthcheck /actuator/health de Docker.
-                .requestMatchers("/actuator/**", "/error").permitAll()
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
 
                 // Tienda (cliente, admin y dueño pueden ver productos)
                 .requestMatchers(HttpMethod.GET, "/api/v1/productos/**", "/api/v1/categorias/**")
+                    .hasAnyRole("DUENO", "ADMIN", "CLIENTE")
+
+                // Usuarios: lectura para todos los roles autenticados.
+                // ms-pedidos valida la existencia del usuario via Feign con el
+                // token del cliente al crear un pedido; solo dueño edita.
+                .requestMatchers(HttpMethod.GET, "/api/v1/usuarios", "/api/v1/usuarios/**")
                     .hasAnyRole("DUENO", "ADMIN", "CLIENTE")
 
                 // Órdenes: el admin solo lectura
@@ -53,4 +61,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

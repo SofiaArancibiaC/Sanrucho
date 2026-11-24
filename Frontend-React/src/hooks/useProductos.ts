@@ -1,36 +1,80 @@
 // ============================================================
-// hooks/useProductos.ts
-// Reemplaza obtenerProductos / obtenerProductoPorCodigo /
-// guardarProducto / eliminarProducto de productos.js.
+// hooks/useProductos.ts  (versión Axios + adaptador del backend)
 // ============================================================
 
+import { useCallback, useEffect, useState } from "react";
 import type { Producto } from "../types";
-import { SANRUCHO_KEYS } from "../storage/claves";
-import { useColeccion } from "../storage/useColeccion";
+import { productosApi } from "../api/productos";
+
+/** Convierte el ProductoResponse del backend al Producto que usa la UI. */
+function adaptarProducto(p: Producto): Producto {
+  return {
+    ...p,
+    // El backend usa idCategoria/imagenUrl; la UI usa categoriaId/imagen.
+    categoriaId: (p as Producto & { idCategoria?: number }).idCategoria ?? p.categoriaId,
+    imagen: p.imagen ?? (p as Producto & { imagenUrl?: string }).imagenUrl ?? "",
+    precio: Number(p.precio ?? 0),
+    stock: Number(p.stock ?? 0),
+    estado: p.estado ?? "Activo",
+  };
+}
 
 export function useProductos() {
-  const { datos, guardar } = useColeccion<Producto>(SANRUCHO_KEYS.productos);
+  const [datos, setDatos] = useState<Producto[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const recargar = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await productosApi.listar({ size: 1000 });
+      const raw = res.data?.content ?? [];
+      setDatos(raw.map(adaptarProducto));
+    } catch (e) {
+      setDatos([]);
+      setError((e as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    recargar();
+  }, [recargar]);
 
   const obtenerPorCodigo = (codigo: string): Producto | undefined =>
     datos.find((p) => p.codigo === codigo);
 
-  const guardarProducto = (producto: Producto): void => {
-    const indice = datos.findIndex((p) => p.codigo === producto.codigo);
-    if (indice === -1) {
-      guardar([...datos, producto]);
+  const guardarProducto = async (producto: Producto): Promise<void> => {
+    // El backend espera idCategoria / imagenUrl y stockCritico obligatorio.
+    const payload = {
+      codigo: producto.codigo,
+      idCategoria: producto.categoriaId,
+      nombre: producto.nombre,
+      descripcion: producto.descripcion ?? "",
+      precio: Number(producto.precio),
+      stock: Number(producto.stock),
+      stockCritico: Number(producto.stockCritico ?? 0),
+      imagenUrl: producto.imagen ?? "",
+      estado: producto.estado,
+    };
+
+    if (producto.id) {
+      await productosApi.actualizar(Number(producto.id), payload);
     } else {
-      const copia = [...datos];
-      copia[indice] = producto;
-      guardar(copia);
+      await productosApi.crear(payload);
     }
+    await recargar();
   };
 
-  const eliminarProducto = (codigo: string): void => {
-    guardar(datos.filter((p) => p.codigo !== codigo));
+  const eliminarProducto = async (codigo: string): Promise<void> => {
+    const p = datos.find((x) => x.codigo === codigo);
+    if (p?.id) await productosApi.eliminar(Number(p.id));
+    await recargar();
   };
 
-  /** Productos con estado "Activo" (los que se muestran al público). */
   const activos = datos.filter((p) => p.estado === "Activo");
 
-  return { datos, activos, guardarProducto, eliminarProducto, obtenerPorCodigo };
+  return { datos, activos, loading, error, recargar, guardarProducto, eliminarProducto, obtenerPorCodigo };
 }

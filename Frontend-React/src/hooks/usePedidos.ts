@@ -1,38 +1,52 @@
 // ============================================================
-// hooks/usePedidos.ts
-// Historial de pedidos/boletas guardado en localStorage.
-// Lo alimenta Checkout y lo consume el panel de administración.
+// hooks/usePedidos.ts (versión Axios + adaptadores del backend)
 // ============================================================
 
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Pedido } from "../types";
-import { SANRUCHO_KEYS } from "../storage/claves";
-import { useColeccion } from "../storage/useColeccion";
+import { pedidosApi } from "../api/pedidos";
 
 export function usePedidos() {
-  const { datos, guardar } = useColeccion<Pedido>(SANRUCHO_KEYS.pedidos);
+  const [datos, setDatos] = useState<Pedido[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const recargar = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      setDatos(await pedidosApi.listarAdaptados({ size: 1000 }));
+    } catch (e) {
+      setDatos([]);
+      setError((e as Error).message || "No se pudieron cargar los pedidos.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    recargar();
+  }, [recargar]);
 
   const pedidos = useMemo(
-    () =>
-      [...datos].sort((a, b) =>
-        b.fechaCreacion.localeCompare(a.fechaCreacion)
-      ),
+    () => [...datos].sort((a, b) =>
+      String(b.fechaCreacion ?? "").localeCompare(String(a.fechaCreacion ?? ""))
+    ),
     [datos]
   );
+
+  const obtenerPorId = (id: string): Pedido | undefined =>
+    pedidos.find((p) => String(p.id) === id) ??
+    pedidos.find((p) => p.codigoBoleta === id);
 
   const aprobados = useMemo(
     () => pedidos.filter((p) => p.estadoPago === "aprobado"),
     [pedidos]
   );
-
   const totalVendido = useMemo(
-    () => aprobados.reduce((total, p) => total + p.total, 0),
+    () => aprobados.reduce((t, p) => t + (p.total ?? 0), 0),
     [aprobados]
   );
 
-  /** Busca por id interno o por el código de boleta visible al cliente. */
-  const obtenerPorId = (id: string): Pedido | undefined =>
-    pedidos.find((p) => p.id === id) ?? pedidos.find((p) => p.codigoBoleta === id);
-
-  return { pedidos, aprobados, totalVendido, obtenerPorId, guardar };
+  return { pedidos, aprobados, totalVendido, loading, error, recargar, obtenerPorId, guardar: recargar };
 }

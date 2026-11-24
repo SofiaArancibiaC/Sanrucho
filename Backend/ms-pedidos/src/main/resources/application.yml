@@ -28,8 +28,8 @@ spring:
 # JWT (solo validacion; el token lo emite ms-usuarios)
 # ------------------------------------------------------------
 jwt:
-  secret: c2FucnVjaG8tdGllbmRhLXNlY3JldC1rZXktMjAyNi1qd3Qtc2VjdXJpdHktaHMyNTY=
-  expiration-ms: 3600000
+  secret: c2FucnVjaG8tc3VwZXItc2VjcmV0LWtleS1wYXJhLWp3dC0yMDI2LWNhbWJpYXItZW4tcHJvZA==
+  expiration-ms: 86400000
 
 # ------------------------------------------------------------
 # Eureka

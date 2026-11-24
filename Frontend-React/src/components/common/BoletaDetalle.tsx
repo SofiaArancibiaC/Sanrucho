@@ -24,9 +24,9 @@ export default function BoletaDetalle({
   titulo = "Resumen de Compra",
   subtitulo = "Detalle completo de tu compra",
 }: Props) {
-  const fechaDespacho = pedido.cliente.fechaDespacho
+  const fechaDespacho = pedido.cliente?.fechaDespacho
     ? new Date(
-        pedido.cliente.fechaDespacho + "T00:00:00"
+        pedido.cliente?.fechaDespacho + "T00:00:00"
       ).toLocaleDateString("es-CL")
     : "-";
 
@@ -78,7 +78,7 @@ export default function BoletaDetalle({
                 </tr>
               </thead>
               <tbody>
-                {pedido.items.map((item) => (
+                {(pedido.items ?? []).map((item) => (
                   <tr key={item.codigo}>
                     <td>
                       <div className="carrito-producto">
@@ -137,14 +137,14 @@ export default function BoletaDetalle({
               <i className="bi bi-person-circle"></i> Datos del cliente
             </h2>
             <div className="resumen-dato">
-              <strong>Nombre completo:</strong> {pedido.cliente.nombre}{" "}
-              {pedido.cliente.apellidos}
+              <strong>Nombre completo:</strong> {pedido.cliente?.nombre}{" "}
+              {pedido.cliente?.apellidos}
             </div>
             <div className="resumen-dato">
-              <strong>Correo electrónico:</strong> {pedido.cliente.correo}
+              <strong>Correo electrónico:</strong> {pedido.cliente?.correo}
             </div>
             <div className="resumen-dato">
-              <strong>Teléfono:</strong> {pedido.cliente.telefono}
+              <strong>Teléfono:</strong> {pedido.cliente?.telefono}
             </div>
           </div>
 
@@ -154,19 +154,19 @@ export default function BoletaDetalle({
             </h2>
             <div className="resumen-dato">
               <strong>Dirección de despacho:</strong>{" "}
-              {pedido.cliente.direccion}
+              {pedido.cliente?.direccion}
             </div>
             <div className="resumen-dato">
               <strong>Día de despacho:</strong> {fechaDespacho}
             </div>
             <div className="resumen-dato">
               <strong>Hora de despacho:</strong>{" "}
-              {pedido.cliente.horaDespacho}
+              {pedido.cliente?.horaDespacho}
             </div>
-            {pedido.cliente.observaciones && (
+            {pedido.cliente?.observaciones && (
               <div className="resumen-dato">
                 <strong>Observaciones:</strong>{" "}
-                {pedido.cliente.observaciones}
+                {pedido.cliente?.observaciones}
               </div>
             )}
           </div>

@@ -5,7 +5,7 @@
 // se recargan las comunas (useTablasMaestras.comunasDeRegion).
 // ============================================================
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useUsuarios } from "../../hooks/useUsuarios";
@@ -36,6 +36,22 @@ export default function AdminUsuarioForm() {
   const [direccion, setDireccion] = useState(existente?.direccion ?? "");
   const [estado, setEstado] = useState<Usuario["estado"]>(existente?.estado ?? "Activo");
 
+  // Los usuarios llegan del backend de forma asíncrona: al aparecer el
+  // solicitado se llena el formulario con sus datos reales.
+  useEffect(() => {
+    if (!existente) return;
+    setRun(existente.run ?? "");
+    setNombre(existente.nombre ?? "");
+    setApellidos(existente.apellidos ?? "");
+    setCorreo(existente.correo ?? "");
+    setFechaNacimiento(existente.fechaNacimiento ?? "");
+    setRolId(existente.rolId ? String(existente.rolId) : "");
+    setRegionId(existente.regionId ? String(existente.regionId) : "");
+    setComunaId(existente.comunaId ? String(existente.comunaId) : "");
+    setDireccion(existente.direccion ?? "");
+    setEstado(existente.estado ?? "Activo");
+  }, [existente]);
+
   const comunas = regionId ? comunasDeRegion(Number(regionId)) : [];
 
   const cambiarRegion = (valor: string) => {
@@ -46,12 +62,17 @@ export default function AdminUsuarioForm() {
   const guardar = async (e: FormEvent) => {
     e.preventDefault();
 
-    const runLimpio = run.toUpperCase().trim();
+    // El backend guarda RUN con guion (ej: 11111111-1), así que se valida
+    // quitando puntos y guion, pero al editar se conserva el formato original.
+    const runLimpio = run.toUpperCase().replace(/[.\-\s]/g, "").trim();
     if (!validarRun(runLimpio)) {
-      await alertaError("RUN inválido", "Revisa el RUN (sin puntos ni guion).");
+      await alertaError("RUN inválido", "Revisa el RUN (por ejemplo: 11111111-1).");
       return;
     }
-    const duplicado = datos.some((u) => u.run === runLimpio && u.run !== runOriginal);
+    const normalizado = (valor: string) => valor.toUpperCase().replace(/[.\-\s]/g, "");
+    const duplicado = datos.some(
+      (u) => normalizado(u.run) === runLimpio && u.run !== runOriginal
+    );
     if (duplicado) {
       await alertaError("RUN duplicado", "Ya existe un usuario con ese RUN.");
       return;
@@ -90,7 +111,8 @@ export default function AdminUsuarioForm() {
     }
 
     const usuario: Usuario = {
-      run: runLimpio,
+      idUsuario: existente?.idUsuario,
+      run: enEdicion ? (existente?.run ?? runLimpio) : runLimpio,
       nombre: nombre.trim(),
       apellidos: apellidos.trim(),
       correo: correo.trim(),
@@ -103,7 +125,15 @@ export default function AdminUsuarioForm() {
       estado,
     };
 
-    guardarUsuario(usuario);
+    try {
+      await guardarUsuario(usuario);
+    } catch (e) {
+      await alertaError(
+        "No se pudo guardar",
+        (e as Error).message || "Revisa los datos e inténtalo nuevamente."
+      );
+      return;
+    }
     await alertaExito("Correcto", "Usuario guardado correctamente.");
     navigate("/admin/usuarios");
   };
@@ -118,7 +148,7 @@ export default function AdminUsuarioForm() {
         <div className="row g-3">
           <div className="col-md-4">
             <label htmlFor="runUsuario" className="form-label">
-              RUN (sin puntos ni guion)
+              RUN (con o sin guion)
             </label>
             <input
               type="text"

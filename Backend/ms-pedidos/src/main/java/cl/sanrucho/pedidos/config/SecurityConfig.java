@@ -40,7 +40,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handling -> handling
@@ -65,15 +64,15 @@ public class SecurityConfig {
 
                         // Crear pedido: clientes y administracion
                         .requestMatchers(HttpMethod.POST, "/api/v1/pedidos/**")
-                            .hasAnyRole("Cliente", "Admin", "Dueño")
+                            .hasAnyRole("CLIENTE", "ADMIN", "DUENO")
 
                         // Cambio de estado: administracion (tambien lo usa ms-pagos)
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/pedidos/*/estado")
-                            .hasAnyRole("Admin", "Dueño")
+                            .hasAnyRole("ADMIN", "DUENO")
 
                         // Eliminacion: administracion
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/pedidos/**")
-                            .hasAnyRole("Admin", "Dueño")
+                            .hasAnyRole("ADMIN", "DUENO")
 
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -81,17 +80,5 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("*"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setExposedHeaders(List.of("Authorization", "Location"));
-        configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
 }

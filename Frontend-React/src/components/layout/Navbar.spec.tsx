@@ -21,6 +21,7 @@ import Navbar from "./Navbar";
   .IS_REACT_ACT_ENVIRONMENT = true;
 
 const USUARIO: Usuario = {
+  idUsuario: 1,
   run: "123456785",
   nombre: "Dueño",
   apellidos: "Sanrucho",

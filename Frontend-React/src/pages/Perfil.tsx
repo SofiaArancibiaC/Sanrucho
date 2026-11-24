@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Card, Form, Button, Row, Col, Alert } from "react-bootstrap";
 import { useAuth, esAdministrativo } from "../context/AuthContext";
 import { useTablasMaestras } from "../hooks/useTablasMaestras";
 import { leerColeccion, escribirColeccion } from "../storage/useColeccion";
+import { pedidosApi } from "../api/pedidos";
 import { SANRUCHO_KEYS } from "../storage/claves";
 import type { Usuario, Pedido } from "../types";
 
@@ -15,6 +16,47 @@ export default function Perfil() {
 
   const [form, setForm] = useState<Usuario | null>(sesion);
   const [guardado, setGuardado] = useState(false);
+  const [misPedidos, setMisPedidos] = useState<Pedido[]>([]);
+  const [errorPedidos, setErrorPedidos] = useState(false);
+
+  useEffect(() => {
+    let activo = true;
+    const cargar = async () => {
+      if (sesion?.idUsuario) {
+        try {
+          // El backend devuelve otro formato: el adaptador lo convierte a Pedido.
+          const pedidos = await pedidosApi.listarAdaptados({ idUsuario: sesion.idUsuario });
+          if (activo) {
+            setMisPedidos(pedidos);
+            setErrorPedidos(false);
+          }
+        } catch {
+          if (activo) {
+            setMisPedidos([]);
+            setErrorPedidos(true);
+          }
+        }
+      } else {
+        // Sin idUsuario en la sesión (ej. token viejo), se filtran por correo.
+        try {
+          const todos = await pedidosApi.listarAdaptados({ size: 1000 });
+          if (activo) setMisPedidos(
+            todos.filter((p) =>
+              (p.cliente?.correo ?? "").toLowerCase() === (sesion?.correo ?? "").toLowerCase()
+            )
+          );
+        } catch {
+          if (activo) setMisPedidos(
+            leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos).filter(
+              (p) => p.cliente?.correo === sesion?.correo
+            )
+          );
+        }
+      }
+    };
+    cargar();
+    return () => { activo = false; };
+  }, [sesion]);
 
   if (!sesion || !form) {
     return (
@@ -25,10 +67,6 @@ export default function Perfil() {
   }
 
   const comunasFiltradas = comunas.filter((c) => c.regionId === form.regionId);
-
-  const misPedidos = leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos).filter(
-    (p) => p.cliente?.correo === sesion.correo
-  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -55,25 +93,25 @@ export default function Perfil() {
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>RUT / RUN</Form.Label>
-                  <Form.Control value={form.run} disabled />
+                  <Form.Control name="run" value={form.run} onChange={handleChange} />
                 </Form.Group>
               </Col>
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Nombre</Form.Label>
-                  <Form.Control value={form.nombre} disabled />
+                  <Form.Control name="nombre" value={form.nombre} onChange={handleChange} />
                 </Form.Group>
               </Col>
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Apellidos</Form.Label>
-                  <Form.Control name="apellidos" value={form.apellidos} disabled />
+                  <Form.Control name="apellidos" value={form.apellidos} onChange={handleChange} />
                 </Form.Group>
               </Col>
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Correo</Form.Label>
-                  <Form.Control value={form.correo} disabled />
+                  <Form.Control name="correo" value={form.correo} onChange={handleChange} />
                 </Form.Group>
               </Col>
               <Col md={6}>
@@ -134,6 +172,12 @@ export default function Perfil() {
       <Card className="mt-4">
         <Card.Body>
           <h3 className="mb-3">Mis pedidos</h3>
+          {errorPedidos && (
+            <Alert variant="warning">
+              No se pudieron cargar tus pedidos. Verifica que el backend esté
+              encendido en <code>http://localhost:9000</code>.
+            </Alert>
+          )}
           {misPedidos.length === 0 ? (
             <p className="text-muted">Aún no tienes pedidos registrados.</p>
           ) : (
@@ -143,10 +187,14 @@ export default function Perfil() {
                   <div className="d-flex justify-content-between align-items-center">
                     <div>
                       <strong>{p.codigoBoleta}</strong>
-                      <div className="small text-muted">{p.fechaCreacion} - {p.estadoPago}</div>
+                      <div className="small text-muted">
+                        {p.fechaCreacion ? new Date(p.fechaCreacion).toLocaleString("es-CL") : "—"} - {p.estadoPago}
+                      </div>
                     </div>
                     <div className="d-flex align-items-center gap-2">
-                      <span className="badge bg-primary rounded-pill">${p.total.toLocaleString("es-CL")}</span>
+                      <span className="badge bg-primary rounded-pill">
+                        ${Number(p.total ?? 0).toLocaleString("es-CL")}
+                      </span>
                       <button
                         className="btn btn-sm btn-outline-primary"
                         onClick={() => {

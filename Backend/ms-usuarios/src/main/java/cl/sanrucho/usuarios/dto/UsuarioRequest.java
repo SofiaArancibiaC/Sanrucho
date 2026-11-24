@@ -2,6 +2,7 @@ package cl.sanrucho.usuarios.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import cl.sanrucho.usuarios.model.Rol;
@@ -28,8 +29,8 @@ public class UsuarioRequest {
     @Email(message = "El email no tiene un formato válido")
     private String email;
 
-    @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
+    // Vacía = no cambiar la contraseña (útil al editar un usuario).
+    @Pattern(regexp = "^$|^.{4,10}$", message = "La contraseña debe tener entre 4 y 10 caracteres, o dejarse vacía para no cambiarla")
     private String password;
 
     private java.time.LocalDate fechaNacimiento;

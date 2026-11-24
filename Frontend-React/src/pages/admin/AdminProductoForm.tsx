@@ -4,7 +4,7 @@
 // Si la URL trae "?codigo=", pasa a modo edición.
 // ============================================================
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useProductos } from "../../hooks/useProductos";
@@ -36,6 +36,21 @@ export default function AdminProductoForm() {
   );
   const [imagen, setImagen] = useState(existente?.imagen ?? "");
   const [estado, setEstado] = useState<Producto["estado"]>(existente?.estado ?? "Activo");
+
+  // Los productos llegan del backend de forma asíncrona: cuando el producto
+  // solicitado aparece, llenamos el formulario con sus datos reales.
+  useEffect(() => {
+    if (!existente) return;
+    setCodigo(existente.codigo ?? "");
+    setNombre(existente.nombre ?? "");
+    setDescripcion(existente.descripcion ?? "");
+    setPrecio(existente.precio != null ? String(existente.precio) : "");
+    setStock(existente.stock != null ? String(existente.stock) : "");
+    setStockCritico(existente.stockCritico != null ? String(existente.stockCritico) : "");
+    setCategoriaId(existente.categoriaId != null ? String(existente.categoriaId) : "");
+    setImagen(existente.imagen ?? "");
+    setEstado(existente.estado ?? "Activo");
+  }, [existente]);
 
   const guardar = async (e: FormEvent) => {
     e.preventDefault();
@@ -78,6 +93,7 @@ export default function AdminProductoForm() {
     }
 
     const producto: Producto = {
+      id: existente?.id,
       codigo: codigoLimpio,
       nombre: nombre.trim(),
       descripcion: descripcion.trim(),
@@ -89,7 +105,15 @@ export default function AdminProductoForm() {
       estado,
     };
 
-    guardarProducto(producto);
+    try {
+      await guardarProducto(producto);
+    } catch (e) {
+      await alertaError(
+        "No se pudo guardar",
+        (e as Error).message || "Revisa los datos e inténtalo nuevamente."
+      );
+      return;
+    }
 
     const aviso =
       producto.stockCritico != null && producto.stock <= producto.stockCritico

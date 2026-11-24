@@ -52,7 +52,7 @@ export function formatearFechaHora(fechaISO: string): string {
 
 /** Cantidad total de unidades compradas en un pedido. */
 export function unidadesPedido(pedido: Pedido): number {
-  return pedido.items.reduce((total, item) => total + item.cantidad, 0);
+  return (pedido.items ?? []).reduce((total, item) => total + (item.cantidad ?? 0), 0);
 }
 
 /**
@@ -63,7 +63,7 @@ export function pedidosDeUsuario(pedidos: Pedido[], correo: string): Pedido[] {
   const buscado = correo.trim().toLowerCase();
   if (!buscado) return [];
   return pedidos.filter(
-    (pedido) => pedido.cliente.correo.trim().toLowerCase() === buscado
+    (pedido) => (pedido.cliente?.correo ?? "").trim().toLowerCase() === buscado
   );
 }
 
@@ -85,24 +85,27 @@ export function filtrarPedidos(
 
       // Las fechas se guardan como ISO (YYYY-MM-DD...), por lo que los
       // primeros 10 caracteres permiten comparar solo el día.
-      const fecha = pedido.fechaCreacion.slice(0, 10);
+      const fecha = (pedido.fechaCreacion ?? "").slice(0, 10);
       if (filtros.desde && fecha < filtros.desde) return false;
       if (filtros.hasta && fecha > filtros.hasta) return false;
 
       if (!texto) return true;
 
+      const cliente = pedido.cliente;
       const campos = [
         pedido.codigoBoleta,
         pedido.id,
-        pedido.cliente.nombre,
-        pedido.cliente.apellidos,
-        `${pedido.cliente.nombre} ${pedido.cliente.apellidos}`,
-        pedido.cliente.correo,
-        pedido.cliente.telefono,
+        cliente?.nombre,
+        cliente?.apellidos,
+        `${cliente?.nombre ?? ""} ${cliente?.apellidos ?? ""}`,
+        cliente?.correo,
+        cliente?.telefono,
       ];
       return campos.some((campo) =>
-        (campo ?? "").toLowerCase().includes(texto)
+        String(campo ?? "").toLowerCase().includes(texto)
       );
     })
-    .sort((a, b) => b.fechaCreacion.localeCompare(a.fechaCreacion));
+    .sort((a, b) =>
+      String(b.fechaCreacion ?? "").localeCompare(String(a.fechaCreacion ?? ""))
+    );
 }

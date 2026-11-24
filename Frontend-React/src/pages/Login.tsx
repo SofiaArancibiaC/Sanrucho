@@ -33,7 +33,7 @@ export default function Login() {
       return;
     }
 
-    const resultado = login(email, password);
+    const resultado = await login(email, password);
     if (!resultado.ok) {
       await alertaError("No se pudo iniciar sesión", resultado.mensaje);
       return;
