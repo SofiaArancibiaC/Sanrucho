@@ -22,11 +22,27 @@ module.exports = function(config) {
     karmaTypescriptConfig: {
       tsconfig: "./tsconfig.json",
       compilerOptions: {
-        jsx: "react-jsx"
+        jsx: "react-jsx",
+        module: "CommonJS",
+        moduleResolution: "Node"
       },
       transpileOnly: true,
+      reports: {
+        html: "coverage",
+        "text-summary": "",
+        json: "coverage/coverage-final.json"
+      },
+      coverageOptions: {
+        instrumentation: true
+      },
       bundlerOptions: {
-        ignore: ["jspdf", "html2canvas", "sweetalert2", "bootstrap", "react-bootstrap"]
+        resolve: {
+          alias: {
+            axios: "src/test-mocks/axios.ts",
+            sweetalert2: "src/test-mocks/sweetalert2.ts"
+          }
+        },
+        ignore: ["jspdf", "html2canvas", "bootstrap", "react-bootstrap"]
       }
     },
 
@@ -35,7 +51,7 @@ module.exports = function(config) {
       captureConsole: false
     },
 
-    reporters: ["spec"],
+    reporters: ["spec", "karma-typescript"],
     browsers: ["ChromeHeadless"],
     singleRun: true
   });

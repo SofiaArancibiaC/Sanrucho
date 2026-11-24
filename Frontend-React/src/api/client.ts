@@ -26,9 +26,10 @@ export const setToken = (token: string | null): void => {
   else localStorage.removeItem(TOKEN_KEY);
 };
 
+// __API_URL__ lo inyecta Vite desde .env; en Karma no existe y se usa el default.
+declare const __API_URL__: string;
 const baseURL =
-  (import.meta as { env?: Record<string, string> }).env?.VITE_API_URL ||
-  "http://localhost:9000";
+  typeof __API_URL__ !== "undefined" ? __API_URL__ : "http://localhost:9000";
 
 const client: AxiosInstance = axios.create({
   baseURL,

@@ -224,3 +224,12 @@ npm test
 
 **Sofía Arancibia y Camila Cerda**
 Estudiante de Analista Programador, Duoc UC
+
+---
+
+## Documentación adicional
+
+- [Documento de cobertura del testing](docs/DOCUMENTO_COBERTURA_TESTING.md)
+- [Documentación de APIs](docs/DOCUMENTACION_APIS.md)
+- [Documento de APIs e Integración](docs/DOCUMENTO_APIS_E_INTEGRACION.md)
+
