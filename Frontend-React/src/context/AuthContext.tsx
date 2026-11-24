@@ -32,6 +32,11 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+function rolIdDe(rol?: string): number {
+  const r = (rol ?? "").toUpperCase();
+  return r === "DUENO" ? 1 : r === "ADMIN" ? 2 : 3;
+}
+
 function decodificarToken(token: string): Sesion | null {
   try {
     const payload = token.split(".")[1];
@@ -43,13 +48,19 @@ function decodificarToken(token: string): Sesion | null {
       correo: json.sub ?? "",
       password: "",
       fechaNacimiento: "",
-      rolId: json.rol === "Admin" || json.rol === "Dueño" ? 2 : 3,
+      idUsuario: json.idUsuario,
+      rolId: rolIdDe(json.rol),
       regionId: 1,
       comunaId: 1,
       direccion: "",
       estado: "Activo",
-      // guardamos el rol textual para las restricciones
-      rol: json.rol,
+      // guardamos el rol textual que usa la UI para las restricciones
+      rol:
+        String(json.rol ?? "").toUpperCase() === "DUENO"
+          ? "Dueño"
+          : String(json.rol ?? "").toUpperCase() === "ADMIN"
+          ? "Admin"
+          : "Cliente",
     } as Sesion & { rol?: string };
   } catch {
     return null;
@@ -57,16 +68,21 @@ function decodificarToken(token: string): Sesion | null {
 }
 
 function leerSesionInicial(): Sesion | null {
+  // La sesión guardada al hacer login trae idUsuario y datos completos.
+  try {
+    const guardada = JSON.parse(
+      localStorage.getItem(SANRUCHO_KEYS.sesion) ?? "null"
+    ) as Sesion | null;
+    if (guardada?.idUsuario) return guardada;
+  } catch {
+    // se intenta con el token
+  }
   const token = getToken();
   if (token) {
     const s = decodificarToken(token);
     if (s) return s;
   }
-  try {
-    return JSON.parse(localStorage.getItem(SANRUCHO_KEYS.sesion) ?? "null") as Sesion | null;
-  } catch {
-    return null;
-  }
+  return null;
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {

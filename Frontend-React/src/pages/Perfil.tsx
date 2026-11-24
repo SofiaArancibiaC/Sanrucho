@@ -37,9 +37,21 @@ export default function Perfil() {
           }
         }
       } else {
-        setMisPedidos(leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos).filter(
-          (p) => p.cliente?.correo === sesion?.correo
-        ));
+        // Sin idUsuario en la sesión (ej. token viejo), se filtran por correo.
+        try {
+          const todos = await pedidosApi.listarAdaptados({ size: 1000 });
+          if (activo) setMisPedidos(
+            todos.filter((p) =>
+              (p.cliente?.correo ?? "").toLowerCase() === (sesion?.correo ?? "").toLowerCase()
+            )
+          );
+        } catch {
+          if (activo) setMisPedidos(
+            leerColeccion<Pedido>(SANRUCHO_KEYS.pedidos).filter(
+              (p) => p.cliente?.correo === sesion?.correo
+            )
+          );
+        }
       }
     };
     cargar();

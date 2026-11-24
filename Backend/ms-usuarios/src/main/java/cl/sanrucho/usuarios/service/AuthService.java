@@ -37,7 +37,8 @@ public class AuthService {
         }
         String token = jwtService.generateToken(
                 usuario.getEmail(),
-                usuario.getRol() != null ? usuario.getRol().name() : "CLIENTE");
+                usuario.getRol() != null ? usuario.getRol().name() : "CLIENTE",
+                usuario.getIdUsuario());
         return AuthResponse.builder().token(token).usuario(mapper.toResponse(usuario)).build();
     }
 
@@ -53,7 +54,8 @@ public class AuthService {
         Usuario saved = repository.save(usuario);
         String token = jwtService.generateToken(
                 saved.getEmail(),
-                saved.getRol() != null ? saved.getRol().name() : "CLIENTE");
+                saved.getRol() != null ? saved.getRol().name() : "CLIENTE",
+                saved.getIdUsuario());
         return AuthResponse.builder().token(token).usuario(mapper.toResponse(saved)).build();
     }
 }

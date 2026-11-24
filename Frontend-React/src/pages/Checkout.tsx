@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { pedidosApi } from "../api/pedidos";
+import { productosApi } from "../api/productos";
 import { useCart } from "../context/CartContext";
 import { SANRUCHO_KEYS } from "../storage/claves";
 import { formatearPrecio, imagenPorDefecto, rutaImagenProducto } from "../utils/formato";
@@ -151,14 +152,34 @@ const confirmarPago = async (e: React.FormEvent) => {
     codigoSeguimiento: aprobado ? "SR-" + Math.random().toString(36).substring(2, 8).toUpperCase() : undefined,
     };
 
-    if (aprobado && sesion?.idUsuario && snapshot.items.every((i) => i.id)) {
-      try {
-        await pedidosApi.crear({
-          idUsuario: sesion.idUsuario,
-          items: snapshot.items.map((i) => ({ idProducto: i.id as number, cantidad: i.cantidad })),
-        });
-      } catch (err) {
-        console.error("No se pudo registrar el pedido en backend:", err);
+    if (aprobado && sesion?.idUsuario) {
+      // Los items del carrito traen el id del backend; si alguno no lo trae
+      // (carrito viejo), lo resolvemos por código antes de crear el pedido.
+      const items = await Promise.all(
+        snapshot.items.map(async (i) => {
+          if (i.id) return { idProducto: Number(i.id), cantidad: i.cantidad };
+          try {
+            const res = await productosApi.porCodigo(i.codigo);
+            if (res.data?.id) return { idProducto: res.data.id, cantidad: i.cantidad };
+          } catch {
+            // no se pudo resolver
+          }
+          return null;
+        })
+      );
+
+      if (items.every((item) => item !== null)) {
+        try {
+          await pedidosApi.crear({
+            idUsuario: sesion.idUsuario,
+            items: items as { idProducto: number; cantidad: number }[],
+          });
+        } catch (err) {
+          console.error("No se pudo registrar el pedido en backend:", err);
+          toast("La compra se registró localmente, pero no se pudo guardar en el backend.", "error");
+        }
+      } else {
+        toast("No se pudo registrar el pedido: hay productos sin identificar en el carrito.", "error");
       }
     }
     localStorage.setItem(SANRUCHO_KEYS.ultimoPedido, JSON.stringify(pedido));

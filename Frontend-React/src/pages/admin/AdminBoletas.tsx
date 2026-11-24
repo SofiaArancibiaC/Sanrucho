@@ -21,7 +21,7 @@ import {
 } from "../../utils/pedidos";
 
 export default function AdminBoletas() {
-  const { pedidos, aprobados, totalVendido, error } = usePedidos();
+  const { pedidos, aprobados, totalVendido, error, recargar, loading } = usePedidos();
 
   const [texto, setTexto] = useState(FILTROS_PEDIDOS_VACIOS.texto);
   const [estado, setEstado] = useState<FiltroEstadoPago>(
@@ -118,10 +118,21 @@ export default function AdminBoletas() {
             Compras realizadas en la tienda y su detalle de boleta.
           </div>
         </div>
-        <span className="badge-sugerencia mb-0">
-          {filtradas.length}{" "}
-          {filtradas.length === 1 ? "boleta encontrada" : "boletas encontradas"}
-        </span>
+        <div className="d-flex align-items-center gap-2">
+          <span className="badge-sugerencia mb-0">
+            {filtradas.length}{" "}
+            {filtradas.length === 1 ? "boleta encontrada" : "boletas encontradas"}
+          </span>
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-primary"
+            onClick={recargar}
+            disabled={loading}
+            title="Volver a consultar los pedidos del backend"
+          >
+            <i className="bi bi-arrow-clockwise"></i> {loading ? "Cargando..." : "Actualizar"}
+          </button>
+        </div>
       </div>
 
       <div className="cards-grid">

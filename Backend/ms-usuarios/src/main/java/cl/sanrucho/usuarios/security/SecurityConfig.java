@@ -37,9 +37,11 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/v1/productos/**", "/api/v1/categorias/**")
                     .hasAnyRole("DUENO", "ADMIN", "CLIENTE")
 
-                // Usuarios: admin puede ver el listado (para reportes), solo dueño edita
+                // Usuarios: lectura para todos los roles autenticados.
+                // ms-pedidos valida la existencia del usuario via Feign con el
+                // token del cliente al crear un pedido; solo dueño edita.
                 .requestMatchers(HttpMethod.GET, "/api/v1/usuarios", "/api/v1/usuarios/**")
-                    .hasAnyRole("DUENO", "ADMIN")
+                    .hasAnyRole("DUENO", "ADMIN", "CLIENTE")
 
                 // Órdenes: el admin solo lectura
                 .requestMatchers(HttpMethod.GET, "/api/v1/boletas/**")

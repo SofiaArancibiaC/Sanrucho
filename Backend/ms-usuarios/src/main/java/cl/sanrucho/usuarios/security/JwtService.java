@@ -29,19 +29,24 @@ public class JwtService {
      * Genera el token con el claim "rol" para que los demas microservicios
      * puedan autorizar por rol (antes solo viajaba el email).
      */
-    public String generateToken(String subject, String rol) {
+    public String generateToken(String subject, String rol, Integer idUsuario) {
         return Jwts.builder()
                 .subject(subject)
                 .claim("rol", rol)
+                .claim("idUsuario", idUsuario)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(key())
                 .compact();
     }
 
+    public String generateToken(String subject, String rol) {
+        return generateToken(subject, rol, null);
+    }
+
     /** Sobrecarga retrocompatible: por defecto rol de cliente. */
     public String generateToken(String subject) {
-        return generateToken(subject, "CLIENTE");
+        return generateToken(subject, "CLIENTE", null);
     }
 
     public String extractUsername(String token) {
