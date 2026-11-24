@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/pedidos"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "idUsuario": 1,
+      "items": [
+        { "idProducto": 1, "cantidad": 2 }
+      ]
+    }
+order: 3000

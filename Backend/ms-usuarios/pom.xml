@@ -156,6 +156,12 @@
             <version>3.0.3</version>
         </dependency>
 
+        <!-- Actuator: endpoint /actuator/health para los healthchecks de Docker -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
     </dependencies>
 
     <!-- Empaquetado ejecutable con Spring Boot -->

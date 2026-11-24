@@ -1,0 +1,19 @@
+# Artefactos de build locales: el Dockerfile compila desde cero.
+**/target
+**/*.jar
+**/*.jar.original
+
+# Control de versiones e IDE
+.git
+.gitignore
+.gitattributes
+.idea
+.vscode
+**/*.iml
+
+# Archivos que no se necesitan dentro de la imagen
+*.bat
+README.md
+postman
+.postman
+init-multi-db

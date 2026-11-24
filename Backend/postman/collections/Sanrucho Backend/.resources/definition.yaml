@@ -1,0 +1,16 @@
+$kind: collection
+description: Colección para probar el backend de Sanrucho vía API Gateway (http://localhost:9000). El login guarda el JWT en la variable {{token}} automáticamente.
+variables:
+  - key: baseUrl
+    value: http://localhost:9000
+    disabled: false
+  - key: token
+    value: ""
+    disabled: false
+  - key: bearer_token_09xd
+    secret: true
+    disabled: false
+auth:
+  type: bearer
+  credentials:
+    token: "{{token}}"

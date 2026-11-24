@@ -1,0 +1,6 @@
+$kind: collection
+auth:
+  type: bearer
+  credentials:
+    token: "{{json_web_token_0nad}}"
+order: 1000

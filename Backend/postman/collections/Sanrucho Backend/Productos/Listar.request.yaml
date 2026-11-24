@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/productos"
+method: GET
+headers:
+  Authorization: "{{bearer_token_09xd}}"
+order: 1000

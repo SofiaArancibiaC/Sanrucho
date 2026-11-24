@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/usuarios"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "run": "12345678-9",
+      "nombre": "Juan",
+      "apellidos": "Perez",
+      "email": "juan@sanrucho.cl",
+      "password": "123456"
+    }
+order: 4000

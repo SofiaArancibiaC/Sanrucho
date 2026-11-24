@@ -1,0 +1,6 @@
+$kind: http-request
+url: http://localhost:9002/api/v1/productos
+method: GET
+headers:
+  Authorization: "{{bearer_token_09xd}}"
+order: 7000

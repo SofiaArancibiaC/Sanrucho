@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/productos/1"
+method: DELETE
+headers:
+  Authorization: "{{bearer_token_09xd}}"
+order: 6000
